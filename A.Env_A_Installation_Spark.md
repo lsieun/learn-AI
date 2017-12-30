@@ -177,7 +177,7 @@ Spark01 手工安裝，Spark02、Spark03、Spark04克隆Spark01。
 
 	shutdown -r now
 
-測試網絡是否申通
+測試網絡是否暢通
 
 	ping Spark01
 	ping Spark02
