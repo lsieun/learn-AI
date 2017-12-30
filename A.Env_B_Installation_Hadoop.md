@@ -182,8 +182,9 @@
 
 也可以在浏览器中进行查看文件。
 
-查看hadoop的版本方法是hadoop version
+查看hadoop的版本方法是
 
-D:\rk
-E:\rk\bigdata\soft
+	hadoop version
+
+> 至此结束
 
