@@ -2,6 +2,8 @@
 
 [Matplotlib tutorial](http://www.labri.fr/perso/nrougier/teaching/matplotlib/matplotlib.html)
 
+[Ten Simple Rules for Better Figures](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003833)
+
 ## Introduction ##
 
 matplotlib is probably the single most used Python package for 2D-graphics. It provides both **a very quick way to visualize data** from Python and **publication-quality figures** in many formats.
