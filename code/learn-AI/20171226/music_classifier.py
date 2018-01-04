@@ -68,7 +68,7 @@ pprint.pprint(model_load)
 pkl_file.close()
 
 print('Starting read wavfile...')
-sample_rate, test = wavfile.read("e:/StudyMaterials/python/python-sklearn/trainset/sample/heibao-wudizirong-remix.wav")
+sample_rate, test = wavfile.read("d:/tmp/sample/heibao-wudizirong-remix.wav")
 testdata_fft_features = abs(fft(test))[:1000]
 print(sample_rate, testdata_fft_features, len(testdata_fft_features))
 type_index = model_load.predict([testdata_fft_features])[0]
