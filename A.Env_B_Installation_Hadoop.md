@@ -123,6 +123,19 @@
 	</configuration>
 	#（5）修改yarn-site.xml
 	vi yarn-site.xml
+	<configuration>
+	
+	<!-- Site specific YARN configuration properties -->
+	    <property>
+	        <name>yarn.resourcemanager.hostname</name>
+	        <value>mini1</value>
+	    </property>
+	    <property>
+	        <name>yarn.nodemanager.aux-services</name>
+	        <value>mapreduce_shuffle</value>
+	    </property>
+	</configuration>
+
 
 将hadoop添加到环境变量
 
