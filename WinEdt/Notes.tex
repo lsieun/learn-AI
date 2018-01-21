@@ -1,5 +1,6 @@
 \documentclass[UTF8]{ctexart}
 \usepackage{amsmath}
+\usepackage{color}
    \author{刘森}
    \title{跟我学人工智能}
 \begin{document}
@@ -7,11 +8,17 @@
 你好，世界 hello, world % This is comment
 
 \section{机器学习算法}
-\paragraph{1} 不同的算法，本身没有好坏之分，有的只是，根据不同的场景选择合适的算法。
-\paragraph{2} 线性回归和Logistic回归，虽然听起来都叫作“回归”，但其实两者却是做不一样的事情：一个是做连续数据的预测，一个是做离散数据的预测；一个是真正做回归的，一个是做分类的，它们两个【用途】是完全不一样的。【如何推导出来？】线性回归是用高斯分布的方式推导出来，Logistic回归既然是做分类，就用Bnody分布，两点分布来推导出来。两者大的工具都是【最大似然估计】。在线性回归里面，要讨论一个东西：【最小二乘法的本质是什么】。或者说，为什么有最小二乘法呢？有没有最小三乘法呢？有没有最小四乘法呢？在【线 性回归】和【Logistic回归】中强调两个工具：【梯度下降算法】和【极大似然估计】。
-    
+
+不同的算法，本身没有好坏之分，有的只是，根据不同的场景选择合适的算法。
+
+线性回归和Logistic回归，虽然听起来都叫作“回归”，但其实两者却是做不一样的事情：一个是做连续数据的预测，一个是做离散数据的预测；一个是真正做回归的，一个是做分类的，它们两个【用途】是完全不一样的。【如何推导出来？】线性回归是用高斯分布的方式推导出来，Logistic回归既然是做分类，就用Bnody分布，两点分布来推导出来。两者大的工具都是【最大似然估计】。在线性回归里面，要讨论一个东西：【最小二乘法的本质是什么】。或者说，为什么有最小二乘法呢？有没有最小三乘法呢？有没有最小四乘法呢？在【线 性回归】和【Logistic回归】中强调两个工具：【梯度下降算法】和【极大似然估计】。
+
 \subsection{线性回归}
-高斯分布 \\ 极大似然估计MLE \\ 最小二乘法的本质 \\
+高斯分布
+
+极大似然估计MLE
+
+最小二乘法的本质
 
 \subsubsection{什么是线性回归}
 线性回归
@@ -129,15 +136,588 @@ J(\theta)=\frac{1}{2} \sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})^{2}
 
 $\theta$的解析式的求解过程 第05课《回归》00:29:52
 
+将$M$个$N$维样本组成矩阵$X$：
+（1）$X$的每一行对应一个样本，共$M$个样本（measurements）；
+（2）$X$的每一列对应样本的一个维度，共$N$维（regressors）
+（3）还有额外的一维常数项$x^{(i)}_{0}$，全为$1$。
+
+目标函数：
+
+\begin{equation}
+\begin{aligned}
+J(\theta)=\frac{1}{2} \sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})^{2}=\frac{1}{2} (X\theta-y)^{T}(X\theta-y)
+\end{aligned}
+\end{equation}
+
+梯度：
+
+\begin{equation}
+\begin{aligned}
+\nabla_{\theta}J(\theta)&=\nabla_{\theta}(\frac{1}{2}(X\theta-y)^{T}(X\theta-y))\\
+&=\nabla_{\theta}(\frac{1}{2}(\theta^{T}X^{T}-y^{T})(X\theta-y))\\
+&=\nabla_{\theta}(\frac{1}{2}(\theta^{T}X^{T}X\theta-\theta^{T}X^{T}y-y^{T}X\theta+y^{T}y))\\
+&=\frac{1}{2}(2X^{T}X\theta-X^{T}y-(y^{T}X)^{T})\\
+&=X^{T}X\theta-X^{T}y
+\end{aligned}
+\end{equation}
+
+在上式中，求驻点，令$X^{T}X\theta-X^{T}y=0$。
+
+所以$\theta$取值如下：
+
+\begin{equation}
+\begin{aligned}
+\theta=(X^{T}X)^{-1}\cdot X^{T}y
+\end{aligned}
+\end{equation}
+
+\subsubsection{最小二 乘法意义下的参数最优解}
+
+参数的解析解
+
+\begin{equation}
+\begin{aligned}
+\theta=(X^{T}X)^{-1} X^{T}y
+\end{aligned}
+\end{equation}
+
+若$X^{T}X$不可逆或防止过拟合，增加$\lambda$扰动
+
+\begin{equation}
+\begin{aligned}
+\theta=(X^{T}X+\lambda I)^{-1} X^{T}y
+\end{aligned}
+\end{equation}
+
+第05课《回归》00:38:36
+
+“简单”方法记忆结论
+
+\begin{equation}
+\begin{aligned}
+&X\theta=y\\
+&\Rightarrow X^{T}X\theta=X^{T}y\\
+&\Rightarrow \theta = (X^{T}X)^{-1} X^{T}y
+\end{aligned}
+\end{equation}
+
+\subsubsection{梯度下降算法Gradient Descent}
+
+第05课《回归》01:14:49
+
+事实上，通过解析解的方式$\theta = (X^{T}X)^{-1} X^{T}y$来求解$\theta$是没有问题的，真的是对的；但是，我们往往在机器学习中，习惯在这个地方引出“梯度下降算法”，并且也习惯使用“梯度下降算法”来求解$\theta$。我们这里还是求目标函数$J(\theta)=\frac{1}{2} \sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})^{2}$的梯度，延着负梯度方向不停的下降，降到某一个值，降不下去了，我们就可以知道，得到了一个局部的极小值，这个局部的极小值点，或许就是我们想要的$\theta$。
+
+初始化$\theta$（随机初始化）
+
+沿着负梯度方向迭代，更新后的$\theta$使$J(\theta)$更小
+
+\begin{equation}
+\begin{aligned}
+\theta_{j}=\theta_{j}-\alpha \cdot \frac{\partial J(\theta)}{\partial \theta}
+\end{aligned}
+\end{equation}
+
+其中，$\alpha$表示学习率、步长。这个步长$\alpha$事实上是有办法可以指定比较优的，后续再讲怎么选$\alpha$会更优。
+
+\subsubsection{梯度方向}
+梯度方向 第05课《回归》01:15:37
+
+\begin{equation}
+\begin{aligned}
+\frac{\partial}{\partial \theta_{j}} J(\theta)&=\frac{\partial}{\partial \theta_{j}} \frac{1}{2} (h_{\theta}(x)-y)^{2}\\
+&=2 \cdot \frac{1}{2} (h_{\theta}(x)-y) \cdot \frac{\partial}{\partial \theta_{j}}(h_{\theta}(x)-y)\\
+&=(h_{\theta}(x)-y) \cdot \frac{\partial}{\partial \theta_{j}}(\sum_{i=0}^{n}\theta_{i}x_{i}-y)\\
+&=(h_{\theta}(x)-y)x_{j}
+\end{aligned}
+\end{equation}
+
+这里是求偏导，一共有$n$个特征，当前求解的是第$j$个特征的偏导。得到这个梯度之后，我们就可以延着负梯度的方向下降下去就可以了。
+
+这里有个需要注意的地方，我们求出来的是梯度，而我们要用的是\textbf{负梯度}，而\textbf{负梯度}应该是$-(h_{\theta}(x)-y)x_{j}$，因此可以调换一下$h_{\theta}(x)$和$y$的位置，写成这种形式$(y-h_{\theta}(x))x_{j}$。
+
+\subsubsection{批量梯度下降算法}
+
+Repeat until convergence(会聚; 集收敛)
+
+\begin{equation}
+\begin{aligned}
+\theta_{j} := \theta_{j}+\alpha \sum_{i=1}^{m} (y^{(i)}-h_{\theta}(x^{(i)}))x^{(i)}_{j}
+\end{aligned}
+\end{equation}
+
+\textbf{gradient descent}. Note that, while gradient descent can be susceptible to local minima in general, the optimization problem we have posed here for linear regression has only one global, and no other local, optima; thus gradient always converges (assuming the learning rate $\alpha$ is not too large) to the global minimum. Indeed, $J$ is a convex(凸形; 凸的) quadratic(二次的;) function.
+
+ \subsubsection{随机梯度下降算法}
+
+ for $i=1$ to $m$
+
+ \begin{equation}
+\begin{aligned}
+\theta_{j} := \theta_{j}+\alpha  (y^{(i)}-h_{\theta}(x^{(i)}))x^{(i)}_{j}
+\end{aligned}
+\end{equation}
+
+This algorithm is called \textbf{stochastic gradient descent} (also \textbf{incremental gradient descent}).  Whereas batch gradient descent has to scan through the entire training set before taking a single step -- a costly operation if $m$ is large -- stochastic gradient descent can start making progress right away, and continues to make progress with each example it looks at. Often, stochastic gradient descent gets $\theta$ "close" to the minimum much faster than batch gradient descent. (Note however that it may never "converge" to the minimum, and the parameters $\theta$ will keep oscillating(振荡; （使） 摆动) around the minimum of $J(\theta)$; but in practice most of the values near the minimum will be reasonably good approximations to the true minimum.) For these reasons, particularly when the training set is large, stochastic gradient descent is often preferred over batch gradient descent.
+
+在没有明确\textbf{批量梯度下降}和\textbf{随机梯度下降}哪个更优的情况下，优先选择“随机梯度下降”。
+
+在求解$\theta$的时候，不一定非要是最好的，它只能说是\textbf{堪用}的，能够work的，可用的就行了。有的时候，不要追求完美，完美往往是达不到的，只要能够过得去， 还可以，就行了。
+
+\subsubsection{折中：mini-batch}
+
+第05课《回归》01:22:37
+
+如果不是每拿到一个样本即更改梯度，而是若干个样本的平均梯度作为更新方向，则是mini-batch梯度下降算法。
+
+机器学习(Machine learning)，第一，要会理论，它是一个能够走多远的基础；第二，是要会写代码，它是保证当前的工作能够持续下去。“渔”和“鱼”都得要。
+
+机器学习中，很多时间都花在了\textbf{如何建模型、如何调参、如何选特征、如何优化模型}这些事情上，写代码并没有那么的困难。
+
+\subsubsection{权值的设置}
+
+高斯核函数 第05课《回归》01:45:26
+
+我们希望用“线性回归”求得模型的“残差”服从高斯分布（正态分布）；如果不服从高斯分布，我们就去重新选“特征”。如果不服从高斯分布，说明有些“特征”没有被考虑进来。
+
+
 \subsection{逻辑回归：分类问题的首选算法}
-    
+
+第05课《回归》02:00:30
+
+\subsubsection{Logistic/sigmoid函数}
+
+
+ \begin{equation}
+\begin{aligned}
+g(z)=\frac{1}{1+e^{-z}}
+\end{aligned}
+\end{equation}
+
+ \begin{equation}
+\begin{aligned}
+h_{\theta}(x)=g(\theta^{T}x)=\frac{1}{1+e^{-\theta^{T}x}}
+\end{aligned}
+\end{equation}
+
+ \begin{equation}
+\begin{aligned}
+g'(x)&=(\frac{1}{1+e^{-x}})'=\frac{e^{-x}}{(1+e^{-x})^{2}}\\
+&=\frac{1}{1+e^{-x}} \cdot \frac{e^{-x}}{1+e^{-x}}\\
+&=\frac{1}{1+e^{-x}} \cdot (1- \frac{1}{1+e^{-x}})\\
+&=g(x) \cdot (1-g(x))
+\end{aligned}
+\end{equation}
+
+\subsubsection{Logistic回归参数估计}
+
+假定
+
+ \begin{equation}
+\begin{aligned}
+P(y=1|x;\theta)&=h_{\theta}(x)\\
+P(y=0|x;\theta)&=1-h_{\theta}(x)\\
+\end{aligned}
+\end{equation}
+
+上面的两个式子，可以用一个式子来表示：
+
+ \begin{equation}
+\begin{aligned}
+p(y|x;\theta)=(h_{\theta}(x))^{y}(1-h_{\theta}(x))^{1-y}
+\end{aligned}
+\end{equation}
+
+那么似然函数$L(\theta)$这样求：
+
+\begin{equation}
+\begin{aligned}
+L(\theta)&=p(\vec{y}|X;\theta)\\
+&=\prod_{i=1}^{m}p(y^{(i)}|x^{(i)};\theta)\\
+&=\prod_{i=1}^{m}(h_{\theta}(x^{(i)}))^{y^{(i)}}(1-h_{\theta}(x^{(i)}))^{1-y^{(i)}}
+\end{aligned}
+\end{equation}
+
+\subsubsection{对数似然函数}
+
+第05课《回归》02:01:23
+
+\begin{equation}
+\begin{aligned}
+l(\theta) &= \log L(\theta) \\
+&= \sum_{i=1}^{m} y^{(i)}\log h_{\theta}(x^{(i)}) + (1-y^{(i)}) \log (1-h_{\theta}(x^{(i)}))
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\frac{\partial}{\partial \theta_{j}} l(\theta) &= (y \frac{1}{g(\theta^{T} x)} - (1-y) \frac{1}{1-g(\theta^{T} x)}) \frac{\partial}{\partial \theta_{j}} g(\theta^{T} x)\\
+&=  (y \frac{1}{g(\theta^{T} x)} - (1-y) \frac{1}{1-g(\theta^{T} x)}) g(\theta^{T} x)(1-g(\theta^{T} x))\frac{\partial}{\partial \theta_{j}} \theta^{T}x \\
+&= (y(1-g(\theta^{T} x))-(1-y)g(\theta^{T} x))x_{j}\\
+&= (y-h_{\theta}(x))x_{j}
+\end{aligned}
+\end{equation}
+
+\subsubsection{参数的迭代}
+
+第05课《回归》02:01:55
+
+Logistic回归参数的学习规则
+
+\begin{equation}
+\begin{aligned}
+\theta_{j} := \theta_{j} + \alpha (y^{(i)}-h_{\theta}(x^{(i)}))x^{(i)}_{j}
+\end{aligned}
+\end{equation}
+
+比较上面的结果和“线性回归”的结论的差别：它们具有相同的形式，Logistic回归是用于做分类的，属于广义线性回归。
+
+\subsubsection{对数线性模型}
+
+一个事件的\textbf{几率}odds，是指该\textbf{事件发生的概率}与\textbf{事件不发生的概率}的比值。
+
+对数几率：$\log it$函数
+
+ \begin{equation}
+\begin{aligned}
+P(y=1|x;\theta)&=h_{\theta}(x)\\
+P(y=0|x;\theta)&=1-h_{\theta}(x)\\
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\log it(p) &= \log \frac{p}{1-p}\\
+&= \log \frac{h_{\theta}(x)}{1-h_{\theta}(x)}\\
+&=\log \frac{\frac{1}{1+e^{-\theta^{T}x}}}{\frac{e^{-\theta^{T}x}}{1+e^{-\theta^{T}x}}}\\
+&= \theta^{T}x
+\end{aligned}
+\end{equation}
+
+说一个事儿：如果有一个$x_{1}$和$x_{2}$，正常去求$x_{1}$占多大比例的方法是
+
+\begin{equation}
+\begin{aligned}
+\frac{x_{1}}{x_{1}+x_{2}}
+\end{aligned}
+\end{equation}
+
+如果不想这么算，而是想做一个指数的比例，那么$x_{1}$和$x_{2}$就变成了$e^{x_{1}}$和$e^{x_{2}}$，再求比例就是
+
+\begin{equation}
+\begin{aligned}
+\frac{e^{x_{1}}}{e^{x_{1}}+e^{x_{2}}} = \frac{1}{1+e^{x_{2}-x_{1}}}
+\end{aligned}
+\end{equation}
+
+如果令$x_{2}-x_{1}=-z$，就得到：
+
+\begin{equation}
+\begin{aligned}
+\frac{1}{1+e^{-z}}
+\end{aligned}
+\end{equation}
+
+这样就得到了sigmoid函数。
+
 \subsection{工具}
 梯度下降算法\\
 极大似然估计\\
-        
-    \subsection{Softmax}
-    \section{Tensorflow}
-    \subsection{安装Tensorflow}
+
+\subsection{Softmax}
+
+\subsection{聚类}
+
+按道理来说，“算法”和“模型”是两个完全不同的概念，算法一般用于表示解决特定的数学问题，而模型则侧重于解决实际的问题，但在不同场景下，两者也会经常混用。
+
+“聚类”是无监督的机器学习算法，而“线性回归、Logistic回归、Softmax、SVM、随机森林”都是有监督的机器学习算法。
+
+“聚类”并不像“有监督分类”那样有$y$值，而只有$m \times n$维的向量数据，其中$m$表示$m$个样本，$n$表示有$n$个特征。“聚类”并不依赖于$y$值，而是依赖于$m \times n$维的数据，根据其内部之间的相似性，来做聚类。
+
+一个$m \times n$维的数据，经过某种聚类算法之后，这$m$个样本聚类到$k$个簇当中，这样就把一个$m \times n$维矩阵转换成了一个$m \times k$维矩阵，这本质上就是一个聚类的过程。我们发现，这个数据是从一个$m \times n$维矩阵转换成了一个$m \times k$维矩阵，这本质上又是一个降维的过程。所以“聚类”这个词和“降维”这个词，两者本质上是一样的。
+
+\subsubsection{本次目标}
+
+掌握\textbf{K-means聚类}的思路和使用条件
+
+了解\textbf{层次聚类}的思路和方法
+
+理解\textbf{密度聚类}并能够应用于实践：（1）DBSCAN；（2）密度最大值聚类
+
+掌握\textbf{谱聚类}的算法：考虑谱聚类和\textbf{PCA}的关系。
+
+\subsubsection{聚类的定义}
+
+聚类就是对大量未知标注的数据集，按数据的\textcolor{red}{内在相似性}将数据集划分为\textcolor{red}{多个类别}，使\textcolor{red}{类别内的数据相似度较大}而\textcolor{blue}{类别间的数据相似度较小}。
+
+而这种\textbf{内在相似性}，通常用\textbf{相似度}或\textbf{距离}来度量。往往，\textbf{距离}求出来之后，将距离的$-1$次方作为\textbf{相似度}。
+
+\subsubsection{相似度/距离计算方法总结}
+
+第10课 聚类 00:11:18
+
+闵可夫斯基距离Minkowski
+
+\begin{equation}
+\begin{aligned}
+dist(X,Y)=\left ( \sum_{i=1}^{n} |x_{i}-y_{i}|^{p} \right )^{\frac{1}{p}}
+\end{aligned}
+\end{equation}
+
+在上式中，当$p=2$时，就是标准的“欧氏距离”；当$p=1$时，就是“曼哈顿距离”；当$p=\infty$时，就相当于取$|x_{i}-y_{i}|$的最大距离，就称为“切比雪夫距离”。
+
+杰卡德相似系数（Jaccard），从集合的角度来理解
+
+\begin{equation}
+\begin{aligned}
+J(A,B)=\frac{|A \bigcap B|}{|A \bigcup B|}
+\end{aligned}
+\end{equation}
+
+余弦相似度（cosine similarity），从角度来理解
+
+\begin{equation}
+\begin{aligned}
+\cos (\theta)=\frac{a^{T}b}{|a| \cdot |b|}
+\end{aligned}
+\end{equation}
+
+Pearson相关系数（Pearson CorrelationCoefficient）是用来衡量两个数据集合是否在一条线上面，它用来衡量定距变量间的线性关系。
+
+\begin{equation}
+\begin{aligned}
+\rho_{XY} &= \frac{cov(X,Y)}{\sigma_{X} \sigma_{Y}} \\
+&= \frac{E[(X-\mu_{X})(Y-\mu_{Y})]}{\sigma_{X} \sigma_{Y}}\\
+&= \frac{\sum_{i=1}^{n}(X_{i}-\mu_{X})(Y_{i}-\mu_{Y})}{\sqrt{\sum_{i=1}^{n}(X_{i}-\mu_{X})^{2}}\sqrt{(\sum_{i=1}^{n}Y_{i}-\mu_{Y})^{2}}}
+\end{aligned}
+\end{equation}
+
+假设$A=(A_{1},A_{2},...A_{n})$，有$n$个数，我们可以求它的平均值$\bar{A}$，那么$\frac{1}{n}(A_{i}-\bar{A})^{2}$就可以认为是随机变量A的均方差。同时，有$B=(B_{1},B_{2},...B_{n})$，也有$n$个数，它的均方差也可以表示为$\frac{1} {n}(B_{i}-\bar{B})^{2}$。也可以用$\frac{1} {n}(A_{i}-\bar{A})(B_{i}-\bar{B})$来度量$A$和$B$之间的协方差。这个$A$和$B$之间协方差，也可以除以它的标准差，就有了Pearson相关系数。
+
+相对熵（K-L距离）
+
+\begin{equation}
+\begin{aligned}
+D(p \parallel q) = \sum_{x}^{ }p(x) \log \frac{p(x)}{q(x)}=E_{p(x)}\log \frac{p(x)}{q(x)}
+\end{aligned}
+\end{equation}
+
+Hellinger距离
+
+\begin{equation}
+\begin{aligned}
+D_{\alpha}(p \parallel q) = \frac{2}{1-a^{2}} \left ( 1- \int p(x)^{\frac{1+\alpha}{2}} q(x)^{\frac{1-\alpha}{2}} dx\right )
+\end{aligned}
+\end{equation}
+
+注意：不要拘泥于某种相似性的计算方式，在实践当中，有些场景，适合用欧氏距离，如果是推荐系统，就习惯用杰卡德系数，如果是文本的相似度，就可能用余弦相似度，这都是有可能的。
+
+我们要说明的就是，在“聚类”算法当中，可以任意挑选一个“相似度计算方法”，就能够算出样本$i$和样本$j$的相似性$S_{ij}$；如果有$m$个样本，就形成一个$m \times m$的相似度方阵，后面就对$m \times m$的方阵使用各种手段来去做聚类。至于说用哪一个“相似度”算法，则是一个相对独立的事情。
+
+\subsubsection{Hellinger distance}
+
+第10课 聚类 00:20:50
+
+\subsubsection{余弦相似度与Pearson相似系数}
+
+第10课 聚类 00:24:50
+
+$n$维向量$x$和$y$的夹角记作$\theta$，根据余弦定理，其余弦值为：
+
+\begin{equation}
+\begin{aligned}
+\cos (\theta) = \frac{x^{T}y}{|x| \cdot |y|}=\frac{\sum_{i=1}^{n}x_{i}y_{i}}{\sqrt{\sum_{i=1}^{n}x^{2}_{i}}\sqrt{\sum_{i=1}^{n}y^{2}_{i}}}
+\end{aligned}
+\end{equation}
+
+这两个向量的Pearson相关系数是：
+
+\begin{equation}
+\begin{aligned}
+\rho_{XY} &= \frac{cov(X,Y)}{\sigma_{X} \sigma_{Y}} \\
+&= \frac{E[(X-\mu_{X})(Y-\mu_{Y})]}{\sigma_{X} \sigma_{Y}}\\
+&= \frac{\sum_{i=1}^{n}(X_{i}-\mu_{X})(Y_{i}-\mu_{Y})}{\sqrt{\sum_{i=1}^{n}(X_{i}-\mu_{X})^{2}}\sqrt{(\sum_{i=1}^{n}Y_{i}-\mu_{Y})^{2}}}
+\end{aligned}
+\end{equation}
+
+如果此时的$\mu_{X}$和$\mu_{Y}$都为0，则此时的Pearson相关系数恰好是“余弦相似度”。
+
+相关系数即将$x$、$y$坐标向量各自\textcolor{red}{平移到原点后的夹角余弦}！
+
+这即解释了为何文档间求距离使用\textcolor{blue}{夹角余弦}——因为这一物理量表征了文档\textcolor{green}{去均值化}后随机向量间\textcolor{blue}{相关系数}。
+
+\subsubsection{聚类的基本思想}
+
+第10课 聚类 00:27:32
+
+给定一个有$N$个对象的数据集，构造数据的$k$个簇，$k \leq n$。满足下列条件：
+
+（1）每一个簇至少包含一个对象
+
+（2）每一个对象属于且仅属于一个簇
+
+（3）将满足上述条件的$k$个簇称作一个合理划分。
+
+基本思想：对于给定的类别数目$k$，首先给出初始划分，通过迭代改变\textbf{样本}和\textbf{簇}的隶属关系，使得每一次改进之后的划分方案都\textcolor{red}{较前一次好}。
+
+\subsubsection{K-means算法}
+
+K-means算法，也称为k-平均或k-均值，是一种广泛使用的聚类算法，或者成为其他聚类算法的基础。
+
+假定输入样本为$S=x_{1},x_{2},...x_{m}$，则算法步骤为：
+
+（1）选择初始的$k$个类别中心$\mu_{1},\mu_{2},...\mu_{k}$
+
+（2）对于每个样本$x_{i}$，将其标记为距离类别中心最近的类别，即：
+
+\begin{equation}
+\begin{aligned}
+label_{i} = \underset{1 \leq j \leq k}{\arg \min}  \parallel x_{i}-\mu_{j} \parallel
+\end{aligned}
+\end{equation}
+
+（3）将每个类别中心更新为隶属该类别的所有样本的均值
+
+\begin{equation}
+\begin{aligned}
+\mu_{j} = \frac{1}{|c_{j}|} \sum_{i \in c_{j}}^{ }x_{j}
+\end{aligned}
+\end{equation}
+
+（4）重复最后两步，直到类别中心的变化小于某阈值。
+
+中止条件：迭代次数、簇中心变化率、最小平方误差MSE(Minimum Squared Error)
+
+很好的一个问题就是：（1）K-means算法中的k如何选择？（2）k个中心如何初始化？
+
+对于第一个问题，一般是使用两种方式。第一种，有的时候，可以通过“先验的知识”来确定的，比如说，抛骰子只能有6种可能的数值。第二种，就是交叉验证，不断的尝试k的大小，来看看最小平方误差是否会减小。当k没有更好的办法选择时，只能够通过相互交叉验证的方式帮助我们做。
+
+第二个问题解答 第10课 聚类 00:39:00
+
+对于第二个问题，一种是随机的给定初始值。
+
+\subsubsection{K-means的公式化解释}
+
+第10课 聚类 00:55:32
+
+记$K$个簇中心为$\mu_{1},\mu_{2},...\mu_{k}$，每个簇的样本数目为$N_{1},N_{2},...,N_{k}$
+
+使用平方误差作为目标函数：
+
+\begin{equation}
+\begin{aligned}
+J(\mu_{1},\mu_{2},...\mu_{k}) = \frac{1}{2} \sum_{j=1}^{K} \sum_{i=1}^{N_{j}} (x_{i}-\mu_{j})^{2}
+\end{aligned}
+\end{equation}
+
+该函数为关于$\mu_{1},\mu_{2},...\mu_{k}$的凸函数，其驻点为：
+
+\begin{equation}
+\begin{aligned}
+\frac{\partial J}{\partial \mu_{j}} = \sum_{x_{i} \in \{J\} }^{ }(x_{i}-\mu_{j}) = 0 \\
+\Rightarrow \mu_{j}=\frac{1}{N_{j}} \sum_{x_{i} \in \{J\}}^{ }x_{i}
+\end{aligned}
+\end{equation}
+
+k-均值的聚类结果，一定是类“圆”的。
+
+\subsubsection{K-means聚类方法总结}
+
+第10课 聚类 01:01:32
+
+优点：
+
+（1）是解决聚类问题的一种经典算法，简单，快速
+
+（2）对处理大数据集，该算法保持可伸缩性和高效率
+
+（3）当簇近似为高斯分布时，它的效果较好
+
+缺点：
+
+（1）在簇的平均值可被定义的情况下才能使用，可能不适用于某些应用
+
+（2）必须事先给出$k$（要生成的簇的数目），而且对初值敏感，对于不同的初始值，可能会导致不同结果
+
+（3）不适合于发现非凸形状的簇或者大小差别很大的簇
+
+（4）对噪声和孤立点数据敏感
+
+可作为其他聚类方法的基础算法，如谱聚类。
+
+\subsubsection{对K-means的思考：K-Mediods聚类(K中值距离)}
+
+第10课 聚类 01:02:40
+
+K-Means将簇中所有点的均值作为新质心，若簇中含有异常点，将导致均值偏离严重。以一维数据为例：
+
+（1）数据1、2、3、4、100的均值为22，显然距离“大多数”数据1、2、3、4比较远
+
+（2）改成求数组的中位数3，在该实例中更为稳妥。
+
+（3）这种聚类方式即\textcolor{red}{K-Mediods聚类}（K中值距离）
+
+初值的选择，对聚类结果有影响吗？如何避免？
+
+\subsubsection{轮廓系数(Silhouette)}
+
+第10课 聚类 01:07:37
+
+Silhouette系数是对聚类结果有效性的解释和验证，由Peter J. Rousseeuw于1986年提出。
+
+计算样本$i$到同簇其他样本的平均距离$a_{i}$。$a_{i}$越小，说明样本$i$越应该被聚类到该簇。将$a_{i}$称为样本$i$的\textcolor{blue}{簇内不相似度}。簇$C$中所有样本的$a_{i}$均值称为簇$C$的\textcolor{red}{簇不相似度}。
+
+计算样本$i$到其他某簇$C_{j}$的所有样本的平均距离$b_{ij}$，称为样本$i$与簇$C_{j}$的不相似度。定义为样本$i$的\textcolor{blue}{簇间不相似度}：$b_{i}=\min \{ b_{i1},b_{i2},...b_{iK} \}$。其中，$b_{i}$越大，说明样本$i$越不属于其他簇。
+
+根据样本$i$的簇内不相似度$a_{i}$和簇间不相似度$b_{i}$，定义样本$i$的轮廓系数：
+
+\begin{displaymath}
+s(i)=\frac{b(i)-a(i)}{\max \{ a(i),b(i)\}}
+\end{displaymath}
+
+$s_{i}$接近于1，则说明样本$i$聚类合理；$s_{i}$接近于-1，则说明样本$i$更应该聚类到另外的簇；若$s_{i}$近似为0，则说明样本$i$在两个簇的边界上。
+
+所有的样本的$s_{i}$的均值，称为聚类结果的轮廓系数，是该聚类是否合理、有效的度量。
+
+\subsubsection{层次聚类方法}
+
+第10课 聚类 01:19:19
+
+层次聚类方法对给定的数据集进行层次的分解，直到某种条件满足为止。具体又分为：（1）凝聚的层次聚类：AGNES算法，（2）分裂的层次聚类：DIANA算法。
+
+凝聚的层次聚类（AGNES算法），是一种自底向上的策略，首先将每个对象作为一个簇，然后合并这些原子簇为越来越大的簇，直到某个终结条件被满足。
+
+分裂的层次聚类（DIANA算法），采用自顶向下的策略，它首先将所有对象置于一个簇中，然后逐渐细分为越来越小的簇，直到达到了某个终结条件。
+
+\subsubsection{密度聚类方法}
+
+第10课 聚类 01:22:39
+
+密度聚类算法的指导思想是，只要样本点的密度大于某阈值，则将该样本添加到最近的簇中。
+
+这类算法能克服基于距离的算法只能发现“类圆形”的聚类的缺点，可发现任意形状的聚类，且对噪声数据不敏感。但计算密度单元的计算复杂度大，需要建立空间索引来降低计算量。
+
+常用的两个算法：DBSCAN算法 和 密度最大值算法。
+
+DBSCAN算法（Density-Based Spatial Clustering of Applications with Noise）是一个比较有代表性的基于密度的聚类算法。与划分和层次聚类方法不同，它将簇定义为\textcolor{red}{密度相连的点的最大集合}，能够把具有足够高密度的区域划分为簇，并可在有“噪声”的数据中发现任意形状的聚类。
+
+密度最大值聚类是一种简洁优美的聚类算法，可以识别各种形状的类簇，并且参数很容易确定。
+
+第10课 聚类 01:40:39
+
+\subsubsection{谱和谱聚类}
+
+第10课 聚类 01:57:06
+
+方阵作为线性算子，它的所有特征值的全体统称方阵的\textcolor{red}{谱}。
+
+（1） 方阵的谱半径为最大的特征值
+（2）矩阵$A$的\textcolor{red}{谱半径}：$A^{T}A$的最大特征值
+
+谱聚类是一种基于图论的聚类方法，通过对样本数据的\textcolor{red}{拉谱拉斯矩阵}的\textcolor{red}{特征向量}进行聚类，从而达到对样本数据聚类的目的。
+
+\section{Tensorflow}
+
+\subsection{安装Tensorflow}
 
         conda install tensorflow
 
