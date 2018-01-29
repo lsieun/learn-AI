@@ -48,8 +48,17 @@ learning problem:
 	supervised learning
 	unsupervised learning
 
+Loading an example dataset 加载数据集
+
+Learning and predicting 对“已知数据集”进行学习，生成模型，和 使用模型，对“未知数据”进行预测
+
+Model persistence 对模型进行持久化
+
+> 机器学习里经常出现ground truth这个词，表示“真实的值”
+> pickle 是 Python 内部的一种序列化方式
 
 
+[scikit-learn Tutorials](http://scikit-learn.org/stable/tutorial/index.html)
 
 
 

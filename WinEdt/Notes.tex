@@ -1,6 +1,7 @@
 \documentclass[UTF8]{ctexart}
 \usepackage{amsmath}
 \usepackage{color}
+
    \author{刘森}
    \title{跟我学人工智能}
 \begin{document}
@@ -715,6 +716,10 @@ DBSCAN算法（Density-Based Spatial Clustering of Applications with Noise）是
 
 谱聚类是一种基于图论的聚类方法，通过对样本数据的\textcolor{red}{拉谱拉斯矩阵}的\textcolor{red}{特征向量}进行聚类，从而达到对样本数据聚类的目的。
 
+\section{卷积神经网络}
+
+00:46:23
+
 \section{Tensorflow}
 
 \subsection{安装Tensorflow}
@@ -723,9 +728,74 @@ DBSCAN算法（Density-Based Spatial Clustering of Applications with Noise）是
 
         pip install tensorflow
 
-    \section{数学知识}
+\section{数学知识}
     1.LATEX控制序列的概念（类似于函数） \\ 控制序列可以是作为命令：以“$\backslash$”开头，参数：必须参数和可选参数。
+\subsubsection{Probability Density Functions}
+
+Probability Density Functions https://onlinecourses.science.psu.edu/stat414/node/97
+
+\section{Vocabulary}
+
+generalized linear model (GLM)
+
+\section{论算法之间的区别}
+
+各自想法的出处
+
+自己的总结
+
+\section{面试}
+
+\section{其它知识}
+
+\subsubsection{数据处理——One-Hot Encoding}
+
+原文地址： http://blog.csdn.net/google19890102/article/details/44039761
+
+在实际的机器学习的应用任务中，\textbf{特征}有时候并不总是连续值，有可能是一些分类值，如性别可分为“male”和“female”。在机器学习任务中，对于这样的特征，通常我们需要对其进行特征数字化，如下面的例子：
+有如下三个特征属性：
+
+性别：["male"，"female"]
+
+地区：["Europe"，"US"，"Asia"]
+
+浏览器：["Firefox"，"Chrome"，"Safari"，"Internet Explorer"]
+
+\textbf{不合适的方法}。对于某一个样本，如["male"，"US"，"Internet Explorer"]，我们需要将这个分类值的特征数字化，最直接的方法，我们可以采用序列化的方式：[0,1,3]。但是这样的特征处理并不能直接放入机器学习算法中。
+
+\textbf{合适的方法}。对于上述的问题，性别的属性是二维的，同理，地区是三维的，浏览器则是四维的，这样，我们可以采用One-Hot编码的方式对上述的样本“["male"，"US"，"Internet Explorer"]”编码，“male”则对应着[1，0]，同理“US”对应着[0，1，0]，“Internet Explorer”对应着[0,0,0,1]。则完整的特征数字化的结果为：[1,0,0,1,0,0,0,0,1]。这样导致的一个结果就是数据会变得非常的稀疏。
+
+实际的Python代码如下：
+
+from sklearn import preprocessing
+
+enc = preprocessing.OneHotEncoder()
+
+enc.fit([[0,0,3],[1,1,0],[0,2,1],[1,0,2]])
+
+array = enc.transform([[0,1,3]]).toarray()
+
+print array
+
+结果：[[ 1.  0.  0.  1.  0.  0.  0.  0.  1.]]
+
+\subsubsection{什么是张量 (tensor)？}
+什么是张量 (tensor)？ https://www.zhihu.com/question/20695804
+
+张量的数学与物理意义是什么，张量的特性与优势是什么？ https://www.zhihu.com/question/36814916
+
+怎么通俗地理解张量? https://www.zhihu.com/question/23720923
+
+What is a tensor? https://www.quora.com/What-is-a-tensor
 
 
+小学课本上画杨桃的故事每个人都听过，一个杨桃在不同角度看，就会呈现不同的样子。有些物理量也是一样的，它在不同的角度看就会有不同的数值。比如对于一个矢量，你的基底变化了，矢量的表示也会变化。但是矢量的长度永远不变。杨桃还是那个杨桃，物理量也还是那个物理量，但是一旦你换了个角度看，杨桃的形状就变了，物理量的数值也就变了。那么如果一个物理系统没有一个更好的观察方向，或者说我们需要频繁的变换我们的视角的时候，应该怎么把握一个胡乱变化的东西呢？你要记住，杨桃和物理量本身都是不变的，变的只是它在你眼中的形象。于是张量就出现了，它将视角变换时候的变换关系作为张量的定义，看似在乱七八糟变，实际上只有满足这样的变换关系，它才是不变的！研究一个看似乱七八糟变，实际上不变的东西，就是张量分析。
 
-\end{document} 
+作者：大野喵渣
+链接：https://www.zhihu.com/question/36814916/answer/69248640
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+\end{document}
+
