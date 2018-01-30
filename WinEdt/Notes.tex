@@ -755,7 +755,7 @@ Lagrange函数
 
 了解\textcolor{red}{核函数}的思想
 
-了解\textcolor{red}{SMO}算法的过程  \textcolor{blue}{这里写错了吗？是SOM，还是SMO呢？}.
+了解\textcolor{red}{SMO}算法的过程  
 
 核函数：SVM本身是个线性分类器，那么在原始的SVM上，可以加上一些核函数，来构造一个非线性的分隔面，来更好的解决分类问题。
 
@@ -870,11 +870,128 @@ $(x_{i},y_{i})$称为样本点。
 
 第09课 SVM 01:15:00 拉格朗日乘子法
 
+目标函数
 
+约束条件
 
+原问题是极小极大问题
 
+原始问题的对偶问题 ，是极大极小问题。
 
+第09课 SVM 01:30:00 整理目标函数：添加负号
 
+\subsection{线性可分支持向量机学习算法}
+
+第09课 SVM 01:33:00 线性可分支持向量机学习算法
+
+构造并求解约束最优化问题
+
+\begin{equation}
+\begin{aligned}
+\underset{a}{\min} \frac{1}{2} \sum_{i=1}^{n} \sum_{j=1}^{n} \alpha_{i} \alpha_{j} y_{i} y_{j} \left ( \Phi(x_{i}) \cdot  \Phi(x_{y}) \right ) - \sum_{i=1}^{n} a_{i} \\
+s.t. \sum_{i=1}^{n} a_{i}y_{i}=0 \\
+a \geq 0, i=1,2,\dots , n
+\end{aligned}
+\end{equation}
+
+求得最优解$a^{*}$，再将$a^{*}$代入到下面的方程中去
+
+\begin{equation}
+\begin{aligned}
+w^{*}=\sum_{i=1}^{N}a_{i}y_{i}\Phi (x_{i}) \\
+b^{*}=y_{i}-\sum_{i=1}^{N}a_{i}^{*} \left ( \Phi(x_{i}) \cdot \Phi(x_{j}) \right )
+\end{aligned}
+\end{equation}
+
+计算求得分离超平面
+
+\begin{equation}
+\begin{aligned}
+w^{*}\Phi(x)+b^{*}=0
+\end{aligned}
+\end{equation}
+
+分类决策函数
+
+\begin{equation}
+\begin{aligned}
+f(x)=sign \left ( w^{*}\Phi(x)+b^{*} \right )
+\end{aligned}
+\end{equation}
+
+第09课 SVM 01:36:00 将约束带入函数，化简计算
+
+第09课 SVM 01:37:00 现在要说一个重要的结论，只有$\alpha$不为0的向量，才是支撑向量。
+
+\subsection{线性支持向量机}
+
+第09课 SVM 01:39:00 线性支持向量机
+
+不一定分类完全正确的超平面就是最好的。
+
+样本数据本身线性不可分
+
+若数据线性不可分，则增加松弛因子$\varepsilon_{i} \geq 0$，使函数间隔加上松弛变量大于等于1.这样约束条件变成
+
+\begin{equation}
+\begin{aligned}
+y_{i}(w \cdot x_{i}+b) \geq 1 - \varepsilon_{i}
+\end{aligned}
+\end{equation}
+
+目标函数：
+
+\begin{equation}
+\begin{aligned}
+\underset{w,b}{\min} \frac{1}{2} ||w||^{2} + C\sum_{i=1}^{N} \varepsilon_{i}
+\end{aligned}
+\end{equation}
+
+虽然可以这么做，但是松弛因子$\varepsilon_{i}$不能太过分（不能太大），因此将$\varepsilon_{i}$加起来求和并放到了目标函数当中（$\sum_{i=1}^{N} \varepsilon_{i}$），当作约束条件之一，让整体的值是最小的，这样就得到了线性的SVM。
+
+现在需要来解释一下“目标函数”。首先说$C$，$C$是用来调节松弛因子$\varepsilon_{i}$和原始的函数$\frac{1}{2} ||w||^{2}$之间的比例关系；如果$C$是无穷大的时候，那就意味着：哪怕$\varepsilon_{i}$是一个很小的数，只要乘以$C$，就会使得最后的结果很大，此时就必须强制性的要求$\varepsilon_{i}$为0，如果不为0，就不可能取最小值了。因此，当$C$是无穷大的时候，$\varepsilon_{i}$为0，就相当于退化成了线性可分的SVM。“线性SVM”是“线性可分SVM”的一个推广、泛化。
+
+\subsection{线性SVM的目标函数}
+
+第09课 SVM 01:48:00 线性SVM的目标函数
+
+\subsection{核函数}
+
+第09课 SVM 02:07:00 核函数
+
+可以使用核函数，将原始输入空间映射到新的特征空间，从而使原本线性不可分的样本可能在核空间可分。
+
+多项式核函数$\kappa(x_{1},x_{2})=(||x_{1}-x_{2}||^{a}+r)^{b}$，其中$a,b,r$为常数。
+
+高斯核函数RBF $\kappa(x_{1},x_{2})=\exp \left ( -\frac{||x_{1}-x_{2}||^{2}}{2 \sigma^{2}}\right )$
+
+字符串核函数，例如两字符串的满足某条件的子串的余弦相似度
+
+在实际应用中，往往依赖先验领域知识/交叉验证等方案才能选择有效的核函数。如果没有更多先验信息，则使用高斯核函数。
+
+\subsection{SVM中系数的求解：SMO}
+
+第09课 SVM 02:07:00 SVM中系数的求解：SMO
+
+序列最小最优化 Sequential Minimal Optimization
+
+有多个拉格朗日乘子
+
+每次只选择其中两个乘子做优化，其他因子认为是参数。将N个问题，转换成两个变量的求解问题，并且目标函数是凸的。
+
+\subsection{总结与思考}
+
+第09课 SVM 02:26:00 总结与思考
+
+SVM可以用来划分多分类别吗？（1）直播多分类；（2） 1 vs rest / 1 vs 1
+
+SVM和Logistic回归的比较：（1）经典的SVM，直接输出类别，不给出后验概率；（2）Logistic回归，会给出属于那哪个类别的后验概率。重点：两者目标函数的异同。
+
+SVM框架下引入Logistic函数：输出条件后验概率
+
+SVM用于回归问题：SVR
+
+体会SVM的目标函数的建立过程：原始目标函数和Lagrange函数有什么关系。
 
 \section{卷积神经网络}
 
@@ -965,9 +1082,9 @@ What is a tensor? https://www.quora.com/What-is-a-tensor
 例如：
 
                 目标函数：min {x+2}
-                
+
                 约束条件：s.t.  x={1,2,3}
-                
+
 其题意为，求x+2的最小值以使得x的取值为1、2、3时。
 
 或者理解为，x的取值为1、2、3时，求x+2的最小值。
