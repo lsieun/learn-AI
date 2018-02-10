@@ -1467,7 +1467,7 @@ $f(x)=\log _{a}x$，当$a=e$的时候，在$x=1$处点的导数为$1$；当$a=e$
 
 第01课 数学分析与概率论 01:01:46 常用函数的导数
 
-$C'=0$       
+$C'=0$
 
 $(x^{n})'=nx^{n-1}$
 
@@ -1546,6 +1546,238 @@ $f(x)=f(x_{0})+f'(x_{0})(x-x_{0})+\frac{f''(x_{0})}{2!}(x-x_{0})^{2}+\dots+\frac
 Maclaurin公式
 
 $f(x)=f(0)+f'(0)x+\frac{f''(0)}{2!}x^{2}+\dots+\frac{f^{(n)}(0)}{n!}x^{n}+o(x^{n})$
+
+Taylor公式和Maclaurin公式的区别在于：Taylor公式是在“任意点”展开，而Maclaurin公式是在$0$点展开，应该说Taylor公式是Maclaurin公式的范化。
+
+我感觉，经常用的就是“Maclaurin公式”，用它来求解一些函数的函数值。下面进行举例。
+
+\subsubsection{Taylor公式的应用1}
+
+第01课 数学分析与概率论 01:11:40 Taylor公式的应用1
+
+数值计算：初等函数值的计算（在原点展开）
+
+\begin{equation}
+\begin{aligned}
+\sin x = x - \frac{x^{3}}{3!} + \frac{x^{5}}{5!}  - \frac{x^{7}}{7!} + \frac{x^{9}}{9!} + \dots
++ (-1)^{m-1} \frac{x^{2m-1}}{(2m-1)!} + R_{2m}
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+e^{x} = 1 + x + \frac{x^{2}}{2!} +  \frac{x^{3}}{3!} + \dots +  \frac{x^{n}}{n!} + R_{n}
+\end{aligned}
+\end{equation}
+
+这两个都是在$0$点展开，使用的是“Maclaurin公式”。
+
+在实践中，往往需要做一定程度的变换。如果自己实现一种新的语言，类似于C语言或Java语言，我们可以实现一些数据类库的功能，例如计算$\sin x$或$e^{x}$，按道理上来说，是可以用“Maclaurin公式”来计算的；但是，有一个问题，“Maclaurin公式”展开之后可以有无穷多项（$n$可以取很大的值），而我们往往取前10项，它的精度就足够了。这里的描述可能有点问题。
+
+\subsubsection{Taylor公式的应用1：计算$e^{x}$}
+
+第01课 数学分析与概率论 01:13:40 Taylor公式的应用1：计算$e^{x}$
+
+给定正实数$x$，计算$e^{x}=?$
+
+一种可行的思路：
+
+求整数$k$和小数$r$，使得$x=k \cdot \ln 2 + r$，其中$|r| \leq 0.5 \cdot \ln 2$
+
+从而
+
+\begin{equation}
+\begin{aligned}
+e^{x} &= e^{k \cdot \ln 2 + r} \\
+&=e^{k \cdot \ln 2} \cdot e^{r} \\
+&=2^{k} \cdot e^{r}
+\end{aligned}
+\end{equation}
+
+\subsubsection{Taylor公式的应用2}
+
+第01课 数学分析与概率论 01:14:53 Taylor公式的应用2
+
+考察Gini系数的图像、熵、分类误差率三者之间的关系：将$f(x)=-\ln x$在$x=1$处一阶展开，忽略高阶无穷小，得到$f(x) \approx 1-x$。
+
+上述结论，在决策树章节会进一步讨论。
+
+\subsection{方向导数}
+
+第01课 数学分析与概率论 01:18:49 方向导数
+
+上面的部分讲的是“一元的导数”，如果是“二元”或“多元”的呢？
+
+如果函数$z=f(x,y)$在点$P(x,y)$是可微分的，那么函数在该点任一方向$L$的方向导数都存在，且有：
+
+\begin{equation}
+\begin{aligned}
+\frac{\partial f}{\partial l}
+&= \left ( \frac{\partial f}{\partial x},\frac{\partial f}{\partial y}  \right ) \cdot \binom{\cos \varphi}{\sin \varphi} \\
+&=\frac{\partial f}{\partial x} \cos \varphi + \frac{\partial f}{\partial y} \sin \varphi
+\end{aligned}
+\end{equation}
+
+其中，$\varphi$为$x$轴到方向$L$的转角，$\left ( \frac{\partial f}{\partial x},\frac{\partial f}{\partial y}  \right )$是和“方向”\textbf{无关}的，而$\binom{\cos \varphi}{\sin \varphi}$是和“方向”\textbf{有关}的。
+
+
+我的问题：“可微分”的概念怎么理解呢？
+
+\subsubsection{梯度}
+
+第01课 数学分析与概率论 01:20:56 梯度
+
+设函数$z=f(x,y)$在平面区域$D$内具有一阶连续偏导数，则对于每一个点$P(x,y) \in D$，向量
+
+\begin{equation}
+\begin{aligned}
+\nabla_{(x,y)} = \left ( \frac{\partial f}{\partial x},\frac{\partial f}{\partial y}  \right )
+\end{aligned}
+\end{equation}
+
+为函数$z=f(x,y)$在点$P$的梯度，记做$gradf(x,y)$
+
+梯度的方向是函数在该点变化最快的方向：考虑一座山，假如它的解析式为$z=H(x,y)$，在$(x_{0},y_{0})$的梯度是在该点坡度变化最快的方向。
+
+梯度下降法。思考：若下山方向和梯度方向呈$\theta$角，下降速度是多少？
+
+“导数”这个概念，把它从“一元”扩展到“$n$元”就得到了“梯度”。“梯度”这个概念，把它从“$n$元”降到“一元”就是“导数”。在后续的讨论中，这两个词（“导数”和“梯度”）往往是不做严格区分的。
+
+\subsection{概率论}
+
+第01课 数学分析与概率论 01:23:18 概率论
+
+对概率的认识：$P(x) \in [0,1]$：（1）若$P=0$，则事件出现的概率为0，但并不表示事件一定不会发生（一根针，扎到一个平面上，它的每一点的概率都为0，但是它还是会发生的）。（2）若$x$为“离散”或“连续”变量，则$P(x=x_{0})$表示$x_{0}$发生的“概率”或“概率密度”。
+
+累计分布函数$\Phi (x) = P(0 \leq x_{0})$：（1）$\Phi (x)$一定为单增函数；（2）$\min (\Phi (x))=0$，$\max (\Phi (x))=1$
+
+思考：将值域为$[0,1]$的某单增函数$y=F(x)$看成$X$事件的累积概率函数：若$y=F(x)$可导，则$f(x)=F'(x)$为某概率密度函数。
+
+cumulative distribution function, CDF 累积分布函数
+
+Probability Density Function, PDF 概率密度函数
+
+\subsubsection{古典概型}
+
+第01课 数学分析与概率论 01:33:36 古典概型
+
+“古曲概型”，我的理解是“古典的概率模型”
+
+举例：将$n$个不同的球放入$N$（$N \geq n$）个盒子中，假设盒子容量无限，求事件$A$=\{每个盒子至多有1个球\}的概率。
+
+只要是“古典概型”，要解决它，直接三步走：第一步，算一下所有的“基本事件总数”；第二步，算一下有效事件的总数；第三显，二者相除就可以了。
+
+解：$P(A)=\frac{P_{N}^{n}}{N^{n}}$
+
+基本事件总数：第1个球，有$N$种放法；第2个球，有$N$种放法；……共$N^{n}$种放法。
+
+每个盒子至多放1个球的事件数：第1个球，有$N$种放法；第2个球，有$N-1$种放法；第3个球，有有$N-2$种放法；……共$N(N-1)(N-2)\dots(N-n+1)=P_{N}^{n}$
+
+\subsubsection{生日悖论}
+
+第01课 数学分析与概率论 01:36:41 生日悖论
+
+假定班里有50位同学，则至少有2个生日相同的概率是多少？
+
+答案是：$1-\frac{P_{N}^{n}}{N^{n}}=1-\frac{P_{365}^{50}}{365^{50}}$
+
+\subsubsection{装箱问题}
+
+第01课 数学分析与概率论 01:38:55 装箱问题
+
+将12件正品和3件次品随机装在3个箱子中，每箱装5件，则每箱中恰好有1件次品的概率是多少？
+
+我现在的问题是：无法解决每箱放5件的条件。
+
+解：
+
+将15件产品装入3个箱子，每箱装5件，共有$\frac{15!}{5!\cdot5!\cdot5!}$种装法
+
+先把3件次品放入3个箱子，有$3!$种装法。对于这样的每一种装法，把其余12件产品装入3个箱子，每箱装4件，共有$\frac{12!}{4!\cdot4!\cdot4!}$种装法
+
+\begin{equation}
+\begin{aligned}
+P(A)=\frac{\frac{3!\cdot12!}{4!\cdot4!\cdot4!}}{\frac{15!}{5!\cdot5!\cdot5!}}=\frac{25}{91}
+\end{aligned}
+\end{equation}
+
+\subsubsection{与组合数的关系}
+
+第01课 数学分析与概率论 01:41:23 与组合数的关系
+
+把$n$个物品分成$k$组，使得每组物品的个数分别为$n_{1},n_{2},\dots,n_{k}$，($n=n_{1}+n_{2}+\dots+n_{k}$)，则不同的分组方法有$\frac{n!}{n_{1}!n_{2}!n_{3}!\dots n_{k}!}$种。
+
+上述问题的简化版本，即$n$个物品分成2组，第一组$m$个，第二组$n-m$个，则分组方法有$\frac{n!}{m!(n-m)!}$，即$C_{n}^{m}$。
+
+\subsubsection{组合数背后的秘密}
+
+第01课 数学分析与概率论 01:42:24 组合数背后的秘密
+
+$N \rightarrow \infty \Rightarrow \ln N! \rightarrow N(\ln N -1)$
+
+\begin{equation}
+\begin{aligned}
+H&=\frac{1}{N} \ln \frac{N!}{\prod_{i=1}^{k}n_{i}!}=\frac{1}{N} \ln (N!) - \frac{1}{N} \sum_{i=1}^{k} \ln (n_{i}!) \\
+&=(\ln N -1)-\frac{1}{N} \sum_{i=1}^{k} n_{i}(\ln n_{i}-1) \\
+&=\ln N-\frac{1}{N} \sum_{i=1}^{k} n_{i}\ln n_{i}
+=-\frac{1}{N} \left (  \left (  \sum_{i=1}^{k} n_{i}\ln n_{i}  \right ) - N\ln N\right ) \\
+&=-\frac{1}{N} \sum_{i=1}^{k} \left (  n_{i}\ln n_{i} - n_{i}\ln N  \right )
+=-\frac{1}{N} \sum_{i=1}^{k} \left ( n_{i}\ln \frac{n_{i}}{N} \right ) \\
+&=-\sum_{i=1}^{k} \left ( \frac{n_{i}}{N}  \ln \frac{n_{i}}{N} \right )
+\rightarrow -\sum_{i=1}^{k} \left ( p_{i} \ln p_{i}  \right )
+\end{aligned}
+\end{equation}
+
+这个$H$叫作“熵”。
+
+\subsubsection{商品推荐}
+
+第01课 数学分析与概率论 01:45:46 商品推荐
+
+商品推荐场景中过于聚焦的商品推荐往往会损害用户的购物体验，在有些场景中，系统会通过一定程度的随机性给用户带来发现的惊喜感。
+
+假设某推荐场景中，经计算A和B两个商品与当前访问用户的匹配度分别为0.8分和0.2分，系统将随机为A商品生成一个均匀分布于0到0.8的最终得分，为B商品生成一个均匀分布于0到0.2的最终得分，试计算最终B的分数大于A的分数的概率。
+
+这里没有听明白。这里的概念大概是“几何概型”。
+
+\textbf{古典概型}的基本事件都是有限的，概率为事件所包含的基本事件除以总基本事件个数。
+\textbf{几何概型}的基本事件通常不可计数，只能通过一定的测度，像长度，面积，体积的的比值来表示
+
+
+\subsection{概率公式}
+
+第01课 数学分析与概率论 01:49:46 概率公式
+
+条件概率：
+
+\begin{equation}
+\begin{aligned}
+P(A|B)=\frac{P(AB)}{P(B)}
+\end{aligned}
+\end{equation}
+
+全概率公式：
+
+\begin{equation}
+\begin{aligned}
+P(A)=\sum_{i}P(AB_{i})=\sum_{i}P(A|B_{i})P(B_{i})
+\end{aligned}
+\end{equation}
+
+贝叶斯（Bayes）公式：
+
+\begin{equation}
+\begin{aligned}
+P(B_{i}|A)=\frac{P(AB_{i})}{P(A)}=\frac{P(A|B_{i})P(B_{i})}{\sum_{j}P(A|B_{j})P(B_{j})}
+\end{aligned}
+\end{equation}
+
+思考题：8支步枪中有5支校准过，3支未校准。一名射手用校准过的枪射击，中靶概率为0.8；用未校准的枪射击，中靶概率为0.3；现从8支枪中随机取1支，结果中靶。求该枪是已校准过的概率。
+
+\subsubsection{两种认识下的两个学派}
+
+第01课 数学分析与概率论 01:53:35 两种认识下的两个学派
+
 
 \section{数学知识}
     1.LATEX控制序列的概念（类似于函数） \\ 控制序列可以是作为命令：以“$\backslash$”开头，参数：必须参数和可选参数。
