@@ -2127,11 +2127,11 @@ c_{ij}=E\{  [X_{i}-E(X_{i})][X_{j}-E(X_{j})]  \} = Cov(X_{i},X_{j}) \\
 \begin{equation}
 \begin{aligned}
 C=
-\begin{bmatrix} 
-c_{11} & c_{12} & \cdots & c_{1n} \\ 
-c_{21} & c_{22} & \cdots & c_{2n} \\ 
-\vdots & \vdots & \ddots & \vdots \\ 
-c_{n1} & c_{n2} & \cdots & c_{nn} \\ 
+\begin{bmatrix}
+c_{11} & c_{12} & \cdots & c_{1n} \\
+c_{21} & c_{22} & \cdots & c_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+c_{n1} & c_{n2} & \cdots & c_{nn} \\
 \end{bmatrix}\quad
 \end{aligned}
 \end{equation}
@@ -2200,7 +2200,424 @@ X的k阶中心矩为$E\{  [X-E(X)]^{k} \}$。当$k=2$时，就是方差；换句
 
 第2个问题与“切比雪夫不等式”和“大数定理”有关系。
 
-解：第02课 数理统计与参数估计 01:00:20 峰度
+解：第02课 数理统计与参数估计 01:00:20 解
+
+\subsubsection{切比雪夫不等式}
+
+第02课 数理统计与参数估计 01:02:10 切比雪夫不等式
+
+设随机变量$X$的期望是$\mu$，方差为$\sigma^{2}$，对于任意正数$\epsilon$，有：
+
+\begin{equation}
+\begin{aligned}
+P\{ |X-\mu| \geq \epsilon \} \leq \frac{\sigma^{2}}{\epsilon^{2}}
+\end{aligned}
+\end{equation}
+
+切比雪夫不等式说明，$X$的方差越小，事件$|X-\mu| \geq \epsilon$发生的概率越大。即：$X$取的值基本上集中在期望$\mu$附近。（1）该不等式进一步说明了方差的含义；（2）该不等式可证明大数定理。
+
+\subsubsection{大数定理}
+
+第02课 数理统计与参数估计 01:03:34 大数定理
+
+设随机变量$X_{1},X_{2},\dots,X_{n}\dots$互相独立，并且具有相同的期望$\mu$和方差$\sigma^{2}$。作为前$n$个随机变量的平均$Y_{n}=\frac{1}{n}\sum_{i=1}^{n}X_{i}$，则对任意正数$\epsilon$，有
+
+\begin{equation}
+\begin{aligned}
+\underset{n \rightarrow \infty}{\lim} P \{ |Y_{n}-\mu| < \varepsilon \} = 1
+\end{aligned}
+\end{equation}
+
+\subsubsection{大数定理的意义}
+
+第02课 数理统计与参数估计 01:05:18 大数定理的意义
+
+当$n$很大时，随机变量$X_{1},X_{2},\dots,X_{n}$的平均值$Y_{n}$在概率意义下无限接近期望$\mu$。出现偏离是可能的，但这种可能性很小，当$n$无限大时，这种可能性的概率为0。
+
+\subsubsection{重要推论}
+
+第02课 数理统计与参数估计 01:06:02 重要推论
+
+一次试验中事件A发生的概率为$p$；重复$n$次独立实验中，事件A发生了$n_{A}$次，则$p$、$n$、$n_{A}$的关系满足：
+
+对于任意正数$\epsilon$，
+
+\begin{equation}
+\begin{aligned}
+\underset{n \rightarrow \infty}{\lim} P \left \{  |\frac{n_{A}}{n}-p| <\epsilon  \right \}=1
+\end{aligned}
+\end{equation}
+
+换句话说，当$n$趋向于无穷时，频率$\frac{n_{A}}{n}$会无限趋近于概率$p$。
+
+\subsubsection{伯努利定理}
+
+第02课 数理统计与参数估计 01:09:02 伯努利定理
+
+上述推论是最早的大数定理的形式，称为伯努利定理。该定理表明事件A发生的频率$\frac{n_{A}}{n}$以概率收敛于事件A的概率$p$，以严格的数学形式表达了频率的稳定性。
+
+上述事实为我们在实际应用中用频率来估计概率提供了一个理论依据。（1）正态分布的参数估计；（2）朴素贝叶斯做垃圾邮件分类；（3）隐马尔可夫模型有监督参数学习。
+
+\subsubsection{中心极限定理}
+
+第02课 数理统计与参数估计 01:09:22 中心极限定理
+
+Central Limit Theorem
+
+设随机变量$X_{1},X_{2},\dots,X_{n}$互相独立，服从同一分布，并且具有相同的期望$\mu$和方差$\sigma^{2}$，则随机变量
+
+\begin{equation}
+\begin{aligned}
+Y_{n}=\frac{\sum_{i=1}^{n}X_{i}-n\mu}{\sqrt{n}\sigma}
+\end{aligned}
+\end{equation}
+
+的分布收敛到标准正态分布。
+
+容易得到：$\sum_{i=1}^{n}X_{i}$收敛到正态分布$N(n\mu,n\sigma^{2})$。
+
+\subsubsection{中心极限定理的意义}
+
+第02课 数理统计与参数估计 01:10:48 中心极限定理的意义
+
+实际问题中，很多随机现象可以看做许多因素的独立影响的综合反应，往往近似服从正态分布。
+
+城市耗电量：大量用户的耗电总和。
+
+测量误差：许多观察不到的、微小误差的总和。注意：是多个随机变量的“和”才可以，有些问题是乘性误差，则需要鉴别或者取对数后再使用。
+
+线性回归中，将使用该定理论证最小二乘法的合理性。
+
+\subsubsection{例：标准的中心极限定理的问题}
+
+第02课 数理统计与参数估计 01:10:54 例：标准的中心极限定理的问题
+
+有一批样本（字符串），其中a-z开头的比例是固定的，但是量很大，需要从中随机抽样。样本量$n$，总体中a开头的字符串占比1\%，需要每次投到的a开头的字符串占比（0.99\%,+1.01\%），样本量n至少是多少？
+
+问题可以重新表达一下：大量存在的两点分布$B_{i}(1,p)$，其中，$B_{i}$发生的概率为0.01，即$p=0.01$。取其中的$n$个，使得发生的个数除以总数的比例落在区间(0.009,0.0101)，则n至少是多少？
+
+\subsection{样本的统计量}
+
+第02课 数理统计与参数估计 01:12:17 样本的统计量
+
+事实上，要拿到随机变量的“全体数据”是做不到的，而只能取其中“一些样本”来进行统计。
+
+设随机变量$X$的$N$个样本为$X_{1},X_{2},\dots,X_{n}$，则样本均值为：
+
+\begin{equation}
+\begin{aligned}
+\bar{X}=\frac{1}{n}\sum_{i=1}^{n}X_{i}
+\end{aligned}
+\end{equation}
+
+样本方差为：
+
+\begin{equation}
+\begin{aligned}
+S^{2}=\frac{1}{n-1}\sum_{i=1}^{n}(X_{i}-\bar{X})^{2}
+\end{aligned}
+\end{equation}
+
+样本方差的分母使用$n-1$而非$n$，是为了无偏。思考：如何证明？
+
+\subsection{样本的矩}
+
+第02课 数理统计与参数估计 01:14:53 样本的矩
+
+$k$阶样本原点矩：
+
+\begin{equation}
+\begin{aligned}
+A_{k}=\frac{1}{n}\sum_{i=1}^{n}X_{i}^{k}
+\end{aligned}
+\end{equation}
+
+$k$阶样本中心矩
+
+\begin{equation}
+\begin{aligned}
+M_{k}=\frac{1}{n}\sum_{i=1}^{n}(X_{i}-\bar{X})^{k}
+\end{aligned}
+\end{equation}
+
+\subsection{思考}
+
+第02课 数理统计与参数估计 01:15:53 思考
+
+随机变量的矩和样本的矩，有什么关系？
+
+换个想法：
+
+（1）假设总体服从某参数$\theta$（存在且未知，有可能是值或者向量）的分布，从总体中抽出一组样本$X_{1},X_{2},\dots,X_{n}$，如何估计参数$\theta$？（这绝对是最大的重点）
+
+（2）样本是独立同分布的
+
+（3）可以通过$X_ {1},X_{2},\dots,X_{n}$方便的计算样本的$k$阶矩
+
+（4）假设样本的$k$阶矩等于总体的$k$阶矩，可估计出总体的参数。
+
+这段讲的很精彩
+
+\subsection{矩估计}
+
+第02课 数理统计与参数估计 01:19:53 矩估计
+
+设总体的均值为$\mu$，方差$\sigma^{2}$，（$\mu$和$\sigma$未知，待求）则有原点距离表达式：
+
+\begin{equation}
+\begin{aligned}
+E(X)=\mu \\
+E(X^{2})=Var(X)+[E(X)]^{2}=\sigma^{2}+\mu^{2}
+\end{aligned}
+\end{equation}
+
+根据该总体的一组样本，求得原点距：
+
+\begin{equation}
+\begin{aligned}
+A_{1}=\frac{1}{n} \sum_{i=1}^{n}X_{i}\\
+A_{2}=\frac{1}{n} \sum_{i=1}^{n}X_{i}^{2}
+\end{aligned}
+\end{equation}
+
+\subsubsection{矩估计的结论}
+
+第02课 数理统计与参数估计 01:21:53 矩估计的结论
+
+根据各自阶的中心矩相等，计算得到：
+
+\begin{equation}
+\begin{aligned}
+\mu=\bar{X} \\
+\sigma^{2}=\frac{1}{n}\sum_{i=1}^{n}{X_{i}-\bar{X}^{2}}=\frac{1}{n}\sum_{i=1}^{n}(X_{i}-\bar{X})^{2}
+\end{aligned}
+\end{equation}
+
+由于是根据样本求得的估计结果，根据记号习惯，写作：
+
+\begin{equation}
+\begin{aligned}
+\hat{\mu}=\bar{X} \\
+\hat{\sigma}^{2}=\frac{1}{n}\sum_{i=1}^{n}(X_{i}-\bar{X})^{2}
+\end{aligned}
+\end{equation}
+
+注：“估计”的值往往加一个“hat”
+
+\subsubsection{例：正态分布的矩估计}
+
+第02课 数理统计与参数估计 01:23:34 例：正态分布的矩估计
+
+在正态分布的总体中采样得到$n$个样本：$X_ {1},X_{2},\dots,X_{n}$，估计该总体的均值和方差。
+
+解：直接使用矩估计的结论：
+
+\begin{equation}
+\begin{aligned}
+\hat{\mu}=\bar{X} \\
+\hat{\sigma}^{2}=\frac{1}{n}\sum_{i=1}^{n}(X_{i}-\bar{X})^{2}
+\end{aligned}
+\end{equation}
+
+\subsubsection{例：均匀分布的矩估计}
+
+第02课 数理统计与参数估计 01:24:58 例：均匀分布的矩估计
+
+设$X_ {1},X_{2},\dots,X_{n}$为定义在$[a,b]$上的均匀分布的总体采样得到的样本，求$a,b$。
+
+解：
+
+均匀分布的均值和方差为：
+
+\begin{equation}
+\begin{aligned}
+E(X)=\frac{a+b}{2} \\
+Var(X)=\frac{(b-a)^{2}}{12}
+\end{aligned}
+\end{equation}
+
+矩估计要求满足：
+
+\begin{equation}
+\begin{aligned}
+\hat{\mu}=\bar{X} \\
+\hat{\sigma}^{2}=\frac{1}{n}\sum_{i=1}^{n}(X_{i}=\bar{X})^{2}
+\end{aligned}
+\end{equation}
+
+从而：
+
+这里省略了。。。
+
+\subsection{贝叶斯公式带来的思考}
+
+第02课 数理统计与参数估计 01:26:28 贝叶斯公式带来的思考
+
+这里与“最大似然估计”做了关联
+
+这个我见到过，暂不记了
+
+\subsection{最大似然估计}
+
+第02课 数理统计与参数估计 01:36:03 最大似然估计
+
+设总体分布为$f(x,\theta)$，$X_ {1},X_{2},\dots,X_{n}$为总体采样得到的样本。因为$X_ {1},X_{2},\dots,X_{n}$独立同分布，于是，它们的联合密度函数为：
+
+查一下“独立同分布”的意思
+
+\begin{equation}
+\begin{aligned}
+L(x_{1},x_{2},\dots,x_{n};\theta_{1},\theta_{2},\dots,\theta_{k})
+=\prod_{i=1}^{n} f(x_{i};\theta_{1},\theta_{2},\dots,\theta_{k});
+\end{aligned}
+\end{equation}
+
+这里，$\theta$被看做固定但未知的参数；反过来，因为样本已存在，可以看成$x_{1},x_{2},\dots,x_{n}$是固定的，$L(x,\theta)$是关于$\theta$的函数，即似然函数。
+
+求参数$\theta$的值，使得似然函数取最大值，这种方法就是最大似然估计。
+
+这里讲述了“what”，即“到底是什么”；后面讲如何做，如何做是技术手段问题。
+
+\subsection{最大似然估计的具体实践操作}
+
+第02课 数理统计与参数估计 01:42:55 最大似然估计的具体实践操作
+
+在实践中，由于求导数的需要，往往将似然函数取对数，得到对数似然函数；若对数似然函数可导，可通过求导的方式，解下列方程组，得到驻点，然后分析该驻点是极大值点。
+
+\begin{equation}
+\begin{aligned}
+\log L(\theta_{1},\theta_{2},\dots,\theta_{k})
+=\sum_{i=1}^{n} \log f(x_{i};\theta_{1},\theta_{2},\dots,\theta_{k}) \\
+\end{aligned}
+\end{equation}
+
+
+$\frac{\partial L(\theta)}{\partial \theta}=0$ \quad $i=1,2,\dots,k$
+
+\subsubsection{举例：抛硬币最大似然估计}
+
+第02课 数理统计与参数估计 01:48:28 举例：抛硬币最大似然估计
+
+找出与样本的分布最接近的概率分布模型
+
+简单的例子，10次抛硬币的结果是：正正反正下 正反反正正
+
+假设$p$是每次抛硬币结果为正的概率，则得到这样的实验结果的概率是：
+
+\begin{equation}
+\begin{aligned}
+P=pp(1-p)ppp(1-p)(1-p)pp=p^{7}(1-p)^{3}
+\end{aligned}
+\end{equation}
+
+最优解是：$p=0.7$
+
+\subsubsection{二项分布的最大似然值估计}
+
+第02课 数理统计与参数估计 01:48:57 二项分布的最大似然值估计
+
+投硬币试验中，进行$N$次独立试验，$n$次朝上，$N-n$次朝下。
+
+假定朝上的概率为$p$，使用对数似然函数作为目标函数：
+
+\begin{equation}
+\begin{aligned}
+h(p)=\log f(n|p)=\log (p^{n}(1-p)^{N-n}) \\
+\frac{\partial h(p)}{\partial p}=\frac{n}{p} - \frac{N-n}{1-p} = 0 \\
+\Rightarrow p = \frac{n}{N}
+\end{aligned}
+\end{equation}
+
+求导过程
+
+\begin{equation}
+\begin{aligned}
+h(p)&=\log f(n|p)=\log (p^{n}(1-p)^{N-n}) \\
+&=\log p^{n} + \log (1-p)^{N-n} \\
+&= n \cdot \log p + (N-n) \cdot \log (1-p) \\ \\
+\frac{\partial h(p)}{\partial p}&=\frac{n}{p} - \frac{N-n}{1-p} = 0 \\
+& \Rightarrow p = \frac{n}{N}
+\end{aligned}
+\end{equation}
+
+到这个时候，我们发现，通过“最大似然估计”这个估计得到的概率$p$就是频率$\frac{n}{N}$。
+
+\subsubsection{正态分布的最大似然值估计}
+
+第02课 数理统计与参数估计 01:51:25 正态分布的最大似然值估计
+
+若给定一组样本$X_ {1},X_{2},\dots,X_{n}$，已知它们来自于高斯分布$N(\mu,\sigma)$，试估计参数$\mu,\sigma$。
+
+按照MLE的过程分析
+
+高斯分布的概率密度函数：
+
+\begin{equation}
+\begin{aligned}
+f(x)=\frac{1}{\sqrt{2\pi}\sigma} e ^{-\frac{(x-\mu)^{2}}{2\sigma^{2}}}
+\end{aligned}
+\end{equation}
+
+将$X_{i}$的样本值带入$x{i}$带入（注意：$X_{i}$是“样本”，而$x{i}$是“样本值”。），得到：
+
+\begin{equation}
+\begin{aligned}
+L(X)=\prod_{i=1}^{n} \frac{1}{\sqrt{2\pi}\sigma} e ^{-\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}}
+\end{aligned}
+\end{equation}
+
+化简对数似然函数：
+
+\begin{equation}
+\begin{aligned}
+l(x)&=\log \prod_{i} \frac{1}{\sqrt{2\pi}\sigma} e ^{-\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}} \\
+&=\sum_{i} \log \frac{1}{\sqrt{2\pi}\sigma} e ^{-\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}} \\
+&= \left (  \sum_{i} \log \frac{1}{\sqrt{2\pi}\sigma}  \right ) + \left (  \sum_{i} -\frac{(x_{i}-\mu)^{2}}{2\sigma^{2}}  \right ) \\
+&= \sum_{i} \log (2\pi \sigma^{2})^{-\frac{1}{2}} -\sum_{i} \frac{(x_{i}-\mu)^{2}}{2\sigma^{2}} \\
+&=-\frac{n}{2} \log (2\pi \sigma^{2}) - \frac{1}{2 \sigma^{2}}\sum_{i}(x_{i}-\mu)^{2}
+\end{aligned}
+\end{equation}
+
+\subsubsection{参数估计的结论}
+
+第02课 数理统计与参数估计 01:56:10 参数估计的结论
+
+目标函数
+
+\begin{equation}
+\begin{aligned}
+l(x)=-\frac{n}{2} \log (2\pi \sigma^{2}) - \frac{1}{2 \sigma^{2}}\sum_{i}(x_{i}-\mu)^{2}
+\end{aligned}
+\end{equation}
+
+将目标函数对参数$\mu,\sigma$分别求偏导，很容易得到$\mu,\sigma$的式子：
+
+\begin{equation}
+\begin{aligned}
+\mu &= \frac{1}{n} \sum_{i} x_{i} \\
+\sigma^{2} &=\frac{1}{n}\sum_{i} (x_{i}-\mu)^{2}
+\end{aligned}
+\end{equation}
+
+\subsubsection{符合直观想像}
+
+第02课 数理统计与参数估计 01:56:32 符合直观想像
+
+\begin{equation}
+\begin{aligned}
+\mu &= \frac{1}{n} \sum_{i} x_{i} \\
+\sigma^{2} &=\frac{1}{n}\sum_{i} (x_{i}-\mu)^{2}
+\end{aligned}
+\end{equation}
+
+上述结论和“矩估计”的结果是一致的，并且意义非常直观；“样本的均值”即高斯分布的均值，“样本的伪方差”即高斯分布的方差。注：经典意义下的方差，分母是$n-1$；在似然估计的方法中，求的方差的分母是$n$。
+
+该结论将在EM（期望最大化算法）、GMM高斯混合模型中将继续使用。
+
+\subsubsection{最大似然估计与过拟合}
+
+第02课 数理统计与参数估计 01:57:09 最大似然估计与过拟合
+
 
 
 
