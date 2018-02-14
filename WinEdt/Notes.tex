@@ -1829,6 +1829,43 @@ $P(x|\theta)$：给定某参数$\theta$的概率分布：似然函数。
 
 我目前的理解是这样子的，“先验概率”和“后验概率”的中的“先”是指“拿到样本之前，并不知道该样本的一些特殊值信息，根据经验计算它属于某一种情况的概率”；“后”是指“拿到样本之后，知道了样本的特征值信息，这个时候再根据经验计算它属于某一种情况的概率”。
 
+Probability distribution
+
+% https://en.wikipedia.org/wiki/Probability_distribution
+
+In probability theory and statistics, \textcolor{red}{a probability distribution} is \textcolor{red}{a mathematical function} that can be thought of as \textcolor{red}{providing the probabilities of occurrence of different possible outcomes} in \textcolor{red}{an experiment}. For instance, if the random variable $X$ is used to denote the outcome of a coin toss (``the experiment"), then the probability distribution of $X$ would take the value 0.5 for $X = heads$, and 0.5 for $X = tails$ (assuming the coin is fair). 从概率论和统计的角度来说（第一个视角），“概率分布”是一个mathematical function，用于给定different possible outcomes各自发生的概率。
+
+In more technical terms, \textcolor{red}{the probability distribution} is a description of \textcolor{red}{a random phenomenon} in terms of the probabilities of events. Examples of random phenomena can include the results of an experiment or survey. \textcolor{red}{A probability distribution} is defined in terms of \textcolor{red}{an underlying sample space}, which is \textcolor{red}{the set of all possible outcomes of the random phenomenon being observed}. The sample space may be the set of real numbers or a higher-dimensional vector space, or it may be a list of non-numerical values; for example, the sample space of a coin flip would be \{heads, tails\} . 从技术的角度来说（第二个视角），“概率分布”更多的描述一种随机的现象；由“概率分布”引出新的概率“sample space（样本空间）”。
+
+\textcolor{red}{Probability distributions} are generally divided into \textcolor{red}{two classes}. \textcolor{red}{A discrete probability distribution} (applicable to the scenarios where the set of possible outcomes is discrete, such as a coin toss or a roll of dice骰子) can be encoded by a discrete list of the probabilities of the outcomes. On the other hand, \textcolor{red}{a continuous probability distribution} (applicable to the scenarios where the set of possible outcomes can take on values in a continuous range (e.g. real numbers), such as the temperature on a given day) is typically described by \textcolor{red}{probability density functions} (with the probability of any individual outcome actually being 0). \textcolor{red}{The normal distribution} is a commonly encountered continuous probability distribution. lsieun: （1）概率分布分成两类，即“离散分布”和“连续分布”；（2）“正态分布”是“连续分布”的举例。
+
+In Bayesian statistical inference, \textcolor{red}{a prior probability distribution}, often simply called ``the prior", of an uncertain quantity is \textcolor{red}{the probability distribution that would express one's beliefs about this quantity before some evidence is taken into account}. For example, the prior could be the probability distribution representing the relative proportions of voters who will vote for a particular politician in a future election. The unknown quantity may be a parameter of the model or a latent variable rather than an observable variable.  lsieun: 先验概率，是在some evidence is taken into account之前，来表达人的相信程度。
+
+In Bayesian statistics,  \textcolor{red}{the posterior probability} of a random event or an uncertain proposition is  \textcolor{red}{the conditional probability that is assigned after the relevant evidence or background is taken into account}. Similarly, the posterior probability distribution is the probability distribution of an unknown quantity, treated as a random variable, conditional on the evidence obtained from an experiment or survey. ``Posterior", in this context, means \textcolor{red}{after taking into account the relevant evidence related to the particular case being examined}. lsieun: 后验概率，是在the relevant evidence or background is taken into account之后的conditional probability。
+
+贝叶斯学派和频率学派的最大区别并不在于信息的利用和整合上。虽然贝叶斯方法可以用先验分布来引入以往的信息，但是频率学派也有方法来整合各种domain knowledge，比如在最优化likelihood的时候加入各种constrain。从这个意义上来说两者其实差别并不大。
+
+
+频率学派和贝叶斯学派最大的差别其实产生于对\textbf{参数空间}的认知上。\textbf{所谓参数空间，就是你关心的那个参数可能的取值范围}。\textbf{频率学派}（其实就是当年的Fisher）\textcolor{red}{并不关心参数空间的所有细节}，他们相信数据都是在这个空间里的“某个参数值”下产生的（虽然你不知道那个值是啥），所以他们的方法论一开始就是从“哪个值最有可能是真实值”这个角度出发的。于是就有了最大似然（maximum likelihood）以及置信区间（confidence interval）这样的东西，你从名字就可以看出来他们关心的就是我有多大把握去圈出那个唯一的真实参数。而\textbf{贝叶斯学派}恰恰相反，他们\textcolor{red}{关心参数空间里的每一个值}，因为他们觉得我们又没有上帝视角，怎么可能知道哪个值是真的呢？所以\textbf{参数空间}里的每个值都有可能是真实模型使用的值，区别只是概率不同而已。于是他们才会引入先验分布（prior distribution）和后验分布（posterior distribution）这样的概念来设法找出参数空间上的每个值的概率。最好诠释这种差别的例子就是想象如果你的后验分布是双峰的，频率学派的方法会去选这两个峰当中较高的那一个对应的值作为他们的最好猜测，而贝叶斯学派则会同时报告这两个值，并给出对应的概率。
+
+如果从概率的角度看，贝叶斯学派的想法其实更为自然，这也是为什么贝叶斯学派的产生远早于频率学派（去年是贝叶斯250周年）。但是贝叶斯方法本身有很多问题，比如当先验选的不好或者模型不好的时候你后验分布的具体形式可能都写不出来，跟别说做统计推断了。在当年电子计算机还没发展出来的时候，对这些情况做分析几乎是不可能的，这也就大大限制了贝叶斯方法的发展。而频率学派主要使用最优化的方法，在很多时候处理起来要方便很多。所以在频率学派产生后就快速地占领了整个统计领域。直到上世纪90年代依靠电子计算机的迅速发展，以及抽样算法的进步（Metropolis-hastings, Gibbs sampling）使得对于任何模型任何先验分布都可以有效地求出后验分布，贝叶斯学派才重新回到人们的视线当中。就现在而言，贝叶斯学派日益受到重视当然是有诸多原因的，所以这并不意味这频率学派就不好或者不对。两个学派除了在\textbf{参数空间}的认知上有区别以外，方法论上都是互相借鉴也可以相互转化的。
+
+作者：Xiangyu Wang
+链接：https://www.zhihu.com/question/20587681/answer/41436978
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+贝叶斯分析的思路对于由证据的积累来推测一个事物发生的概率具有重大作用， 它告诉我们当我们要预测一个事物， 我们需要的是首先根据已有的经验和知识推断一个先验概率， 然后在新证据不断积累的情况下调整这个概率。整个通过积累证据来得到一个事件发生概率的过程我们称为贝叶斯分析。
+
+%作者：许铁-巡洋舰科技
+%链接：https://www.zhihu.com/question/20587681/answer/122348889
+%来源：知乎
+%著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+
+
 \subsection{分布}
 
 第01课 数学分析与概率论 01:58:44 分布
@@ -1909,7 +1946,7 @@ $P(x|\theta)$：给定某参数$\theta$的概率分布：似然函数。
 
 最大似然估计：深刻理解
 
-首先，“统计量”，大家应该是清楚的，只不过我们再说一篇这个事情。 一般来说，大家对于“期望”和“方差”是比较理解的，而对于“偏度”和“峰度”就不那么熟悉；由“方差”这个概念，我们会提到“协方差”，而“协方差”要谈两件事情，第一件就是“独立”和“不相关”的区别和联系，第二件就是说一下“协方差”之间做一个“相关系数”，而这个“相关系数”我们后面还会用到。
+首先，“统计量”，大家应该是清楚的，只不过我们再说一遍这个事情。 一般来说，大家对于“期望”和“方差”是比较理解的，而对于“偏度”和“峰度”就不那么熟悉；由“方差”这个概念，我们会提到“协方差”，而“协方差”要谈两件事情，第一件就是“独立”和“不相关”的区别和联系，第二件就是说一下“协方差”之间做一个“相关系数”，而这个“相关系数”我们后面还会用到。
 
 关于“参数估计”，我们会说两个方案，第一个是“矩估计”，第二个是“最大似然估计”。“矩估计”比较简单，因此并不是重点，而“最大似然估计”才是重点，并且是我们以后的绝对重点。
 
@@ -2618,11 +2655,198 @@ l(x)=-\frac{n}{2} \log (2\pi \sigma^{2}) - \frac{1}{2 \sigma^{2}}\sum_{i}(x_{i}-
 
 第02课 数理统计与参数估计 01:57:09 最大似然估计与过拟合
 
+\section{矩阵和线性代数}
+
+第03课 矩阵和线性代数 00:01:40
+
+我们来破个题，第一个是“数”，但我们谈的不是“数”，而是“代数”，是用“某些符号”来替代真正的“数”来做的运算。我们主要的方案是“线性”的，而“线性代数”里面最重要的一个算子就是“矩阵”，尤其是“矩阵的乘法”，所以我们题目叫作“矩阵和线性代数”。
+
+\subsection{主要内容}
+
+第03课 矩阵和线性代数 00:02:26 主要内容
+
+矩阵：（1）线性代数是有用的，以SVD为例；（2）矩阵的乘法/状态转移矩阵；（3）矩阵和向量组
+
+特征值和特征微量：（1）对称阵、正交阵、 正定阵；（2）数据白化
+
+矩阵求导：（1）向量对向量求导；（2）标量对向量求导；（3）标量对矩阵求导。
+
+大多数人都了解过线性代数，但是我想说的第一个话题就是，线性代数其实是非常有用的，而不是像我们在上学时候学的、看起来很无聊的一种变换，我们举一个SVD应用的例子来说明线性代数的有用性。然后我们重点探索一件事情“矩阵的乘法”，如果矩阵$A$是$m\times n$阶的$A_{m \times n}$，矩阵$B$是$n \times r$阶的$B_{n \times r}$，$A$的列数和$B$的行数是一样的，则这两个矩阵是可乘的。两个矩阵乘法如何计算，大家是知道的；我们要说的是，矩阵的乘法为什么要这么计算呢？大家不觉得第一次看到矩阵乘法的时候很奇怪吗 ？我们举一个例子来看一下有意思的东西：状态转移矩阵。另外，我们说说“向量组、矩阵、特征值、特征向量”，说说各种变换（对称阵、正交阵、正定阵）、 数据的白化、矩阵求导等事情。
+
+\subsection{SVD的提法}
+
+第03课 矩阵和线性代数 00:03:58 SVD的提法
+
+此处主要是说明“线性代数是有用的”，举了一个图片的例子，很有趣，但我现在不是特别懂，只听懂了一个大概意思。
+将推荐系统的时候，还会再说SVD。
+
+\subsection{线性代数}
+
+第03课 矩阵和线性代数 00:16:58 线性代数
+
+\subsection{矩阵乘法}
+
+第03课 矩阵和线性代数 00:29:00 矩阵乘法
+
+\subsection{矩阵和向量的乘法}
+
+第03课 矩阵和线性代数 00:51:56 矩阵和向量的乘法
+
+\subsection{矩阵的秩}
+
+第03课 矩阵和线性代数 00:57:33 矩阵的秩
+
+如果把“数学”看成是“机器学习”的工具，那么“线性代数”是数学的“工具”。
+
+\subsection{向量组等价}
+
+第03课 矩阵和线性代数 01:00:51 向量组等价
+
+\subsection{系数矩阵}
+
+第03课 矩阵和线性代数 01:06:38 系数矩阵
+
+\subsection{正交阵}
+
+第03课 矩阵和线性代数 01:09:52 正交阵
+
+\subsection{特征值和特征向量}
+
+第03课 矩阵和线性代数 01:15:18 特征值和特征向量
+
+\subsection{特征值的性质}
+
+第03课 矩阵和线性代数 01:27:32 特征值的性质
+
+
+\section{马同学线性代数}
+
+\subsection{向量}
+
+\subsubsection{物理中的向量}
+
+将有向线段的起点与终点分别表示为字母$A,B$，则向量表示为$\overrightarrow{AB}$。
+
+为了书写方便，向量也可以用一个字母来代替，比如$\overrightarrow{AB}$也可以用$\vec{u}$来表示。
+
+既然向量是具有方向和大小的几何对象。那么只要大小相等，方向相同，向量自然也就相等
+
+\subsubsection{数学中的向量}
+
+物理是物理，一向讲究差不多就行，甚至认为“近似”是物理的精华。 
+
+但是数学不能这么干，说向量就是一个具有方向和大小的几何对象，这事情数学干不出来。 
+
+“严格性虽然不是数学的一切，但是没有了严格性数学就没有了一切”。 
+
+从向量的物理概念出发，是一个具有方向和大小的几何对象。 
+
+比如，这么一个向量$\vec{u}=\overrightarrow{OP}$，我们把它的起点放在原点$O$点，终点放在$P$点，就可以画出这个向量。
+
+在数学中，我们始终遵循向量的起点在原点$O$，那么我们就可以用终点的坐标来表示向量，即上面的向量可以表示为： $\vec{u}=(x,y)$。这样，向量和空间中的点就建立了一一映射的关系。往更高维度走也是一样的，比如三维空间中的一个点就对应了一个三维向量。
+
+这个时候，我们就需要向量的形式化定义了，如下：
+
+$n$个有序的数$a_{1},a_{2},\dots,a_{n}$所组成的数组称为$n$维向量，这$n$个数称为该向量的$n$个分量，第$i$个数$a_{i}$称为第$i$个分量。$n$维向量可以写成一行，也可以写成一列，分别称为“行向量”和“列向量”。
+
+$n$维列向量
+
+\begin{equation}
+\begin{aligned}
+\begin{pmatrix} 
+a_{1}\\
+a_{2}\\
+\cdots\\
+a_{n}
+\end{pmatrix}
+\end{aligned}
+\end{equation}
+
+$n$维行向量
+
+\begin{equation}
+\begin{aligned}
+\begin{pmatrix}
+a_{1},a_{2},\cdots,a_{n}
+\end{pmatrix}
+\end{aligned}
+\end{equation}
+
+上面两种写法都代表同一个向量，这两种写法到后面矩阵出现了才有区别。 \\
+
+\textbf{长度}
+
+向量是有向线段，它的大小就是线段的长度。 
+
+对于向量$\vec{u}=\overrightarrow{OP}$的长度被记做$||\vec{u}||$或者$||\overrightarrow{OP}||$。
+
+在二维中，对于向量$\vec{u}=\begin{pmatrix} x\\ y \end{pmatrix}$而言，这个长度可以根据毕达哥拉斯定理计算，等于$\sqrt{x^{2}+y^{2}}$。扩展到三维就是$||\vec{v}||=\sqrt{x^{2}+y^{2}+z^{2}}$。
+
+更一般的，对于：
+
+\begin{equation}
+\begin{aligned}
+\vec{w}=
+\begin{pmatrix}
+a_{1}\\
+a_{2}\\
+\cdots\\
+a_{n}
+\end{pmatrix}
+\end{aligned}
+\end{equation}
+
+的长度为：
+
+\begin{equation}
+\begin{aligned}
+||\vec{w}||=\sqrt{a_{1}^{2}+a_{2}^{2}+\dots+a_{n}^{2}}
+\end{aligned}
+\end{equation}
+
+注意：\textcolor{red}{向量长度是一个数，不是一个向量或点}。
+
+对于向量$\overrightarrow{AB}$来讲，如果交换起点和终点的顺序，就会得到另一个向量$\overrightarrow{BA}$。它们的长度相等，方向相反，即：$||\overrightarrow{AB}||=||\overrightarrow{BA}||$。\\
+
+\textbf{零向量}
+
+$\overrightarrow{AA}$也是一个向量，它被称为零向量。
+
+起点与终点为同一个点的向量为零向量,被记做$\vec{0}$。零向量的长度为零。\\
+
+\textbf{平行的向量}
+
+向量不仅有长度还有方向，不过我们这里暂时没有办法给出方向的数学定义，这得等后面介绍了点积才能严格定义。 
+
+两个具有相同或相反方向的向量平行
+
+零向量与任意向量平行。 
+
+\subsubsection{总结}
+
+向量是有序对
+
+向量大小的标记方法、计算方法（长度）
+
+平行的向量
+
+
+
+
+
+
+
+
 
 
 
 \section{数学知识}
     1.LATEX控制序列的概念（类似于函数） \\ 控制序列可以是作为命令：以“$\backslash$”开头，参数：必须参数和可选参数。
+
+% LaTex排版技巧：[5]如何输入矩阵    
+% https://jingyan.baidu.com/article/f3e34a128c53aef5ea653542.html    
+    
+    
 \subsubsection{Probability Density Functions}
 
 Probability Density Functions https://onlinecourses.science.psu.edu/stat414/node/97
