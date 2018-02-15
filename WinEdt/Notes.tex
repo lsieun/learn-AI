@@ -2673,20 +2673,326 @@ l(x)=-\frac{n}{2} \log (2\pi \sigma^{2}) - \frac{1}{2 \sigma^{2}}\sum_{i}(x_{i}-
 
 大多数人都了解过线性代数，但是我想说的第一个话题就是，线性代数其实是非常有用的，而不是像我们在上学时候学的、看起来很无聊的一种变换，我们举一个SVD应用的例子来说明线性代数的有用性。然后我们重点探索一件事情“矩阵的乘法”，如果矩阵$A$是$m\times n$阶的$A_{m \times n}$，矩阵$B$是$n \times r$阶的$B_{n \times r}$，$A$的列数和$B$的行数是一样的，则这两个矩阵是可乘的。两个矩阵乘法如何计算，大家是知道的；我们要说的是，矩阵的乘法为什么要这么计算呢？大家不觉得第一次看到矩阵乘法的时候很奇怪吗 ？我们举一个例子来看一下有意思的东西：状态转移矩阵。另外，我们说说“向量组、矩阵、特征值、特征向量”，说说各种变换（对称阵、正交阵、正定阵）、 数据的白化、矩阵求导等事情。
 
-\subsection{SVD的提法}
+\subsection{SVD的提法（奇异值分解）}
 
 第03课 矩阵和线性代数 00:03:58 SVD的提法
 
 此处主要是说明“线性代数是有用的”，举了一个图片的例子，很有趣，但我现在不是特别懂，只听懂了一个大概意思。
 将推荐系统的时候，还会再说SVD。
 
+奇异值分解（Singular Value Decomposition）是一种重要的矩阵分解方法，可以看做对称方阵在任意矩阵上的推广。Singular并不是指“奇怪的”，而是指“突出的、 奇特的、 非凡的”，似乎更应该称之为“优值分解”。
+
+假设$A$是一个$m \times n$阶实矩阵，则存在一个分解使得：
+
+\begin{equation}
+\begin{aligned}
+A_{m \times n} = U_{m \times m} \sum _{m \times n} V_{n \times n}^{T}
+\end{aligned}
+\end{equation}
+
+其中，$U_{m \times m}$和$V_{n \times n}^{T}$是正交的，而$\sum _{m \times n}$称为奇异值，是一个对角阵，即只有对角线上有值。通常将奇异值由大而排列。这样，$\sum$便能由$A$唯一确定了。（第03课 矩阵和线性代数 00:06:32 这里讲的很精彩）\\
+
+什么是正交阵？如果$U$是一个$m \times m$的方阵，并且$U^{T}U=I$($U$的转置乘以$U$正好是个单位阵)，则$U$称为“正交阵”。单位阵的意思是，只有对角线上的元素是1，其它的元素都是0。
+
+什么是实矩阵？\textcolor{red}{实矩阵}指的是矩阵中所有的数都是实数的矩阵。如果一个矩阵中含有除实数以外的数，那么这个矩阵就不是实矩阵。
+
+与特征值、特征向量的概念相对应：
+
+\begin{itemize}
+\item $\sum$对角线上的元素$\sigma$称为矩阵$A$的奇异值
+\item $U$的第$i$列称为$A$的关于$\sigma_{i}$的左奇异向量
+\item $V$的第$i$列称为$A$的关于$\sigma_{i}$的右奇异向量
+\end{itemize}
+
+\subsubsection{SVD举例$A_{m \times n} = U_{m \times m} \sum _{m \times n} V_{n \times n}^{T}$}
+
+第03课 矩阵和线性代数 00:07:15 SVD举例
+
+已知$4 \times 5$阶实矩阵$A$，求$A$的SVD分解：
+
+\begin{equation}
+\begin{aligned}
+A_{4 \times 5}=
+\begin{bmatrix}
+1 & 0 & 0 & 0 & 2 \\
+0 & 0 & 3 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 \\
+0 & 4 & 0 & 0 & 0
+\end{bmatrix}
+\end{aligned}
+\end{equation}
+
+分解为：
+
+$U_{4 \times 4}=
+\begin{bmatrix}
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0
+\end{bmatrix}$ \quad
+$\sum_{4 \times 5}=
+\begin{bmatrix}
+4 & 0 & 0 & 0 & 0 \\
+0 & 3 & 0 & 0 & 0 \\
+0 & 0 & \sqrt{5} & 0 & 0 \\
+0 & 0 & 0 & 0 & 0
+\end{bmatrix}$\quad
+$V_{5 \times 5}^{T}=
+\begin{bmatrix}
+0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 \\
+\sqrt{0.2} & 0 & 0 & 0 & \sqrt{0.8} \\
+0 & 0 & 0 & 1 & 0 \\
+\sqrt{0.8} & 0 & 0 & 0 & -\sqrt{0.2 }
+\end{bmatrix}$\quad
+
+矩阵$U$和$V$都单位正交方阵：$U^{T}U=I,V^{T}V=I$
+
+% SVD
+% def restore(sigma,u,v,k): #奇异值、左特征向量、右特征向量
+%       print(k)
+%       m=len(u)
+%       n = len(v[0])
+%       a = np.zeros((m,n))
+%       for k in range(k+1):
+%             for in range(m):
+%                   a[i] += sigma[k] * u[i][k] * v[k]
+%       b = a.astype(''uint8)
+%       Image.fromarray(b).save("svd_" + str(K) + ".png")
+
+
+\subsubsection{奇异值分解-效果}
+
+第03课 矩阵和线性代数 00:07:51 奇异值分解-效果
+
+可以做图像处理。 这里讲图像处理的过程，很有趣。
+
+$\sum$是个对角阵，里面的元素$\sigma$是从大到小排列的($\sigma_{1} > \sigma_{2} > \dots$)，这时如果取前$k$个$\sigma$值，就相当于做了特征的提取。
+
+一般处理的灰度图，因为有RGB三个通道，分别处理3个通道，然后再进行合成彩色就好了。讲算法的时候，一般就用灰度来做例子。
+
+这一部分的目的，就是要讲：线性代数是有用的。
+
 \subsection{线性代数}
 
 第03课 矩阵和线性代数 00:16:58 线性代数
 
+\subsubsection{方阵的行列式}
+
+第03课 矩阵和线性代数 00:16:58 方阵的行列式
+
+定义：方阵的行列式
+
+\begin{itemize}
+\item 1阶方阵的行列式为该元素本身
+\item $n$阶方阵的行列式等于它的任一行（或列）的各元素与其对应的代数余子式乘积之和。
+\end{itemize}
+
+什么是行列式？（百度一下）
+
+什么是代数余子式？（百度一下）\\
+
+$1 \times 1$的方阵，其行列式等于该元素本身。
+
+$A=\begin{pmatrix} a_{11} \end{pmatrix}$ \quad $|A|=a_{11}$
+
+$2 \times 2$的方阵，其行列式用“主对角线元素乘积”减去“次对角线元素的乘积”。
+
+$A=\begin{pmatrix} a_{11} && a_{12} \\ a_{21} && a_{22} \end{pmatrix}$ \quad
+$|A|=a_{11}a_{22}-a_{12}a_{21}$
+
+$3 \times 3$的方阵，
+
+\begin{equation}
+\begin{aligned}
+A=
+\begin{pmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33}
+\end{pmatrix}
+\end{aligned}
+\end{equation}
+
+根据“主对角线元素乘积 减去 次对角线元素的乘积”的原则，得：
+
+\begin{equation}
+\begin{aligned}
+|A|=a_{11}a_{12}a_{13}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32} \\
+-a_{11}a_{23}a_{32}-a_{12}a_{21}a_{33}-a_{13}a_{22}a_{31}
+\end{aligned}
+\end{equation}
+
+\subsubsection{代数余子式}
+
+第03课 矩阵和线性代数 00:18:53 代数余子式
+
+在一个$n$阶行列式$A$中，把$(i,j)$元素$a_{ij}$所在的第$i$行和第$j$列划去后，留下的$n-1$阶方阵的行列式叫做元素$a_{ij}$的\textcolor{red}{余子式}，记作$M_{ij}$。
+
+代数余子式：$A_{ij}=(-1)^{i+j}M_{ij}$
+
+\begin{equation}
+\begin{aligned}
+A=
+\begin{pmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33}
+\end{pmatrix}
+\end{aligned}
+\end{equation}
+
+$\forall 1 \leq j \leq n, |A|= \sum_{i=1}^{n} a_{ij} \cdot (-1)^{i+j} M_{ij}$
+
+$\forall 1 \leq i \leq n, |A|= \sum_{j=1}^{n} a_{ij} \cdot (-1)^{i+j} M_{ij}$
+
+\begin{equation}
+\begin{aligned}
+|A|=a_{11}a_{12}a_{13}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32} \\
+-a_{11}a_{23}a_{32}-a_{12}a_{21}a_{33}-a_{13}a_{22}a_{31}
+\end{aligned}
+\end{equation}
+
+\subsubsection{伴随矩阵}
+
+第03课 矩阵和线性代数 00:19:13 伴随矩阵
+
+对于$n \times n$方阵的任意元素$a_{ij}$都有各自的代数余子式$A_{ij}=(-1)^{i+j}M_{ij}$，构造$n \times n$的方阵$A^{*}$：
+
+\begin{equation}
+\begin{aligned}
+A^{*}=
+\begin{pmatrix}
+A_{11} & A_{21} & \cdots & A_{n1} \\
+A_{12} & A_{22} & \cdots & A_{n2} \\
+\vdots & \vdots & \ddots & \vdots \\
+A_{1n} & A_{2n} & \cdots & A_{nn} \\
+\end{pmatrix}
+\end{aligned}
+\end{equation}
+
+$A^{*}$称为$A$的伴随矩阵。注意：$A_{ij}$位于$A^{*}$的第$j$行第$i$列。
+
+\subsubsection{方阵的逆$A \cdot A^{*} = |A| \cdot I$}
+
+第03课 矩阵和线性代数 00:20:53 方阵的逆
+
+$A \cdot A^{*} = |A| \cdot I$，我们发现，任何一个方阵$A$和它的伴随矩阵$A^{*}$的乘积$A \cdot A^{*}$，正好是行列式$|A|$的若干倍。
+
+
+由前述结论：$\forall 1 \leq i \leq n, |A|= \sum_{j=1}^{n} a_{ij} \cdot (-1)^{i+j} M_{ij}$
+
+根据：
+
+$A=
+\begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22}  & \cdots & a_{2n} \\
+\vdots & \vdots  & \ddots & \vdots \\
+a_{n1} & a_{n2}  & \cdots & a_{nn}
+\end{pmatrix}$ \quad
+
+$A^{*}=
+\begin{pmatrix}
+A_{11} & A_{21} & \cdots & A_{n1} \\
+A_{12} & A_{22} & \cdots & A_{n2} \\
+\vdots & \vdots & \ddots & \vdots \\
+A_{1n} & A_{2n} & \cdots & A_{nn} \\
+\end{pmatrix}$
+
+计算：
+
+$A \cdot A^{*}=
+\begin{pmatrix}
+|A| & 0 & \cdots & 0 \\
+0 & |A| & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & |A| \\
+\end{pmatrix}
+=|A| \cdot I \Rightarrow A^{-1}=\frac{1}{|A|}A^{*}$
+
+思考：该等式有什么用？在后续求偏导的时候会用到。
+
+\subsubsection{范德蒙行列式Vandermonde}
+
+第03课 矩阵和线性代数 00:22:03 范德蒙行列式Vandermonde
+
+证明范德蒙行列式Vandermonde：
+
+$D_{n}=
+\begin{vmatrix}
+1 & 1 & 1 & \cdots & 1 \\
+x_{1} & x_{2} & x_{3}  & \cdots & x_{n} \\
+x_{1}^{2} & x_{2}^{2} & x_{3}^{2}  & \cdots & x_{n}^{2} \\
+\vdots & \vdots & \vdots  & \ddots & \vdots \\
+x_{1}^{n-1} & x_{2}^{n-1} & x_{3}^{n-1}  & \cdots & x_{n}^{n-1} \\
+\end{vmatrix}
+=\underset{i,j(n \geq i \geq j \geq 1)}{\prod }(x_{i}-x_{j})$ \quad
+
+在上面的行列式$D_{n}$中，我们保证$x_{1} \neq x_{2} \neq x_{3} \dots$，即$x_{i}$互不相等。
+
+提示：数学归纳法
+
+注：参考Lagrange/Newton插值法
+
+这部分讲的很精彩。
+
+
+
+
 \subsection{矩阵乘法}
 
 第03课 矩阵和线性代数 00:29:00 矩阵乘法
+
+$A$为$m \times s$阶的矩阵，$B$为$s \times n$阶的矩阵，那么，$C=A \times B$是$m \times n$阶的矩阵，其中，
+
+\begin{equation}
+\begin{aligned}
+c_{ij}=\sum_{k=1}^{s}a_{ik}b_{kj}
+\end{aligned}
+\end{equation}
+
+\subsubsection{矩阵模型}
+
+第03课 矩阵和线性代数 00:30:31 矩阵模型
+
+考虑某随机过程$\pi$，它的状态有$n$个，用$1~n$表示。记在当前时刻$t$时位于$i$状态，它在$t+1$时刻位于$j$状态的概率为$P(i,j)=P(j|i)$：即“状态转移的概率”只依赖于“前一个状态”。\\
+
+第03课 矩阵和线性代数 00:36:50 概率转移矩阵
+
+第$n+1$代中处于第$j$个阶层的概率为：
+
+$\pi(X_{n+1}=j)=\sum_{i=1}^{K}\pi(X_{n}=i) \cdot P(X_{n+1}=j|X_{n}=i)$
+
+$\Rightarrow \pi^{(n+1)}=\pi^{(n)} \cdot P$
+
+因此，矩阵$P$即为（条件）概率转移矩阵。第$i$行元素表示：在上一个状态为$i$时的分布概率，即每一行元素的和为1。
+
+思考：初始概率分布$\pi$对最终分布的影响？\\
+
+\subsubsection{平稳分布}
+
+第03课 矩阵和线性代数 00:44:36 平稳分布
+
+初始概率不同，但经过若干次迭代，$\pi$最终稳定收敛在某个分布上。
+
+从而，这是转移概率矩阵$P$的性质，而非初始分布的性质。事实上，上述矩阵$P$的$n$次幂，每行都是$(0.286,0.489,0.225), n > 20$。
+
+如果一个非周期马尔科夫随机过程具有转移概率矩阵$P$，且它的任意两个状态都是连通的，则$\underset{n \rightarrow \infty }{\lim}P_{ij}^{n}$存在，记做$\underset{n \rightarrow \infty }{\lim}P_{ij}^{n}=\pi(j)$。
+
+第03课 矩阵和线性代数 00:48:32 平稳分布
+
+这里看不懂了
+
+\subsubsection{思考}
+
+第03课 矩阵和线性代数 00:49:47 思考
+
+根据定义来计算$C=A \times B$，需要$m \times n \times s$次乘法，即若$A$、$B$都是$n$阶方阵，$C$的计算时间复杂度为$O(n^{3})$，问：可否设计更快的算法？
+
+三个矩阵$A$、$B$、$C$的阶分别是$a_{0} \times a_{1}$，$a_{1} \times a_{2}$，$a_{2} \times a_{3}$，从而$(A \times B) \times C$ 和 $A \times (B \times C)$的乘法次数是$a_{0}a_{1}a_{2}+a_{0}a_{2}a_{3}$、$a_{1}a_{2}a_{3}+a_{0}a_{1}a_{3}$，二者一般情况是不相等的。问：给定$n$个矩阵的连乘积$A_{1} \times A_{2} \times A_{3} \dots \times A_{n}$，如何添加括号来改变计算次序，使得乘法的计算量最小？
+
 
 \subsection{矩阵和向量的乘法}
 
@@ -2718,6 +3024,7 @@ l(x)=-\frac{n}{2} \log (2\pi \sigma^{2}) - \frac{1}{2 \sigma^{2}}\sum_{i}(x_{i}-
 
 第03课 矩阵和线性代数 01:27:32 特征值的性质
 
+\newpage
 
 \section{马同学线性代数}
 
@@ -2733,13 +3040,13 @@ l(x)=-\frac{n}{2} \log (2\pi \sigma^{2}) - \frac{1}{2 \sigma^{2}}\sum_{i}(x_{i}-
 
 \subsubsection{数学中的向量}
 
-物理是物理，一向讲究差不多就行，甚至认为“近似”是物理的精华。 
+物理是物理，一向讲究差不多就行，甚至认为“近似”是物理的精华。
 
-但是数学不能这么干，说向量就是一个具有方向和大小的几何对象，这事情数学干不出来。 
+但是数学不能这么干，说向量就是一个具有方向和大小的几何对象，这事情数学干不出来。
 
-“严格性虽然不是数学的一切，但是没有了严格性数学就没有了一切”。 
+“严格性虽然不是数学的一切，但是没有了严格性数学就没有了一切”。
 
-从向量的物理概念出发，是一个具有方向和大小的几何对象。 
+从向量的物理概念出发，是一个具有方向和大小的几何对象。
 
 比如，这么一个向量$\vec{u}=\overrightarrow{OP}$，我们把它的起点放在原点$O$点，终点放在$P$点，就可以画出这个向量。
 
@@ -2753,7 +3060,7 @@ $n$维列向量
 
 \begin{equation}
 \begin{aligned}
-\begin{pmatrix} 
+\begin{pmatrix}
 a_{1}\\
 a_{2}\\
 \cdots\\
@@ -2776,7 +3083,7 @@ a_{1},a_{2},\cdots,a_{n}
 
 \textbf{长度}
 
-向量是有向线段，它的大小就是线段的长度。 
+向量是有向线段，它的大小就是线段的长度。
 
 对于向量$\vec{u}=\overrightarrow{OP}$的长度被记做$||\vec{u}||$或者$||\overrightarrow{OP}||$。
 
@@ -2816,11 +3123,11 @@ $\overrightarrow{AA}$也是一个向量，它被称为零向量。
 
 \textbf{平行的向量}
 
-向量不仅有长度还有方向，不过我们这里暂时没有办法给出方向的数学定义，这得等后面介绍了点积才能严格定义。 
+向量不仅有长度还有方向，不过我们这里暂时没有办法给出方向的数学定义，这得等后面介绍了点积才能严格定义。
 
 两个具有相同或相反方向的向量平行
 
-零向量与任意向量平行。 
+零向量与任意向量平行。
 
 \subsubsection{总结}
 
@@ -2830,7 +3137,172 @@ $\overrightarrow{AA}$也是一个向量，它被称为零向量。
 
 平行的向量
 
+\subsection{向量基本操作（数乘和加法）}
 
+\subsubsection{加法}
+
+\textbf{三角法则}
+
+物理中，我们学过的力的合成其实就是向量的加法。 \\
+
+\textbf{代数定义}
+
+对于：\\
+
+$\vec{a}=\begin{pmatrix} a_{1} \\ a_{2} \\ \cdots \\ a_{n} \end{pmatrix}$  \qquad
+$\vec{b}=\begin{pmatrix} b_{1} \\ b_{2} \\ \cdots \\ b_{n} \end{pmatrix}$\\
+
+它的加法定义为：\\
+
+$\vec{a}+\vec{b}
+=\begin{pmatrix} a_{1} \\ a_{2} \\ \cdots \\ a_{n} \end{pmatrix} +
+\begin{pmatrix} b_{1} \\ b_{2} \\ \cdots \\ b_{n} \end{pmatrix}
+=\begin{pmatrix} a_{1}+b_{1} \\ a_{2}+b_{2} \\ \cdots \\ a_{n}+b_{n} \end{pmatrix}$\\
+
+当然也可以看作是行向量：\\
+
+$\vec{a}+\vec{b}=\begin{pmatrix} a_{1},a_{2},\cdots,a_{n} \end{pmatrix} +
+\begin{pmatrix} b_{1},b_{2},\cdots,b_{n} \end{pmatrix}
+=\begin{pmatrix} a_{1}+b_{1},a_{2}+b_{2},\cdots,a_{n}+b_{n} \end{pmatrix}$\\
+
+\textbf{推论}
+
+根据三角形原则，我们可以得到一个推论：$||\vec{u}||+||\vec{v}|| \geq ||\vec{u} + \vec{v}||$，其中$\vec{u},\vec{v}$共线的时候取等号。
+
+\subsubsection{数乘}
+
+向量的基本操作除了加法，还有数乘。\\
+
+\textbf{几何意义}
+
+数乘$k\vec{u},k \in R$，就是对$\vec{u}$进行缩放。
+
+$|k|$为缩放比例，$k<0$时，$k\vec{u}$与$\vec{u}$方向相反；$k=0$时，$k\vec{u}$为零向量。\\
+
+\textbf{代数}
+
+对于\\
+
+$\vec{a}=\begin{pmatrix} a_{1} \\ a_{2} \\ \cdots \\ a_{n} \end{pmatrix}$ \\
+
+数乘的代数表达为：\\
+
+$k\vec{a}=k\begin{pmatrix} a_{1} \\ a_{2} \\ \cdots \\ a_{n} \end{pmatrix}
+=\begin{pmatrix} ka_{1} \\ ka_{2} \\ \cdots \\ ka_{n} \end{pmatrix},k \in R$\\
+
+当然也可以写成行向量：\\
+
+$k\vec{a}=k\begin{pmatrix} a_{1},a_{2},\cdots,a_{n} \end{pmatrix}=\begin{pmatrix} ka_{1},ka_{2},\cdots,ka_{n} \end{pmatrix},k \in R$
+
+\subsubsection{运算规则}
+
+我们不难看出，向量\textbf{加法}满足交换律，结合律：
+
+交换律：$\vec{v}+\vec{u}=\vec{u}+\vec{v}$
+
+结合律：$\vec{u}+\vec{v}+\vec{w}=\vec{u}+(\vec{v}+\vec{w})$\\
+
+
+\textbf{数乘}满足交换律，结合律和分配率的：
+
+交换律：$k \cdot \vec{u} = \vec{u} \cdot k$
+
+结合律：$k \cdot m \cdot \vec{u} = k \cdot (m \cdot \vec{u})$
+
+分配律：$k(\vec{u}+\vec{v})=k\vec{u}+k\vec{v}$
+
+\subsection{线性表示与线性相关}
+
+\subsubsection{线性表示}
+
+\textbf{调色}
+
+人眼大致有三种感光细胞：红色、绿色、蓝色的感光细胞。如果通过特定的光线，单独“激活”这三种感光细胞，我们分别看到红色、绿色、蓝色，这些光线也就是红光、绿光、蓝光：这三种颜色的光线同时作用这三种感光细胞上，混合在一起，就得到了我们所看到的颜色。因此，这三种颜色我们也称为“三原色”，简写为RGB（红色、绿色、蓝色英文首字母的缩写）。
+
+白色的太阳光，就是按照$R:G:B=1:1:1$的比例合成的；如果调整比例，我们可以得到海棠红$\approx R + \frac{1}{5}G+\frac{1}{3}B$。\\
+
+
+
+\textbf{线性表示or线性组合}
+
+上面啰嗦了那么多，我们终于可以开始数学化，首先把RGB表示为向量：
+
+$R:\begin{pmatrix} 255\\ 0 \\ 0 \end{pmatrix}$ \qquad
+$G:\begin{pmatrix} 0\\ 255 \\ 0 \end{pmatrix}$ \qquad
+$B:\begin{pmatrix} 0\\ 0 \\ 255 \end{pmatrix}$ \qquad\\
+
+这样之前的海棠红，就可以写成这样了：\\
+
+\begin{equation}
+\begin{aligned}
+\begin{pmatrix} 255 \\ 52 \\ 85 \end{pmatrix} \approx
+\begin{pmatrix} 255 \\ 0 \\ 0 \end{pmatrix} +
+\frac{1}{5}\begin{pmatrix} 0 \\ 255 \\ 0 \end{pmatrix} +
+\frac{1}{3}\begin{pmatrix} 0 \\ 0 \\ 255 \end{pmatrix}
+\end{aligned}
+\end{equation}
+
+为了严格进行数学定义，我们先给出\textcolor{red}{向量组}的定义：
+
+若干同维数的列向量（或者同维数的行向量）所组成的集合，叫做\textbf{向量组}。 比如，之前的RGB放在一个集合里，$\{R,G,B\}$就是一个向量组。\\
+
+然后定义“线性表示”或“线性组合”：
+
+给定向量组$A: \vec{a_{1}},\vec{a_{2}},\dots,\vec{a_{m}}$和向量$\vec{b}$，如果存在一组实数$k_{1},k_{2},\dots,k_{m}$，使：
+
+\begin{equation}
+\begin{aligned}
+\vec{b}=k_{1}\vec{a_{1}}+k_{2}\vec{a_{2}}+\dots+k_{m}\vec{a_{m}}
+\end{aligned}
+\end{equation}
+
+则称向量$\vec{b}$能由向量组$A$\textcolor{red}{线性表示}，也可以说向量$\vec{b}$是向量组$A$的\textcolor{red}{线性组合}。
+
+\subsubsection{线性相关}
+
+海棠红可以被RGB线性表示，我们就说海棠红和RGB线性相关。
+
+红色不能用绿色和蓝色调出来，绿色不能用红色和蓝色调出来，蓝色不能用红色和绿色调出来，我们就说RGB线性无关。
+
+一个向量能被\textcolor{red}{某向量组}线性表示，则由它们组成的向量组也被称为线性相关的。\\
+
+\textbf{线性相关的定义 }
+
+严格定义如下：
+
+给定向量组$A: \vec{a_{1}},\vec{a_{2}},\dots,\vec{a_{m}}$，如果存在\textbf{不全为零}的实数$k_ {1},k_{2},\dots,k_{m}$，使：
+
+\begin{equation}
+\begin{aligned}
+k_{1}\vec{a_{1}}+k_{2}\vec{a_{2}}+\dots+k_{m}\vec{a_{m}}=\vec{0}
+\end{aligned}
+\end{equation}
+
+则称向量组$A$是线性相关的，否则称它为线性无关。\\
+
+\textbf{线性相关与线性表示的关系}
+
+因为$k_ {1},k_{2},\dots,k_{m}$不全为零，不妨假设$k_{1} \neq 0$
+
+\begin{equation}
+\begin{aligned}
+k_{1}\vec{a_{1}}+k_{2}\vec{a_{2}}+\dots+k_{m}\vec{a_{m}}=\vec{0}
+\Rightarrow
+-k_{1}\vec{a_{1}}=k_{2}\vec{a_{2}}+\dots+k_{m}\vec{a_{m}}
+\end{aligned}
+\end{equation}
+
+则：
+
+\begin{equation}
+\begin{aligned}
+k_{1}\vec{a_{1}}+k_{2}\vec{a_{2}}+\dots+k_{m}\vec{a_{m}}=\vec{0}
+\Rightarrow
+\vec{a_{1}}=-\frac{k_{2}\vec{a_{2}}+\dots+k_{m}\vec{a_{m}}}{k_{1}}
+\end{aligned}
+\end{equation}
+
+$\vec{a_{1}}$是$\vec{a_{2}},\vec{a_{3}},\dots,\vec{a_{m}}$的线性表示，因此，$\vec{a_{1}},\vec{a_{2}},\dots,\vec{a_{m}}$线性相关。
 
 
 
@@ -2843,10 +3315,10 @@ $\overrightarrow{AA}$也是一个向量，它被称为零向量。
 \section{数学知识}
     1.LATEX控制序列的概念（类似于函数） \\ 控制序列可以是作为命令：以“$\backslash$”开头，参数：必须参数和可选参数。
 
-% LaTex排版技巧：[5]如何输入矩阵    
-% https://jingyan.baidu.com/article/f3e34a128c53aef5ea653542.html    
-    
-    
+% LaTex排版技巧：[5]如何输入矩阵
+% https://jingyan.baidu.com/article/f3e34a128c53aef5ea653542.html
+
+
 \subsubsection{Probability Density Functions}
 
 Probability Density Functions https://onlinecourses.science.psu.edu/stat414/node/97
