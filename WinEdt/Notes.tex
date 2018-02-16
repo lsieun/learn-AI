@@ -2655,6 +2655,8 @@ l(x)=-\frac{n}{2} \log (2\pi \sigma^{2}) - \frac{1}{2 \sigma^{2}}\sum_{i}(x_{i}-
 
 第02课 数理统计与参数估计 01:57:09 最大似然估计与过拟合
 
+\newpage
+
 \section{矩阵和线性代数}
 
 第03课 矩阵和线性代数 00:01:40
@@ -2667,7 +2669,7 @@ l(x)=-\frac{n}{2} \log (2\pi \sigma^{2}) - \frac{1}{2 \sigma^{2}}\sum_{i}(x_{i}-
 
 矩阵：（1）线性代数是有用的，以SVD为例；（2）矩阵的乘法/状态转移矩阵；（3）矩阵和向量组
 
-特征值和特征微量：（1）对称阵、正交阵、 正定阵；（2）数据白化
+特征值和特征向量：（1）对称阵、正交阵、 正定阵；（2）数据白化
 
 矩阵求导：（1）向量对向量求导；（2）标量对向量求导；（3）标量对矩阵求导。
 
@@ -2690,7 +2692,7 @@ A_{m \times n} = U_{m \times m} \sum _{m \times n} V_{n \times n}^{T}
 \end{aligned}
 \end{equation}
 
-其中，$U_{m \times m}$和$V_{n \times n}^{T}$是正交的，而$\sum _{m \times n}$称为奇异值，是一个对角阵，即只有对角线上有值。通常将奇异值由大而排列。这样，$\sum$便能由$A$唯一确定了。（第03课 矩阵和线性代数 00:06:32 这里讲的很精彩）\\
+其中，$U_{m \times m}$和$V_{n \times n}^{T}$是正交的，而$\sum _{m \times n}$称为奇异值，是一个对角阵，即只有对角线上有值。通常将奇异值由大到小排列。这样，$\sum$便能由$A$唯一确定了。（第03课 矩阵和线性代数 00:06:32 这里讲的很精彩）\\
 
 什么是正交阵？如果$U$是一个$m \times m$的方阵，并且$U^{T}U=I$($U$的转置乘以$U$正好是个单位阵)，则$U$称为“正交阵”。单位阵的意思是，只有对角线上的元素是1，其它的元素都是0。
 
@@ -2941,7 +2943,7 @@ x_{1}^{n-1} & x_{2}^{n-1} & x_{3}^{n-1}  & \cdots & x_{n}^{n-1} \\
 
 
 
-\subsection{矩阵乘法}
+\subsubsection{矩阵乘法}
 
 第03课 矩阵和线性代数 00:29:00 矩阵乘法
 
@@ -2994,35 +2996,365 @@ $\Rightarrow \pi^{(n+1)}=\pi^{(n)} \cdot P$
 三个矩阵$A$、$B$、$C$的阶分别是$a_{0} \times a_{1}$，$a_{1} \times a_{2}$，$a_{2} \times a_{3}$，从而$(A \times B) \times C$ 和 $A \times (B \times C)$的乘法次数是$a_{0}a_{1}a_{2}+a_{0}a_{2}a_{3}$、$a_{1}a_{2}a_{3}+a_{0}a_{1}a_{3}$，二者一般情况是不相等的。问：给定$n$个矩阵的连乘积$A_{1} \times A_{2} \times A_{3} \dots \times A_{n}$，如何添加括号来改变计算次序，使得乘法的计算量最小？
 
 
-\subsection{矩阵和向量的乘法}
+\subsubsection{矩阵和向量的乘法}
 
 第03课 矩阵和线性代数 00:51:56 矩阵和向量的乘法
 
-\subsection{矩阵的秩}
+$A$为$m \times n$的矩阵，$\vec{x}$为$n \times 1$的列向量，则$A\vec{x}$为$m \times 1$的列向量，记$\vec{y}=A \cdot \vec{x}$
+
+由于$n$维列向量和$n$维空间的点一一对应，上式实际给出了从$n$维空间的点到$m$维空间点的线性变换。旋转、平稳（齐次坐标下）。
+
+特殊的，若$m = n$，且$A\vec{x}$完成了$n$维空间内的线性变换。\\
+
+第03课 矩阵和线性代数 00:56:06 矩阵和向量的乘法应用
+
+这里讲的例子很生动，机械手臂。
+
+有时间查一下线性代数的应用。
+
+
+\subsubsection{矩阵的秩}
 
 第03课 矩阵和线性代数 00:57:33 矩阵的秩
 
+在$m \times n$矩阵$A$中，任取$k$行$k$列，不改变这$k^{2}$个元素在$A$中的次序，得到$k$阶方阵，称为矩阵$A$的$k$阶子式。显然，$m \times n$矩阵$A$的$k$阶子式有$C_{m}^{k}C_{n}^{k}$个。\\
+
+设在矩阵$A$中有一个不等于0的$r$阶子式$D$，且所有$r+1$阶子式（如果存在的话）全等于0，那么，$D$称为矩阵$A$的最高阶非零子式，$r$称为矩阵$A$的秩，记做$R(A)=r$。
+
+\begin{itemize}
+\item $n \times n$的可逆矩阵，秩为$n$
+\item 可逆矩阵又称满秩矩阵
+\item 矩阵的秩等于它行（列）向量组的秩
+\end{itemize}
+
+第03课 矩阵和线性代数 00:59:36 秩与线性方程组的解的关系
+
+这段没有听懂。
+
 如果把“数学”看成是“机器学习”的工具，那么“线性代数”是数学的“工具”。
 
-\subsection{向量组等价}
+\subsubsection{向量组等价}
 
-第03课 矩阵和线性代数 01:00:51 向量组等价
+第03课 矩阵和线性代数 01:04:30 向量组等价
 
-\subsection{系数矩阵}
+向量$b$能由向量组$A:a_{1},a_{2},\dots,a_{m}$线性表示的充要条件是矩阵$A=(a_{1},a_{2},\dots,a_{m})$的秩等于矩阵$B=(a_{1},a_{2},\dots,a_{m},b)$的秩。
+
+设有两个向量组$A:a_{1},a_{2},\dots,a_{m}$及$B:b_{1},b_{2},\dots,b_{n}$，若$B$组的向量都能由向量$A$线性表示，则称向量组$B$能由向量组$A$线性表示。若向量组$A$与向量组$B$能相互线性表示，则称两个向量组等价。
+
+\subsubsection{系数矩阵}
 
 第03课 矩阵和线性代数 01:06:38 系数矩阵
 
-\subsection{正交阵}
+将向量组$A$和$B$所构成的矩阵依次记做$A=(a_{1},a_{2},\dots,a_{m})$和$B=(b_{1},b_{2},\dots,b_{n})$，$B$组能由$A$组线性表示，即对每个向量$b_{j}$，存在$k_{1j},k_{2j},\dots,k_{mj}$使得：
+
+\begin{equation}
+\begin{aligned}
+b_{j}=k_{1j}a_{1}+k_{2j}a_{2}+\dots+k_{mj}a_{m}
+=(a_{1},a_{2},\dots,a_{m}) \begin{pmatrix} k_{1j} \\ k_{2j} \\ \vdots \\ k_{mj} \end{pmatrix}
+\end{aligned}
+\end{equation}
+
+从而得到系数矩阵$K$
+
+\begin{equation}
+\begin{aligned}
+(b_{1},b_{2},\cdots,b_{n})
+=(a_{1},a_{2},\dots,a_{m})
+\begin{pmatrix}
+k_{11} & k_{12} & \cdots & k_{1n} \\
+k_{21} & k_{22} & \cdots & k_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+k_{m1} & k_{m2} & \cdots & k_{mn}
+\end{pmatrix}
+\end{aligned}
+\end{equation}
+
+\subsubsection{对$C=AB$的重认识}
+
+第03课 矩阵和线性代数 01:08:35 对$C=AB$的重认识
+
+由此可知，若$C=A \times B$，则矩阵$C$的列向量能由$A$的列向量线性表示，$B$为这一表示的系数矩阵。对偶的，若$C=A \times B$，则矩阵$C$的行向量能由$B$的行向量线性表示，$A$为这一表示的系数矩阵。
+
+向量组$B:b_{1},b_{2},\dots,b_{n}$能由向量组$A:a_{1},a_{2},\dots,a_{m}$线性表示的充要条件是矩阵$A=(a_{1},a_{2},\dots,a_{m})$的秩等于矩阵$(A,B)=(a_{1},a_{2},\dots,a_{m},b_{1},b_{2},\dots,b_{n})$的秩，即$R(A)=R(A,B)$。
+
+\subsubsection{正交阵}
 
 第03课 矩阵和线性代数 01:09:52 正交阵
+
+若$n$阶矩阵$A$满足$A^{T}A=I$，称$A$为正交矩阵，简称正交阵。$A$是正交阵的充要条件：$A$的列（行）向量都是单位向量，且两两正交。
+
+$A$为正交阵，$\vec{x}$为向量，则$A\vec{x}$称作正交变换。正交变换不改变向量长度。
+
+这里讲的很好。
+
+举个例子：假如正交阵
+$A=\begin{pmatrix} \cos \theta & \sin \theta \\ -\sin \theta & \cos \theta \end{pmatrix}$
+，则
+$A^{T}=\begin{pmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{pmatrix}$
+，那么
+
+\begin{equation}
+\begin{aligned}
+A \cdot A^{T}&=\begin{pmatrix} \cos \theta & \sin \theta \\ -\sin \theta & \cos \theta \end{pmatrix} \cdot \begin{pmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{pmatrix} \\
+&=
+\begin{pmatrix}
+\cos \theta \cdot \cos \theta + \sin \theta \cdot \sin \theta & (-\sin \theta) \cdot \cos \theta + \sin \theta \cdot \cos \theta \\
+(-\sin \theta) \cdot \cos \theta + \sin \theta \cdot \cos \theta & (-\sin \theta) \cdot (-\sin \theta) + \cos \theta \cdot \cos \theta
+\end{pmatrix} \\
+&=\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}
+\end{aligned}
+\end{equation}
+
+假如一个点的坐标为$(x_{0},y_{0})$，它距离原点$(0,0)$的距离是$\sqrt{x_{0}^{2}+y_{0}^{2}}$，通过上面的正交阵$A=\begin{pmatrix} \cos \theta & \sin \theta \\ -\sin \theta & \cos \theta \end{pmatrix}$进行变换，
+
+\begin{equation}
+\begin{aligned}
+A \cdot \begin{pmatrix} x_{0} \\ y_{0} \end{pmatrix}
+&= \begin{pmatrix} \cos \theta & \sin \theta \\ -\sin \theta & \cos \theta \end{pmatrix} \cdot
+\begin{pmatrix} x_{0} \\ y_{0} \end{pmatrix} \\
+&=
+\begin{pmatrix}
+\cos \theta x_{0} + \sin \theta y_{0} \\
+-\sin \theta x_{0} + \cos \theta y_{0}
+\end{pmatrix}
+\end{aligned}
+\end{equation}
+
+$A \cdot \begin{pmatrix} x_{0} \\ y_{0} \end{pmatrix}$到原点$(0,0)$的距离也是$\sqrt{x_{0}^{2}+y_{0}^{2}}$。
+
+\subsubsection{思考}
+
+第03课 矩阵和线性代数 01:14:25 思考
+
+若$A$、$B$都是$n$阶正交阵，那么，$A \times B$是正交阵吗？ 答案，是的。
+
+正交阵和对称阵，能够通过何种操作获得一定意义下的联系？
 
 \subsection{特征值和特征向量}
 
 第03课 矩阵和线性代数 01:15:18 特征值和特征向量
 
-\subsection{特征值的性质}
+$A$是$n$阶矩阵，若数$\lambda$和$n$维非$0$列向量$\vec{x}$满足$A\vec{x}=\lambda \vec{x}$，那么，数$\lambda$称为$A$的特征值，$\vec{x}$称为$A$的对应于特征值$\lambda$的特征向量。
 
-第03课 矩阵和线性代数 01:27:32 特征值的性质
+根据定义，立刻得到$(A-\lambda I)\vec{x}=0$，令关于$\lambda$的多项式$|A-\lambda I|$为0，方程$|A-\lambda I|=0$的根为$A$的特征值；将根$\lambda_{0}$带入方程组$|A-\lambda I|\vec{x}=0$，求得到的非零解，即$\lambda_{0}$对应的特征向量。
+
+\subsubsection{特征值的性质}
+
+第03课 矩阵和线性代数 01:18:43 特征值的性质
+
+设$n$阶矩阵$A=(a_{ij})$的特征值为$\lambda_{1},\lambda_{2},\dots,\lambda_{n}$，则
+
+\begin{equation}
+\begin{aligned}
+\lambda_{1}+\lambda_{2}+\dots+\lambda_{n}
+=a_{11}+a_{22}+\dots+a_{nn} \\
+\lambda_{1} \cdot \lambda_{2} \cdot \dots \cdot \lambda_{n} = |A|
+\end{aligned}
+\end{equation}
+
+矩阵$A$主行列式的元素和，称作矩阵$A$的迹。
+
+
+\subsubsection{思考}
+
+第03课 矩阵和线性代数 01:30:13 思考
+
+已知$\lambda$是方阵$A$的特征值，则
+
+\begin{itemize}
+\item $\lambda^{2}$是$A^{2}$的特征值
+\item $A$可逆时，$\lambda^{-1}$是$A^{-1}$的特征值。
+\end{itemize}
+
+提示：定义
+
+\subsubsection{不同特征值对应的特征向量}
+
+第03课 矩阵和线性代数 01:30:42 不同特征值对应的特征向量
+
+设$\lambda_{1},\lambda_{2},\dots,\lambda_{m}$是方阵$A$的$m$个特征值，$p_{1},p_{2},\dots,p_{m}$是依次与之对应的特征向量，若$\lambda_{1},\lambda_{2},\dots,\lambda_{m}$各不相等，则$p_{1},p_{2},\dots,p_{m}$线性无关。
+
+总结与思考 
+
+\begin{itemize}
+\item 不同特征值对应的特征向量，线性无关
+\item 若方阵$A$是对称阵呢？结论是否会加强？ 协方差矩阵、二次型矩阵、无向图邻接矩阵等都是“对称阵”。
+\end{itemize}
+
+\subsubsection{引理}
+
+第03课 矩阵和线性代数 01:32:14 引理
+
+实对称阵的特征值是实数。
+
+\begin{itemize}
+\item 设复数$\lambda$为对称阵$A$的特征值，复向量$\vec{x}$为对应的特征向量，即$A\vec{x}=\lambda \vec{x},(x \neq 0)$
+\item 用$\bar{\lambda}$表示$\lambda$的共轭复数，$\bar{\vec{x}}$表示$\vec{x}$的共轭复向量，而$A$是实矩阵，有$\bar{A}=A$。
+\item 下面给出证明过程。第03课 矩阵和线性代数 01:32:34
+\end{itemize}
+
+第03课 矩阵和线性代数 01:32:34 利用上述结论很快得到
+
+将实数$\lambda$带入方程组$(A-\lambda I)x=0$，该方程组为实系数方程组，因此，\textcolor{red}{实对称阵}的特征向量可以取\textcolor{red}{实向量}。
+
+\subsubsection{实对称阵不同特征值的特征向量正交}
+
+第03课 矩阵和线性代数 01:33:54 实对称阵不同特征值的特征向量正交
+
+令实对称矩阵为$A$，它的两个不同的特征值$\lambda_{1},\lambda_{2}$对应的特征向量分别是$\mu_{1},\mu_{2}$；其中，$\lambda_{1},\lambda_{2},\mu_ {1},\mu_{2}$都是实数或是实向量。
+
+它讲了证明的过程，我还不懂。
+
+\subsubsection{最终结论}
+
+第03课 矩阵和线性代数 01:36:03 最终结论
+
+设$A$为$n$阶\textcolor{red}{对称阵}，则必有\textcolor{red}{正交阵$P$}，使得$P^{-1}AP=P^{T}AP=\Lambda$
+
+\begin{itemize}
+\item $\Lambda$是以$A$的$n$个特征值为对角元的对角阵
+\item 该变换称为“合同变换”，$A$和$\Lambda$互为合同矩阵。
+\end{itemize}
+
+在谱聚类、PCA等章节中将会继续讨论。
+
+\subsubsection{白化/漂白whitening}
+
+第03课 矩阵和线性代数 01:41:05 白化/漂白whitening
+
+计算观测数据$x$的$n \times n$的对称阵$x \cdot x^{T}$的特征值和特征向量，用特征值形成对角阵$D$，特征向量形成正交阵$U$，则：$x \cdot x^{T} = U^{T}DU$。
+
+这里听懂了前一半，后一半就听不懂了。
+
+“白化”会在讲“ICA”的时候用到。ICA，即独立成份分析，比PCA看起来要高大上一些，PCA只能保证二阶独立，ICA是$n$阶独立的。
+
+\subsubsection{正定阵}
+
+第03课 矩阵和线性代数 01:52:30 正定阵
+
+对于$n$阶方阵$A$，若任意$n$阶向量$\vec{x}$，都有$x^{T}Ax > 0$，则称$A$是正定阵。
+
+\begin{itemize}
+\item 若条件变成$x^{T}Ax \geq 0$，则$A$称作半正定阵。
+\item 类似还有负定阵，半负定阵。
+\end{itemize}
+
+后续听不懂了
+
+\subsubsection{正定阵的判断}
+
+第03课 矩阵和线性代数 02:02:53 正定阵的判断
+
+\subsubsection{向量的导数}
+
+第03课 矩阵和线性代数 02:03:53 向量的导数
+
+$A$为$m \times n$的矩阵，$\vec{x}$为$n \times 1$的列向量，则$A\vec{x}$为$m \times 1$的列向量，记$\vec{y}=A \cdot \vec{x}$。
+
+思考：$\frac{\partial \vec{y}}{\partial \vec{x}}=?$ 得到一个矩阵。
+
+\subsubsection{推导}
+
+第03课 矩阵和线性代数 02:08:30 推导
+
+令
+
+$A=
+\begin{bmatrix} 
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn} 
+\end{bmatrix}$ \quad
+$\vec{x}=
+\begin{pmatrix} 
+x_{1} \\
+x_{2} \\
+\vdots \\
+x_{n} 
+\end{pmatrix}$\\
+
+$A \cdot \vec{x}=
+\begin{pmatrix}
+a_{11}x_{1} + a_{12}x_{2}+\dots + a_{1n}x_{n} \\
+a_{21}x_{1} + a_{22}x_{2}+\dots + a_{2n}x_{n} \\
+\vdots \\
+a_{m1}x_{1} + a_{m2}x_{2}+\dots + a_{mn}x_{n} 
+\end{pmatrix}$\\
+
+从而
+
+$\frac{\partial \vec{y}}{\partial \vec{x}}=\frac{\partial A \cdot \vec{x}}{\partial \vec{x}}=
+\begin{bmatrix}
+a_{11} & a_{22} & \cdots & a_{m1} \\
+a_{12} & a_{22} & \cdots & a_{m2} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{1n} & a_{2n} & \cdots & a_{mn}
+\end{bmatrix}
+=A^{T}$
+
+\subsubsection{结论与直接推广}
+
+第03课 矩阵和线性代数 02:09:42 结论与直接推广
+
+向量偏导公式：
+
+$\frac{\partial A \vec{x}}{\partial \vec{x}}=A^{T}$ \quad
+$\frac{\partial A \vec{x}}{\partial \vec{x}^{T}}=A$ \quad
+$\frac{\partial (\vec{x}^{T} A)}{\partial \vec{x}}=A$ \quad
+
+在线性回归中将直接使用该公式。
+
+\subsubsection{标量对向量的导数}
+
+第03课 矩阵和线性代数 02:13:02 标量对向量的导数
+
+$A$为$n \times n$的矩阵，$\vec{x}$为$n \times 1$的列向量，记$y=\vec{x}^{T} \cdot A \cdot \vec{x}$。
+
+同理可得：$\frac{\partial y}{\partial \vec{x}}
+=\frac{\partial (\vec{x}^{T} \cdot A \cdot \vec{x})}{\partial \vec{x}}
+=(A^{T}+A) \cdot \vec{x}$
+
+若$A$为对称阵，则有$\frac{\partial (\vec{x}^{T} \cdot A \cdot \vec{x})}{\partial \vec{x}}=2A\vec{x}$
+
+推导证明就略过了。
+
+\subsubsection{标量对方阵的导数}
+
+第03课 矩阵和线性代数 02:13:56 标量对方阵的导数
+
+$A$为$n \times n$的矩阵，$|A|$为$A$的行列式，计算$\frac{|A|}{A}$。
+
+解：根据等式$\forall 1 \leq i \leq n$，$|A|=\sum_{j=1}^{n}a_{ij} \cdot (-1)^{i+j}M_{ij}$
+
+有$\frac{\partial |A|}{\partial a_{ij}}=\frac{\partial (\sum_{j=1}^{n}a_{ij} \cdot (-1)^{i+j}M_{ij})}{\partial a_{ij}}=A_{ji}^{*}$
+
+从而：$\frac{\partial |A|}{\partial A}=(A^{*})^{T}=|A| \cdot (A^{-1})^{T}$
+
+依据$A \cdot A^{*} = |A| \cdot I$，第二个等式成立
+
+\subsubsection{QR分解}
+
+第03课 矩阵和线性代数 02:18:08 QR分解
+
+对于$m \times n$的列满秩矩阵$A$，必有：$A_{m \times n}=Q_{m \times n} \cdot R_{n \times n}$
+
+其中，$Q^{T} \cdot Q = I$（即列正交矩阵），$R$为非奇异上三角矩阵。当要求$R$的对角线元素为正时，该分解唯一。
+
+该分解为\textcolor{red}{QR分解}。可用于求解矩阵$A$的特征值、$A$的逆等问题。
+
+\subsection{总结与思考}
+
+第03课 矩阵和线性代数 02:26:48 总结与思考
+
+线性代数是普适的数学工具，是进一步学习其它内容的基础。有些机器学习的推导过程使用该工具表达清晰，易于推广，如线性回归。重点思考特征值、特征向量和矩阵的关系。
+
+思考：对于“非线性”问题，线性代数这一工具是否足够？是否有“非线性代数”？非线性映射、核函数。
+
+查询：（1）Schmidt正交化/HouseHolder变换/Givens变换；（2）Hessenberg矩阵
+
+参考文献：同济大学数学系编，工程数学线性代数（第五版），高等教育出版社，2007
+
 
 \newpage
 
