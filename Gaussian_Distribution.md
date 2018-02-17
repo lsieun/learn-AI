@@ -75,4 +75,11 @@ plt.show()
 ![](images/matplotlib/20180218015801.png)
 
 
+## 4、参考 ##
+
+[Python数据可视化](http://blog.csdn.net/column/details/13510.html)
+
+[Markdown：插入数学公式](https://www.jianshu.com/p/fd97e1f8f699)
+
+
 
