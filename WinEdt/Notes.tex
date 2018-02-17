@@ -1,25 +1,38 @@
-\documentclass[UTF8]{ctexart}
+\documentclass[UTF8]{ctexbook}
 \usepackage{amsmath}
 \usepackage{color}
-
+\usepackage{listings}
    \author{刘森}
    \title{跟我学人工智能}
 \begin{document}
     \maketitle
 你好，世界 hello, world % This is comment
-
-\section{机器学习算法}
+\tableofcontents
+\mainmatter
+\part{机器学习算法}
 
 不同的算法，本身没有好坏之分，有的只是，根据不同的场景选择合适的算法。
 
+\begin{lstlisting}[language=python]
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+\end{lstlisting}
+
+
+\section{}
+
+
+
 \newpage
+\chapter{回归}
 
-\section{回归}
-
-\subsection{主要内容}
+\section{主要内容}
 
 \begin{itemize}
-\item 线性回归：高斯分布、极大似然估计MLE、最小二乘法本质
+\item 线性回归：高斯分布、极大似然估计(maximum likelihood estimation, MLE)、最小二乘法本质
 \item Logistic回归：分类问题的首选算法
 \item 工具：梯度下降算法、极大似然估计
 \end{itemize}
@@ -253,7 +266,7 @@ J(\vec{\theta})=\frac{1}{2}\sum_{i=1}^{m} \left ( h_{\vec{\theta}}(x^{(i)}) - y^
 
 \begin{equation}
 \begin{aligned}
-J(\vec{\theta})=\frac{1}{2}\sum_{i=1}^{m} \left ( h_{\vec{\theta}}(x^{(i)}) - y^{(i)} \right )^{2} 
+J(\vec{\theta})=\frac{1}{2}\sum_{i=1}^{m} \left ( h_{\vec{\theta}}(x^{(i)}) - y^{(i)} \right )^{2}
 + \lambda \sum_{j=1}^{n} \theta_{j}^{2}
 \end{aligned}
 \end{equation}
@@ -498,9 +511,9 @@ P(y=0|x;\theta)&=1-h_{\theta}(x)\\
 梯度下降算法\\
 极大似然估计\\
 
-\section{Softmax}
+\chapter{Softmax}
 
-\section{聚类}
+\chapter{聚类}
 
 按道理来说，“算法”和“模型”是两个完全不同的概念，算法一般用于表示解决特定的数学问题，而模型则侧重于解决实际的问题，但在不同场景下，两者也会经常混用。
 
@@ -790,7 +803,7 @@ DBSCAN算法（Density-Based Spatial Clustering of Applications with Noise）是
 
 谱聚类是一种基于图论的聚类方法，通过对样本数据的\textcolor{red}{拉谱拉斯矩阵}的\textcolor{red}{特征向量}进行聚类，从而达到对样本数据聚类的目的。
 
-\section{提升}
+\chapter{提升}
 
 bagging 并行 RF
 
@@ -807,7 +820,7 @@ Adaboost Adaptive Boosting 自适应增加
 
 
 
-\section{支持向量机SVM}
+\chapter{支持向量机SVM}
 
 \subsection{复习：对偶问题}
 
@@ -1084,7 +1097,7 @@ SVM用于回归问题：SVR
 
 体会SVM的目标函数的建立过程：原始目标函数和Lagrange函数有什么关系。
 
-\section{贝叶斯网络}
+\chapter{贝叶斯网络}
 
 之前的线性回归、逻辑回归，都是已知$X$来求$y$，是建立$X$和$y$的一种直接关系。
 
@@ -1205,7 +1218,7 @@ I(X,Y)=\sum_{x,y}p(x,y)\log \frac{p(x,y)}{p(x)p(y)}
 
 第14课 贝叶斯网络 01:13:33 贝叶斯网络的形式化定义
 
-\section{主题模型}
+\chapter{主题模型}
 
 \subsection{主要内容}
 
@@ -1345,7 +1358,7 @@ Beta分布
 
 第15课 主题模型 02:06:17 代码实现
 
-\section{卷积神经网络}
+\chapter{卷积神经网络}
 
 00:46:23
 
@@ -1359,6 +1372,8 @@ input nodes / hidden nodes / output nodes
 
 relu
 
+\part{Tensorflow}
+
 \section{Tensorflow}
 
 \subsection{安装Tensorflow}
@@ -1367,7 +1382,9 @@ relu
 
         pip install tensorflow
 
-\section{微积分与概率论基础}
+\part{机器学习数学基础}
+
+\chapter{微积分与概率论基础}
 
 第01课 数学分析与概率论 00:00:00
 
@@ -2002,7 +2019,7 @@ In Bayesian statistics,  \textcolor{red}{the posterior probability} of a random 
 
 第01课 数学分析与概率论 02:06:39 指数族
 
-\section{数理统计与参数估计}
+\chapter{数理统计与参数估计}
 
 “概率论”和“数理统计”有区别吗？它们不一样吗？
 
@@ -2729,7 +2746,7 @@ l(x)=-\frac{n}{2} \log (2\pi \sigma^{2}) - \frac{1}{2 \sigma^{2}}\sum_{i}(x_{i}-
 
 \newpage
 
-\section{矩阵和线性代数}
+\chapter{矩阵和线性代数}
 
 第03课 矩阵和线性代数 00:01:40
 
@@ -3430,7 +3447,7 @@ $A$为$n \times n$的矩阵，$|A|$为$A$的行列式，计算$\frac{|A|}{A}$。
 
 \newpage
 
-\section{凸优化}
+\chapter{凸优化}
 
 \subsection{主要内容}
 
@@ -3443,7 +3460,7 @@ $A$为$n \times n$的矩阵，$|A|$为$A$的行列式，计算$\frac{|A|}{A}$。
 
 \newpage
 
-\section{马同学线性代数}
+\part{马同学线性代数}
 
 
 
@@ -3762,7 +3779,7 @@ generalized linear model (GLM)
 
 自己的总结
 
-\section{面试}
+\part{面试}
 
 \subsection{监督分类和非监督分类都有哪些呢？}
 
@@ -3781,7 +3798,7 @@ PCA
 
 LDA（文档主题模型）
 
-\section{数学家的故事}
+\part{数学家的故事}
 
 \subsection{欧拉}
 
@@ -3809,9 +3826,9 @@ LDA（文档主题模型）
 
 欧拉研究问题最鲜明的特点是：他把数学研究之手深入到自然与社会的深层。他不仅是位杰出的数学家，而且也是位理论联系实际的巨匠，应用数学大师。他喜欢搞特定的具体问题，而不象现代某些数学家那样，热衰于搞一般理论。
 
-\section{其它知识}
+\chapter{其它知识}
 
-\subsection{数据处理——One-Hot Encoding}
+\section{数据处理——One-Hot Encoding}
 
 原文地址： http://blog.csdn.net/google19890102/article/details/44039761
 
@@ -3842,7 +3859,7 @@ print array
 
 结果：[[ 1.  0.  0.  1.  0.  0.  0.  0.  1.]]
 
-\subsection{什么是张量 (tensor)？}
+\section{什么是张量 (tensor)？}
 什么是张量 (tensor)？ https://www.zhihu.com/question/20695804
 
 张量的数学与物理意义是什么，张量的特性与优势是什么？ https://www.zhihu.com/question/36814916
@@ -3859,7 +3876,7 @@ What is a tensor? https://www.quora.com/What-is-a-tensor
 来源：知乎
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
-\subsection{数学符号“s.t.”的意义}
+\section{数学符号“s.t.”的意义}
 
 在优化问题的求解中，如线性规划、非线性规划问题等，经常会遇到数学符号“s.t.”，它的意思是什么呢？
 
@@ -3874,6 +3891,26 @@ What is a tensor? https://www.quora.com/What-is-a-tensor
 其题意为，求x+2的最小值以使得x的取值为1、2、3时。
 
 或者理解为，x的取值为1、2、3时，求x+2的最小值。
+
+\section{最大似然估计}
+
+\paragraph{What}
+说的通俗一点啊，\textbf{最大似然估计}，就是\textcolor{red}{利用已知的样本结果，反推最有可能（最大概率）导致这样结果的参数值}。
+
+\paragraph{Example}
+例如：一个麻袋里有白球与黑球，但是我不知道它们之间的比例，那我就有放回的抽取10次，结果我发现我抽到了8次黑球2次白球，我要求最有可能的黑白球之间的比例时，就采取最大似然估计法：
+
+假设我抽到黑球的概率为$p$，那得出8次黑球2次白球这个结果的概率为：
+$P(Black=8)=p^{8}*(1-p)^{2}$,现在我想要得出$p$是多少啊，很简单，使得$P(Black=8)$最大的$p$就是我要求的结果，接下来求导的过程就是求极值的过程啦。
+
+%作者：渣君
+%链接：https://www.zhihu.com/question/20447622/answer/23902715
+%来源：知乎
+%著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+
 
 
 \end{document}
