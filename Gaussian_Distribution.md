@@ -39,6 +39,40 @@ plt.grid(True)
 plt.show()
 ```
 
+## 3、画4条高斯分布曲线进行对比 ##
+
+```python
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Python实现正态分布
+# 绘制正态分布概率密度函数
+
+def plot_normal_distribution(u,sigma,color):
+    x = np.linspace(u - 3*sigma, u + 3*sigma, 50)
+    y = np.exp(-(x - u) ** 2 /(2* sigma **2))/(math.sqrt(2*math.pi)*sigma)
+    plt.plot(x, y, color, linewidth=2)
+
+u01 = 0 # 均值μ
+u02 = 0
+u03 = 0
+u04 = -2 #期望值左移
+sigma01 = math.sqrt(1) # 标准差δ
+sigma02 = math.sqrt(0.2) #变高变瘦
+sigma03 = math.sqrt(5) #变矫变胖
+sigma04 = math.sqrt(0.5)
+
+plot_normal_distribution(u01,sigma01,"r-")
+plot_normal_distribution(u02,sigma02,"g-")
+plot_normal_distribution(u03,sigma03,"b-")
+plot_normal_distribution(u04,sigma04,"m-")
+
+plt.grid(True)
+plt.show()
+```
+
+![](images/matplotlib/20180218015801.png)
 
 
 
