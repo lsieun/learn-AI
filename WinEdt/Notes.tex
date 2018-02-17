@@ -8,13 +8,26 @@
     \maketitle
 你好，世界 hello, world % This is comment
 
-
-
 \section{机器学习算法}
 
 不同的算法，本身没有好坏之分，有的只是，根据不同的场景选择合适的算法。
 
-线性回归和Logistic回归，虽然听起来都叫作“回归”，但其实两者却是做不一样的事情：一个是做连续数据的预测，一个是做离散数据的预测；一个是真正做回归的，一个是做分类的，它们两个【用途】是完全不一样的。【如何推导出来？】线性回归是用高斯分布的方式推导出来，Logistic回归既然是做分类，就用Bnody分布，两点分布来推导出来。两者大的工具都是【最大似然估计】。在线性回归里面，要讨论一个东西：【最小二乘法的本质是什么】。或者说，为什么有最小二乘法呢？有没有最小三乘法呢？有没有最小四乘法呢？在【线 性回归】和【Logistic回归】中强调两个工具：【梯度下降算法】和【极大似然估计】。
+\newpage
+
+\section{回归}
+
+\subsection{主要内容}
+
+\begin{itemize}
+\item 线性回归：高斯分布、极大似然估计MLE、最小二乘法本质
+\item Logistic回归：分类问题的首选算法
+\item 工具：梯度下降算法、极大似然估计
+\end{itemize}
+
+
+线性回归和Logistic回归，虽然听起来都叫作“回归”，但其实两者却是做不一样的事情：一个是做连续数据的预测，一个是做离散数据的预测；一个是真正做回归的，一个是做分类的，它们两个【用途】是完全不一样的。【如何推导出来？】线性回归是用高斯分布的方式推导出来，Logistic回归既然是做分类，就用伯努利分布(Bernoulli distribution)，两点分布来推导出来。两者大的工具都是【最大似然估计】。在线性回归里面，要讨论一个东西：【最小二乘法的本质是什么】。或者说，为什么有最小二乘法呢？有没有最小三乘法呢？有没有最小四乘法呢？\\
+
+在【线 性回归】和【Logistic回归】中强调两个工具：【梯度下降算法】和【极大似然估计】。
 
 \subsection{线性回归}
 高斯分布
@@ -81,7 +94,9 @@ the $\epsilon^{(i)}$ are distributed IID (independently and identically distribu
 
 误差$\epsilon^{(i)}(1 \leq i \leq m)$是独立同分布的，服从均值为$0$，方差为某定值$\sigma^{2}$的【高斯分布】。原因：【中心极限定理】，可以查阅一下“中心极限定理的意义”。
 
-似然函数 第05课《回归》00:21:21
+\subsubsection{似然函数}
+
+第05课《回归》00:21:21 似然函数
 
 首先，两边是相等的：
 
@@ -100,7 +115,7 @@ p(\epsilon^{(i)})=\frac{1}{\sqrt{2\pi}\sigma}\exp(-\frac{(\epsilon^{(i)})^{2}}{2
 另外，$\epsilon^{(i)} = y^{(i)} - \theta^{T}x^{(i)}$，此时将$\epsilon^{(i)}$代入上式：
 
 \begin{displaymath}
-p(y^{i}|x^{i};\theta)=\frac{1}{\sqrt{2\pi}\sigma}\exp(-\frac{(y^{(i)} - \theta^{T}x^{(i)})^{2}}{2\sigma^{2}})
+p(y^{(i)}|x^{(i)};\theta)=\frac{1}{\sqrt{2\pi}\sigma}\exp(-\frac{(y^{(i)} - \theta^{T}x^{(i)})^{2}}{2\sigma^{2}})
 \end{displaymath}
 
 如此一来，上式当中就没有误差$\epsilon$了，因此只要指定了$x$和$\theta$，就可以认为是一个$y$的分布。换句话讲，$y$其实服从的是【均值是$\theta^{T}x$，方差是某一个$\sigma$的高斯分布（正态分布）】。
@@ -115,8 +130,9 @@ L(\theta)=\prod_{i=1}^{m}p(y^{i}|x^{i};\theta) = \prod_{i=1}^{m}\frac{1}{\sqrt{2
 
 如此一来，怎么求$\theta$呢？直接对【似然函数】取对数，然后再想办法。
 
-高斯的对数似然与最小二乘
+\subsubsection{高斯的对数似然与最小二乘}
 
+第05课《回归》00:25:17 高斯的对数似然与最小二乘
 
 \begin{equation}
 \begin{aligned}
@@ -137,12 +153,12 @@ J(\theta)=\frac{1}{2} \sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})^{2}
 
 \subsubsection{$\theta$的解析式的求解过程}
 
-$\theta$的解析式的求解过程 第05课《回归》00:29:52
+第05课《回归》00:29:52 $\theta$的解析式的求解过程
 
-将$M$个$N$维样本组成矩阵$X$：
-（1）$X$的每一行对应一个样本，共$M$个样本（measurements）；
-（2）$X$的每一列对应样本的一个维度，共$N$维（regressors）
-（3）还有额外的一维常数项$x^{(i)}_{0}$，全为$1$。
+将$M$个$N$维样本组成矩阵$X$：\\
+（1）$X$的每一行对应一个样本，共$M$个样本（measurements）；\\
+（2）$X$的每一列对应样本的一个维度，共$N$维（regressors）\\
+（3）还有额外的一维常数项$x^{(i)}_{0}$，全为$1$。\\
 
 目标函数：
 
@@ -174,7 +190,9 @@ J(\theta)=\frac{1}{2} \sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})^{2}=\frac{1}
 \end{aligned}
 \end{equation}
 
-\subsubsection{最小二 乘法意义下的参数最优解}
+\subsubsection{最小二乘法意义下的参数最优解}
+
+第05课《回归》00:36:53 最小二乘法意义下的参数最优解\\
 
 参数的解析解
 
@@ -184,7 +202,7 @@ J(\theta)=\frac{1}{2} \sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})^{2}=\frac{1}
 \end{aligned}
 \end{equation}
 
-若$X^{T}X$不可逆或防止过拟合，增加$\lambda$扰动
+若$X^{T}X$\textcolor{red}{不可逆}或防止\textcolor{red}{过拟合}，增加$\lambda$扰动
 
 \begin{equation}
 \begin{aligned}
@@ -192,9 +210,8 @@ J(\theta)=\frac{1}{2} \sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})^{2}=\frac{1}
 \end{aligned}
 \end{equation}
 
-第05课《回归》00:38:36
 
-“简单”方法记忆结论
+“简单”方法记忆结论 第05课《回归》00:38:36
 
 \begin{equation}
 \begin{aligned}
@@ -203,6 +220,61 @@ J(\theta)=\frac{1}{2} \sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})^{2}=\frac{1}
 &\Rightarrow \theta = (X^{T}X)^{-1} X^{T}y
 \end{aligned}
 \end{equation}
+
+\subsubsection{加入$\lambda$扰动后}
+
+第05课《回归》00:38:17 加入$\lambda$扰动后\\
+
+这里讲述的问题是：为什么加入$\lambda$扰动后是可逆的？
+
+$X^{T}X$半正定：对于任意的非零向量$u$
+
+$uX^{T}Xu=(Xu)^{T}Xu$，令$v=Xu$，得到$v^{T}v \geq 0$
+
+所以，对于任意的实数$\lambda > 0$，$X^{T}X+\lambda I$正定，从而可逆。保证回归公式一定有意义。
+
+$\theta = (X^{T}X+\lambda I)^{-1} X^{T}y$
+
+这儿我看不懂了。
+
+\subsubsection{线性回归的复杂度惩罚因子}
+
+第05课《回归》00:40:04 线性回归的复杂度惩罚因子\\
+
+线性回归的目标函数为：
+
+\begin{equation}
+\begin{aligned}
+J(\vec{\theta})=\frac{1}{2}\sum_{i=1}^{m} \left ( h_{\vec{\theta}}(x^{(i)}) - y^{(i)} \right )^{2}
+\end{aligned}
+\end{equation}
+
+将目标函数增加平方和损失：
+
+\begin{equation}
+\begin{aligned}
+J(\vec{\theta})=\frac{1}{2}\sum_{i=1}^{m} \left ( h_{\vec{\theta}}(x^{(i)}) - y^{(i)} \right )^{2} 
++ \lambda \sum_{j=1}^{n} \theta_{j}^{2}
+\end{aligned}
+\end{equation}
+
+本质即为假定参数$\theta$服从高斯分布。
+
+\subsubsection{L1-norm如何处理梯度？}
+
+第05课《回归》00:45:40 L1-norm如何处理梯度？\\
+
+\subsubsection{机器学习与数据使用}
+
+第05课《回归》00:49:46 机器学习与数据使用\\
+
+训练数据、验证数据、测试数据
+
+交叉验证
+
+\subsubsection{广义逆矩阵（伪逆）}
+
+第05课《回归》00:57:33 广义逆矩阵（伪逆）\\
 
 \subsubsection{梯度下降算法Gradient Descent}
 
@@ -426,9 +498,9 @@ P(y=0|x;\theta)&=1-h_{\theta}(x)\\
 梯度下降算法\\
 极大似然估计\\
 
-\subsection{Softmax}
+\section{Softmax}
 
-\subsection{聚类}
+\section{聚类}
 
 按道理来说，“算法”和“模型”是两个完全不同的概念，算法一般用于表示解决特定的数学问题，而模型则侧重于解决实际的问题，但在不同场景下，两者也会经常混用。
 
@@ -3174,7 +3246,7 @@ $A$是$n$阶矩阵，若数$\lambda$和$n$维非$0$列向量$\vec{x}$满足$A\ve
 
 设$\lambda_{1},\lambda_{2},\dots,\lambda_{m}$是方阵$A$的$m$个特征值，$p_{1},p_{2},\dots,p_{m}$是依次与之对应的特征向量，若$\lambda_{1},\lambda_{2},\dots,\lambda_{m}$各不相等，则$p_{1},p_{2},\dots,p_{m}$线性无关。
 
-总结与思考 
+总结与思考
 
 \begin{itemize}
 \item 不同特征值对应的特征向量，线性无关
@@ -3260,18 +3332,18 @@ $A$为$m \times n$的矩阵，$\vec{x}$为$n \times 1$的列向量，则$A\vec{x
 令
 
 $A=
-\begin{bmatrix} 
+\begin{bmatrix}
 a_{11} & a_{12} & \cdots & a_{1n} \\
 a_{21} & a_{22} & \cdots & a_{2n} \\
 \vdots & \vdots & \ddots & \vdots \\
-a_{m1} & a_{m2} & \cdots & a_{mn} 
+a_{m1} & a_{m2} & \cdots & a_{mn}
 \end{bmatrix}$ \quad
 $\vec{x}=
-\begin{pmatrix} 
+\begin{pmatrix}
 x_{1} \\
 x_{2} \\
 \vdots \\
-x_{n} 
+x_{n}
 \end{pmatrix}$\\
 
 $A \cdot \vec{x}=
@@ -3279,7 +3351,7 @@ $A \cdot \vec{x}=
 a_{11}x_{1} + a_{12}x_{2}+\dots + a_{1n}x_{n} \\
 a_{21}x_{1} + a_{22}x_{2}+\dots + a_{2n}x_{n} \\
 \vdots \\
-a_{m1}x_{1} + a_{m2}x_{2}+\dots + a_{mn}x_{n} 
+a_{m1}x_{1} + a_{m2}x_{2}+\dots + a_{mn}x_{n}
 \end{pmatrix}$\\
 
 从而
@@ -3358,7 +3430,22 @@ $A$为$n \times n$的矩阵，$|A|$为$A$的行列式，计算$\frac{|A|}{A}$。
 
 \newpage
 
+\section{凸优化}
+
+\subsection{主要内容}
+
+\subsection{思考两个不等式}
+
+
+
+
+
+
+\newpage
+
 \section{马同学线性代数}
+
+
 
 \subsection{向量}
 
