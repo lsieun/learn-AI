@@ -3779,6 +3779,101 @@ generalized linear model (GLM)
 
 自己的总结
 
+\part{高等数学-同济大学第六版《线性代数》视频教程 徐小湛}
+
+\chapter{行列式Determinants}
+
+\section{二阶与三阶行列式 Determinants of Order Two or Three}
+
+我们先讲“二阶行列式”
+
+\subsection{二元线性方程组与二阶行列式}
+
+\paragraph{行列式的来历}行列式的概念是从解线性方程组的问题中引入的。
+
+\paragraph{举个例子}解以下二元线性（一次）方程组（示例，我省略了）
+
+消元法
+
+原方程：
+
+\begin{equation}
+\begin{aligned}
+a_{11}x_{1}+a_{12}x_{2}=b_{1} \\
+a_{21}x_{1}+a_{22}x_{2}=b_{2}
+\end{aligned}
+\end{equation}
+
+计算得：
+
+\begin{equation}
+\begin{aligned}
+(a_{11}a_{22}-a_{12}a_{21})x_{1}=b_{1}a_{22}-a_{12}b_{2}\\
+(a_{11}a_{22}-a_{12}a_{21})x_{2}=a_{11}b_{2}-b_{1}a_{21}
+\end{aligned}
+\end{equation}
+
+如果$a_{11}a_{22}-a_{12}a_{21} \neq 0$，则可解出：
+
+\begin{equation}
+\begin{aligned}
+x_{1}=\frac{b_{1}a_{22}-a_{12}b_{2}}{a_{11}a_{22}-a_{12}a_{21}}\\
+x_{2}=\frac{a_{11}b_{2}-b_{1}a_{21}}{a_{11}a_{22}-a_{12}a_{21}}
+\end{aligned}
+\end{equation}
+
+以上结果不容易记住，为了方便记忆，引入\textcolor{red}{行列式}记号来表示两个乘积的差：
+
+\begin{equation}
+\begin{aligned}
+\begin{vmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{vmatrix}
+=a_{11}a_{22}-a_{12}a_{21}
+\end{aligned}
+\end{equation}
+
+这是由4个元素构成的二阶行列式。
+
+\paragraph{行列式的计算规则} \textcolor{red}{主对角线}上的两个数的乘积，减去\textcolor{red}{次对角线}上的两个数的乘积。
+
+\paragraph{用行列式来表示方程组的解}
+
+\begin{equation}
+\begin{aligned}
+a_{11}x_{1}+a_{12}x_{2}=b_{1} \\
+a_{21}x_{1}+a_{22}x_{2}=b_{2}
+\end{aligned}
+\end{equation}
+
+当系数行列式$D=\begin{vmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{vmatrix}=a_{11}a_{22}-a_{12}a_{21} \neq 0$时，方程有唯一解：
+
+\begin{equation}
+\begin{aligned}
+x_{1}=\frac{b_{1}a_{22}-a_{12}b_{2}}{a_{11}a_{22}-a_{12}a_{21}}\\
+x_{2}=\frac{a_{11}b_{2}-b_{1}a_{21}}{a_{11}a_{22}-a_{12}a_{21}}
+\end{aligned}
+\end{equation}
+
+用行列式可以表示为：
+
+\begin{equation}
+\begin{aligned}
+x_{1}=\frac{\begin{vmatrix} b_{1} & a_{12} \\ b_{2} & a_{22} \end{vmatrix}}{\begin{vmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{vmatrix}}=\frac{D_{1}}{D}\\
+x_{2}=\frac{\begin{vmatrix} a_{11} & b_{1} \\ a_{21} & b_{2} \end{vmatrix}}{\begin{vmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{vmatrix}}=\frac{D_{2}}{D}
+\end{aligned}
+\end{equation}
+
+用“二阶行列式的商”来表示方程组的解的方法称为“二元线性方程组的克拉默法则”
+
+\subsection{克拉默法则在微积分中的应用}
+
+设方程组$\begin{cases}
+tx^{3}+y^{3}=e^{t}\\
+x^{5}+y^{2}=t^{2}
+\end{cases}$确定了函数$y=y(x)$，求$\frac{dy}{dx}$。
+
+\section{三阶行列式}
+
+
 \part{面试}
 
 \subsection{监督分类和非监督分类都有哪些呢？}
