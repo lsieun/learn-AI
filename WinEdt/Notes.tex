@@ -2134,7 +2134,7 @@ P\{X_{i}=1\}=\frac{\underset{k \in odd}{2^{m} \cdot \sum C_{n}^{k}}}{2^{m+n}}
 
 第02课 数理统计与参数估计 00:16:01 方差
 
-定义$Var(X)=E\{  [X-E(X)]^{2} \}=E(X^{2})-E^{2}(X)$。（这个可以自己手动推导一下）一个随机变量X的方差，就是“变量平方的期望”减去“变量期望的平方”。
+定义$Var(X)=E\{  [X-E(X)]^{2} \}=E(X^{2})-E^{2}(X)$。 （这个可以自己手动推导一下）一个随机变量X的方差，就是“变量平方的期望”减去“变量期望的平方”。
 
 $E\{  [X-E(X)]^{2} \} \geq 0 \Rightarrow E(X^{2}) \geq E^{2}(X)$，当X为定值时，取等号。
 
@@ -3871,7 +3871,120 @@ tx^{3}+y^{3}=e^{t}\\
 x^{5}+y^{2}=t^{2}
 \end{cases}$确定了函数$y=y(x)$，求$\frac{dy}{dx}$。
 
-\section{三阶行列式}
+\section{三元线性方程组与三阶行列式}
+
+\chapter{第4章}
+
+\section{向量空间}
+
+\subsection{向量空间}
+
+我们曾经把一切$n$维向量$(x_{1},x_{2},\dots,x_{n})$的集合称为$n$维向量空间，记作$R^{n}=\{ (x_{1},x_{2},\dots,x_{n} | x_{1},x_{2},\dots,x_{n} \in R)\}$
+
+下面给出一般的向量空间的定义。
+
+\paragraph{定义6（向量空间）} 设$\emptyset \neq V \subseteq R^{n}$，若集合$V$对于向量的线性运算封闭，则称$V$是一个\textcolor{red}{向量空间}（\textcolor{blue}{vector space}）。
+
+集合$V$对于向量的线性运算\textcolor{red}{封闭}是指：
+
+\begin{equation}
+\begin{aligned}
+\forall a,b \in V \Rightarrow a+b \in V, \lambda a \in V
+\end{aligned}
+\end{equation}
+
+注意：\textcolor{blue}{任何向量空间必须含有零向量}。
+
+因为若$a \in V$，则$0a=\vec{0} \in V$。从而，\textcolor{red}{不含零向量的集合一定不是向量空间}。
+
+\subsection{向量组生成的向量空间}
+
+设有一组$m$维向量$a_{1},a_{2},\dots,a_{m}$，它们的一切线性组合的集合记为$L$：
+
+\begin{equation}
+\begin{aligned}
+L=\{ \lambda_{1}a_{1}+\lambda_{2}a_{2}+\dots+\lambda_{m}a_{m} | \lambda_{1},\lambda_{2},\dots,\lambda_{m} \in R \}
+\end{aligned}
+\end{equation}
+
+则$L$是一个向量空间。称$L$是由这组向量\textcolor{red}{生成的向量空间}（\textcolor{blue}{spanned vector space}），记作
+
+\begin{equation}
+\begin{aligned}
+L(a_{1},a_{2},\dots,a_{m})=\{ \lambda_{1}a_{1}+\lambda_{2}a_{2}+\dots+\lambda_{m}a_{m} | \lambda_{1},\lambda_{2},\dots,\lambda_{m} \in R \}
+\end{aligned}
+\end{equation}
+
+或$Span(a_{1},a_{2},\dots,a_{m})$。
+
+
+分隔线=========\\
+
+[这里要证明了]事实上，任取$L$中两个元素：
+
+\begin{equation}
+\begin{aligned}
+x=\lambda_{1}a_{1}+\lambda_{2}a_{2}+\dots+\lambda_{m}a_{m}\\
+x=\mu_{1}a_{1}+\mu_{2}a_{2}+\dots+\mu_{m}a_{m}
+\end{aligned}
+\end{equation}
+
+分隔线=========\\
+
+设向量组$a_{1},a_{2},\dots,a_{m}$可由向量组$b_{1},b_{2},\dots,b_{l}$线性表示，则$L(a_{1},a_{2},\dots,a_{m}) \subseteq L(b_{1},b_{2},\dots,b_{l})$
+
+\paragraph{命题} 设向量组$a_{1},a_{2},\dots,a_{m}$可由向量组$b_{1},b_{2},\dots,b_{l}$等价（即它们能互相线性表示），则$L(a_{1},a_{2},\dots,a_{m}) = L(b_{1},b_{2},\dots,b_{l})$
+
+即，\textcolor{red}{等价向量组生成相同的向量空间}。
+
+\subsection{向量空间的基与维数}
+
+\paragraph{定义7 （向量空间的基与维数）} 设$V$是一个向量空间，如果$V$中有$r$个向量$a_{1},a_{2},\dots,a_{r}$，满足\\（1）$a_ {1},a_{2},\dots,a_{r}$线性无关；\\（2）$V$中任一向量都可由$a_ {1},a_{2},\dots,a_{r}$线性表示（等价于$V$可由这组向量生成），\\则称$a_ {1},a_{2},\dots,a_{r}$是向量空间$V$的一个
+\textcolor{red}{基}（\textcolor{blue}{basis}），$r$称为$V$的\textcolor{red}{维数}（\textcolor{blue}{dimension}），记作$\dim V$，此时称$V$为\textcolor{red}{$r$维空间}。\\
+
+只含零向量的向量空间没有基，其维数规定为0。\\
+
+根据定义，向量空间$V$的基就是$V$的一个极大无关组（最大的、线性不相关的向量组），$V$的维数就是极大无关组的向量个数。
+
+$R^{n}$中的任何含有非零向量的向量空间都有基。
+
+若$a_ {1},a_{2},\dots,a_{r}$是向量空间$V$的一个基，则$V$可由这个基生成：
+
+\begin{displaymath}
+V=\{ \lambda_{1}a_{1}+\lambda_{2}a_{2}+\dots+\lambda_{r}a_{r} | \lambda_{1},\lambda_{2},\dots,\lambda_{r} \in R \}
+\end{displaymath}
+
+\paragraph{定义8 （向量在一个基中的坐标）}设$a_ {1},a_{2},\dots,a_{r}$是向量空间$V$的一个基，则$V$中任一向量$x$可唯一地表示成
+
+\begin{displaymath}
+x= \lambda_{1}a_{1}+\lambda_{2}a_{2}+\dots+\lambda_{r}a_{r}
+\end{displaymath}
+
+称$(\lambda_{1},\lambda_{2},\dots,\lambda_{r})$是向量$x$在基$a_ {1},a_{2},\dots,a_{r}$中的\textcolor{red}{坐标}。
+
+\subsection{过渡矩阵}
+
+设基$b_{1},b_{2},b_{3}$在基$a_{1},a_{2},a_{3}$中的坐标分别是：
+
+\begin{displaymath}
+(p_ {11},p_{21},p_{31}),(p_{12},p_{22},p_{32}),(p_{13},p_{23},p_{33})
+\end{displaymath}
+
+\begin{displaymath}
+(b_{1},b_{2},b_{3})=(a_{1},a_{2},a_{3})
+\begin{pmatrix} 
+p_ {11} & p_{12} & p_{13} \\
+p_ {21} & p_{22} & p_{23} \\
+p_ {31} & p_{32} & p_{33}
+\end{pmatrix}
+\end{displaymath}
+
+称矩阵$P=(p_{ij})$是从旧基$a_{1},a_{2},a_{3}$到新基$b_{1},b_{2},b_{3}$的\textcolor{red}{过渡矩阵}（\textcolor{blue}{transition matrix}）。
+
+
+\textcolor{red}{实矩阵}
+\textcolor{blue}{实矩阵}
+
 
 
 \part{面试}
