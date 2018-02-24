@@ -3877,8 +3877,6 @@ x^{5}+y^{2}=t^{2}
 
 \section{向量空间}
 
-\subsection{向量空间}
-
 我们曾经把一切$n$维向量$(x_{1},x_{2},\dots,x_{n})$的集合称为$n$维向量空间，记作$R^{n}=\{ (x_{1},x_{2},\dots,x_{n} | x_{1},x_{2},\dots,x_{n} \in R)\}$
 
 下面给出一般的向量空间的定义。
@@ -3897,7 +3895,7 @@ x^{5}+y^{2}=t^{2}
 
 因为若$a \in V$，则$0a=\vec{0} \in V$。从而，\textcolor{red}{不含零向量的集合一定不是向量空间}。
 
-\subsection{向量组生成的向量空间}
+\section{向量组生成的向量空间}
 
 设有一组$m$维向量$a_{1},a_{2},\dots,a_{m}$，它们的一切线性组合的集合记为$L$：
 
@@ -3937,7 +3935,7 @@ x=\mu_{1}a_{1}+\mu_{2}a_{2}+\dots+\mu_{m}a_{m}
 
 即，\textcolor{red}{等价向量组生成相同的向量空间}。
 
-\subsection{向量空间的基与维数}
+\section{向量空间的基与维数}
 
 \paragraph{定义7 （向量空间的基与维数）} 设$V$是一个向量空间，如果$V$中有$r$个向量$a_{1},a_{2},\dots,a_{r}$，满足\\（1）$a_ {1},a_{2},\dots,a_{r}$线性无关；\\（2）$V$中任一向量都可由$a_ {1},a_{2},\dots,a_{r}$线性表示（等价于$V$可由这组向量生成），\\则称$a_ {1},a_{2},\dots,a_{r}$是向量空间$V$的一个
 \textcolor{red}{基}（\textcolor{blue}{basis}），$r$称为$V$的\textcolor{red}{维数}（\textcolor{blue}{dimension}），记作$\dim V$，此时称$V$为\textcolor{red}{$r$维空间}。\\
@@ -3962,7 +3960,7 @@ x= \lambda_{1}a_{1}+\lambda_{2}a_{2}+\dots+\lambda_{r}a_{r}
 
 称$(\lambda_{1},\lambda_{2},\dots,\lambda_{r})$是向量$x$在基$a_ {1},a_{2},\dots,a_{r}$中的\textcolor{red}{坐标}。
 
-\subsection{过渡矩阵}
+\section{过渡矩阵}
 
 设基$b_{1},b_{2},b_{3}$在基$a_{1},a_{2},a_{3}$中的坐标分别是：
 
@@ -3972,7 +3970,7 @@ x= \lambda_{1}a_{1}+\lambda_{2}a_{2}+\dots+\lambda_{r}a_{r}
 
 \begin{displaymath}
 (b_{1},b_{2},b_{3})=(a_{1},a_{2},a_{3})
-\begin{pmatrix} 
+\begin{pmatrix}
 p_ {11} & p_{12} & p_{13} \\
 p_ {21} & p_{22} & p_{23} \\
 p_ {31} & p_{32} & p_{33}
@@ -3981,6 +3979,152 @@ p_ {31} & p_{32} & p_{33}
 
 称矩阵$P=(p_{ij})$是从旧基$a_{1},a_{2},a_{3}$到新基$b_{1},b_{2},b_{3}$的\textcolor{red}{过渡矩阵}（\textcolor{blue}{transition matrix}）。
 
+\chapter{第五章 相似矩阵及二次型 }
+
+Similar Matrices and Quadratic Forms
+
+第44讲 向量的内积、长度及夹角
+
+\section{向量的内积}
+
+\subsection{向量的内积}
+
+\paragraph{回忆} 空间解析几何中，两个向量的数量积、向量的长度和夹角等概念和计算公式。
+
+\paragraph{定义（数量积）} 设$\vec{a},\vec{b}$是向量，夹角为$\theta$，$\vec{a},\vec{b}$的\textcolor{red}{数量积}定义为以下数量：
+
+\begin{displaymath}
+\vec{a} \cdot \vec{b} = |\vec{a}| |\vec{b}| \cos \theta
+\end{displaymath}
+
+\textcolor{red}{夹角公式} $\cos \theta=\frac{\vec{a} \cdot \vec{b}}{|\vec{a}| |\vec{b}|}$ \quad $\theta = \arcsin \frac{\vec{a} \cdot \vec{b}}{|\vec{a}| |\vec{b}|}$ \quad 这里要求$\vec{a},\vec{b}$都不能是$\vec{0}$向量。\\
+
+在空间解析几何中，$\vec{a}=a_{1}i+a_{2}j+a_{3}k=(a_{1},a_{2},a_{3})$ \quad $\vec{b}=b_{1}i+b_{2}j+b_{3}k=(b_{1},b_{2},b_{3})$，那么\\
+数量积$\vec{a} \cdot \vec{b} = a_{1}b_{1} + a_{2}b_{2} + a_{3}b_{3} $。\textbf{数量积就是对应分量乘积之和}。\\
+向量的长度（模）：$|\vec{a}|=\sqrt{\vec{a}\vec{a}}=\sqrt{a_{1}^{2}+a_ {2}^{2}+a_ {3}^{2}}$\\
+夹角斜弦：$\cos \theta=\frac{a_{1}b_{1} + a_{2}b_{2} + a_{3}b_{3}}{\sqrt{a_{1}^{2}+a_ {2}^{2}+a_ {3}^{2}}\sqrt{b_{1}^{2}+b_ {2}^{2}+b_ {3}^{2}}}$\\
+
+下面，我们要将以上概念和运算推广到$n$维向量。
+
+\paragraph{定义1（向量的内积）}设有$n$维向量$\vec{x}=(x_{1},\dots,x_{n})$ \quad $\vec{y}=(y_{1},\dots,y_{n})$，定义$\vec{x}$与$\vec{y}$的\textcolor{red}{内积}（\textcolor{blue}{inner product}），记作$[x,y]$，为以下数量：
+
+\begin{displaymath}
+[x,y]=x_{1}y_{1}+\dots+x_{n}y_{n}=
+\begin{pmatrix} x_{1},\dots,x_{n} \end{pmatrix}
+\begin{pmatrix} y_{1} \\ \vdots \\ y_{n} \end{pmatrix}
+\end{displaymath}
+
+再次记住：\textbf{内积就是对应分量乘积之和}。
+
+\textcolor{red}{内积}是\textcolor{red}{数量积}的推广。RK、RK，这里要注意了，这里其实是讲了两个概念，一个是内积，一个是数量积。
+
+\subsection{内积的基本性质}
+
+设$x,y,z$是$n$维向量，$\lambda$是实数，则\\
+（1）$[x,y]=[y,x]$ （\textcolor{red}{交换性或对称性} \textcolor{blue}{Symmetry}）\\
+（2）$[\lambda x,y]=\lambda [x,y]$ （\textcolor{red}{齐次性} \textcolor{blue}{Homogeneity}）\\
+（3）$[x+y,z]=[x,z]+[y,z]$ （\textcolor{red}{可加性} \textcolor{blue}{Additivity}）\\
+（4）$[x,y] \geq 0$ 且 $[x,x]=0$当且仅当$x=\vec{0}$（\textcolor{red}{非负性} \textcolor{blue}{Positivity}）\\
+其中，第（2）条、第（3）条可以理解成内积的“线性”性质。
+
+\section{施瓦茨不等式}
+
+在空间解析几何中，利用两个向量$\vec{a}=(a_{1},a_{2},a_{3})$ ，$\vec{b}=(b_{1},b_{2},b_{3})$的夹角余弦公式：
+
+\begin{displaymath}
+\cos \theta=\frac{a_{1}b_{1} + a_{2}b_{2} + a_{3}b_{3}}{\sqrt{a_{1}^{2}+a_ {2}^{2}+a_ {3}^{2}}\sqrt{b_{1}^{2}+b_ {2}^{2}+b_ {3}^{2}}}
+\end{displaymath}
+
+得：
+
+\begin{displaymath}
+\frac{|a_{1}b_{1} + a_{2}b_{2} + a_{3}b_{3}|}{\sqrt{a_{1}^{2}+a_ {2}^{2}+a_ {3}^{2}}\sqrt{b_{1}^{2}+b_ {2}^{2}+b_ {3}^{2}}}
+=|\cos \theta| \leq 1
+\end{displaymath}
+
+进一步得：
+
+\begin{displaymath}
+|a_{1}b_{1} + a_{2}b_{2} + a_{3}b_{3}| \leq \sqrt{a_{1}^{2}+a_ {2}^{2}+a_ {3}^{2}}\sqrt{b_{1}^{2}+b_ {2}^{2}+b_ {3}^{2}}
+\end{displaymath}
+
+\begin{displaymath}
+(a_{1}b_{1} + a_{2}b_{2} + a_{3}b_{3})^{2} \leq (a_{1}^{2}+a_ {2}^{2}+a_ {3}^{2})(b_{1}^{2}+b_ {2}^{2}+b_ {3}^{2})
+\end{displaymath}
+
+因此，$|a \cdot b| \leq |a||b|$ \quad $(a \cdot b)^{2} \leq (a \cdot a)(b \cdot b)$\\
+
+下面将以上（3维向量的）结论推广到$n$维向量。
+
+设有$n$维向量$\vec{x}=(x_{1},\dots,x_{n})$ ，$\vec{y}=(y_{1},\dots,y_{n})$，则有不等式：
+
+\begin{displaymath}
+[x,y]^{2} \leq [x,x][y,y]
+\end{displaymath}
+
+即 \quad 施瓦茨(Schwarz)不等式。当$x$与$y$平行（共线或线性相关）时，等式成立。记忆：内积的绝对值不大于长度之积。
+$[x,y]^{2} \leq [x,x][y,y]$可以展开成如下形式：
+
+\begin{displaymath}
+(x_{1}y_{1}+\dots+x_{n}y_{n})^{2} \leq
+(x_{1}^{2}+\dots+x_{n}^{2})(y_{1}^{2}+\dots+y_{n}^{2})
+\end{displaymath}
+
+有的教材上，也称为“柯西-施瓦茨不等式”，可以写成下面这种形式：
+
+\begin{displaymath}
+(\sum_{i=1}^{n}x_{i}y_{i})^{2} \leq (\sum_{i=1}^{n}x_{i}^{2})(\sum_{i=1}^{n}y_{i}^{2})
+\end{displaymath}
+
+“柯西-施瓦茨不等式”也有积分的形式如下：
+
+\begin{displaymath}
+\left (\int_{a}^{b} f(x) g(x) dx \right )^{2} \leq \left (\int_{a}^{b} f^{2}(x) dx \right ) \left (\int_{a}^{b} g^{2}(x) dx \right )
+\end{displaymath}
+
+小总结：“柯西-施瓦茨不等式”，对于\textbf{离散}的数，就是求\textbf{和}；对于\textbf{连续}的数，就是求\textbf{积分}。\\
+
+下面是一段英文阅读材料：
+
+Cauchy-Schwarz inequality
+
+\begin{displaymath}
+(x_{1}y_{1}+\dots+x_{n}y_{n})^{2} \leq
+(x_{1}^{2}+\dots+x_{n}^{2})(y_{1}^{2}+\dots+y_{n}^{2})
+\end{displaymath}
+
+In mathematics, \textcolor{blue}{the Cauchy-Schwarz inequality} is a useful inequality encountered in many different settings, such as \textcolor{red}{linear algebra}, analysis, probability theory, and other areas. \textcolor{red}{It is considered to be one of the most important inequalities in all of mathematics.}
+
+
+\section{向量的长度}
+
+\paragraph{回忆} 在空间直角系中，\\
+向量$\vec{a}=a_{1}i+a_{2}j+a_{3}k=(a_{1},a_{2},a_{3})$\\
+的长度（模）：$|\vec{a}|=\sqrt{\vec{a} \cdot \vec{a}}=\sqrt{a_{1}^{2}+a_{2}^{2}+a_{3}^{2}}$\\
+
+现将（3维向量的）长度的概念推广到$n$维向量
+
+\subsection{定义：向量的长度}
+
+\paragraph{定义2（向量的长度）}设有$n$维向量$\vec{x}=(x_{1},\dots,x_{n})$\\
+令$||\vec{x}||=\sqrt{[x,x]}=\sqrt{x_{1}^{2}+\dots+x_{n}^{2}}$\\
+称为向量$\vec{x}$的\textcolor{red}{长度}或\textcolor{red}{范数}（\textcolor{blue}{norm}）或\textcolor{red}{模}。
+
+\textcolor{red}{单位向量}：$||x||=1$的向量$x$。
+
+\textcolor{blue}{非零向量的}\textcolor{red}{单位化}（\textcolor{red}{规范化}）
+
+设$x$是非零向量，则与$x$\textcolor{blue}{同向}的单位向量是：$\frac{1}{||x||}x$
+
+\subsection{长度的性质}
+
+长度的性质：\\
+（1）\textcolor{red}{非负性}：$||x|| \geq 0$且$||x||=0$当且仅当$x = \vec{0}$\\
+（2）\textcolor{red}{齐次性}：$||\lambda x||=|\lambda|||x||$\\
+（2）\textcolor{red}{三角不等式}：$||x+y|| \leq ||x|| + ||y||$\\
+
+
+\section{向量的夹角}
 
 \textcolor{red}{实矩阵}
 \textcolor{blue}{实矩阵}
