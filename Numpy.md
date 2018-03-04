@@ -155,18 +155,392 @@ Normalize a 5x5 random matrix (★☆☆)
 Create a custom dtype that describes a color as four unisgned bytes (RGBA) (★☆☆)
 
 
+## 2018-03-04 ##
+
+### 生成矩阵np.ones ###
+
+```python
+def ones(shape, dtype=None, order='C'):
+```
+
+示例1：
+```python
+import numpy as np
+
+a = np.ones(10)
+print(a)
+```
+输出1：
+
+	[ 1.  1.  1.  1.  1.  1.  1.  1.  1.  1.]
 
 
+示例2：输出一个3行4列全是1的矩阵
+```python
+import numpy as np
+
+b = np.ones((3,4))
+print(b)
+```
+输出2：
+
+	[[ 1.  1.  1.  1.]
+	 [ 1.  1.  1.  1.]
+	 [ 1.  1.  1.  1.]]
+
+### 生成一个范围的值np.arange ###
+
+方法定义：
+
+```python
+def arange(start=None, stop=None, step=None, dtype=None):
+```
+
+示例1：输入1个参数
+```python
+import numpy as np
+
+a = np.arange(10)
+print(a)
+```
+
+输出1：
+
+	[0 1 2 3 4 5 6 7 8 9]
+
+示例2：输入2个参数
+
+```python
+import numpy as np
+
+b = np.arange(5,10)
+print(b)
+```
+
+输出2：
+
+	[5 6 7 8 9]
+
+示例3：输入3个参数，加上步长
+
+```python
+import numpy as np
+
+c = np.arange(5,10,2)
+print(c)
+```
+
+输出3：
+
+	[5 7 9]
+
+示例4：进行reshape
+
+reshape的定义如下：
+
+```python
+def reshape(self, shape, *shapes, order='C')
+```
+
+```python
+import numpy as np
+
+d = np.arange(0,8).reshape((2,4))
+print(d)
+```
+
+输出4：
+
+	[[0 1 2 3]
+	 [4 5 6 7]]
+
+### 合并矩阵np.c_ ###
+
+使用`np.ones`生成一个2行4列的矩阵放到a中，接着将2行1列的矩阵放到b中，最后使用`np.c_`将a和b组成一个2行5列的新矩阵c。
+
+```python
+import numpy as np
+
+a = np.ones((2,4))
+print(a)
+print("="*20)
+b = np.arange(4,6).reshape((2,1))
+print(b)
+print("="*20)
+c = np.c_[a,b]
+print(c)
+```
+
+输出：
+
+	[[ 1.  1.  1.  1.]
+	 [ 1.  1.  1.  1.]]
+	====================
+	[[4]
+	 [5]]
+	====================
+	[[ 1.  1.  1.  1.  4.]
+	 [ 1.  1.  1.  1.  5.]]
 
 
+其实，还有一个`np.r_`能够对两个矩阵进行按“行”合并。
+
+```python
+import numpy as np
+
+a = np.ones((2,4))
+print(a)
+print("="*20)
+b = np.arange(4,8).reshape((1,4))
+print(b)
+print("="*20)
+c = np.r_[a,b]
+print(c)
+```
+
+输出：
+
+	[[ 1.  1.  1.  1.]
+	 [ 1.  1.  1.  1.]]
+	====================
+	[[4 5 6 7]]
+	====================
+	[[ 1.  1.  1.  1.]
+	 [ 1.  1.  1.  1.]
+	 [ 4.  5.  6.  7.]]
+
+这样看来的话，`np.c_`中的`c`应该就是指column，即按照“列”进行合并，而`np.r_`中的`r`应该代表row，即按照行进行合并。
+
+### 数学np.ceil ###
+
+示例：
+```python
+import numpy as np
+
+a = 10
+b = 3
+c = np.ceil(a/b)
+print('type(c) = ',type(c))
+print(c)
+```
+
+输出：
+
+	type(c) =  <class 'numpy.float64'>
+	4.0
 
 
+```python
 
+```
 
+```python
 
+```
 
+```python
 
+```
 
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
+
+```python
+
+```
 
 
 
