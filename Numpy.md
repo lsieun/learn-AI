@@ -334,13 +334,105 @@ print(c)
 
 ```
 
-```python
+## 2018.03.08 ##
 
+### np.mgrid ###
+
+主要作用是：Construct a multi-dimensional "meshgrid".
+
+mgrid的step参数不使用complex number，此时不包括stop value
+
+	If the step length is not a complex number, then the **stop** is not inclusive.
+
+mgrid的step参数使用complex number，就代表the number of points，并且包括stop value
+
+    However, if the step length is a **complex number** (e.g. 5j), then the
+    integer part of its magnitude is interpreted as specifying the
+    number of points to create between the start and stop values, where
+    the stop value **is inclusive**.
+
+
+
+```python
+import numpy as np
+
+if __name__ == "__main__":
+    x1, y1 = np.mgrid[-10:10:3,-10:10:3]
+    x2, y2 = np.mgrid[-10:10:3j,-10:10:3j]
+    print(x1)
+    print("-"*40)
+    print(y1)
+    print("-"*40)
+    print(x2)
+    print("-"*40)
+    print(y2)
+    print("-"*40)
 ```
 
-```python
+输出如下：
 
+	[[-10 -10 -10 -10 -10 -10 -10]
+	 [ -7  -7  -7  -7  -7  -7  -7]
+	 [ -4  -4  -4  -4  -4  -4  -4]
+	 [ -1  -1  -1  -1  -1  -1  -1]
+	 [  2   2   2   2   2   2   2]
+	 [  5   5   5   5   5   5   5]
+	 [  8   8   8   8   8   8   8]]
+	----------------------------------------
+	[[-10  -7  -4  -1   2   5   8]
+	 [-10  -7  -4  -1   2   5   8]
+	 [-10  -7  -4  -1   2   5   8]
+	 [-10  -7  -4  -1   2   5   8]
+	 [-10  -7  -4  -1   2   5   8]
+	 [-10  -7  -4  -1   2   5   8]
+	 [-10  -7  -4  -1   2   5   8]]
+	----------------------------------------
+	[[-10. -10. -10.]
+	 [  0.   0.   0.]
+	 [ 10.  10.  10.]]
+	----------------------------------------
+	[[-10.   0.  10.]
+	 [-10.   0.  10.]
+	 [-10.   0.  10.]]
+	----------------------------------------
+
+注意：在上述输出结果中，x1、x2的增长方向是按行增加，而y1、y2是按列增加
+
+### np.mgrid和np.stack生成表格 ###
+
+```python
+import numpy as np
+
+if __name__ == "__main__":
+    x, y = np.mgrid[-2:2:3j,-2:2:3j]
+    print(x)
+    print("-"*40)
+    print(y)
+    print("-"*40)
+    grid_test = np.stack((x.flat,y.flat), axis=1)
+    print(grid_test)
 ```
+
+输出结果：
+
+	[[-2. -2. -2.]
+	 [ 0.  0.  0.]
+	 [ 2.  2.  2.]]
+	----------------------------------------
+	[[-2.  0.  2.]
+	 [-2.  0.  2.]
+	 [-2.  0.  2.]]
+	----------------------------------------
+	[[-2. -2.]
+	 [-2.  0.]
+	 [-2.  2.]
+	 [ 0. -2.]
+	 [ 0.  0.]
+	 [ 0.  2.]
+	 [ 2. -2.]
+	 [ 2.  0.]
+	 [ 2.  2.]]
+
 
 ```python
 

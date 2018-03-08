@@ -15,13 +15,15 @@ matplotlib is probably the single most used Python package for 2D-graphics. It p
 import numpy as np
 import matplotlib.pyplot as plt
 
-X = np.linspace(-np.pi, np.pi, 256, endpoint=True)
-C,S = np.cos(X), np.sin(X)
+if __name__ == "__main__":
 
-plt.plot(X,C)
-plt.plot(X,S)
+    X = np.linspace(-np.pi, np.pi, 256, endpoint=True)
+    cosY,sinY = np.cos(X), np.sin(X)
+    
+    plt.plot(X,cosY)
+    plt.plot(X,sinY)
+    plt.show()
 
-plt.show()
 ```
 
 ![](images/matplotlib/sin_cos_001.png)

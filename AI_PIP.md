@@ -5,6 +5,10 @@ pip安装numpy
 
 	pip install numpy
 
+pip安装pandas
+
+	pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pandas
+
 pip安装sklearn
 
 	pip install -U scikit-learn
