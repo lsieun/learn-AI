@@ -23,7 +23,7 @@
     plt.xlim(x1_min, x1_max)
     plt.ylim(x2_min, x2_max)
 
-### 网络线 ###
+### 网格线 ###
 
     plt.grid(b=True,ls=':')
 
