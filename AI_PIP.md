@@ -17,6 +17,10 @@ pip安装scipy(注：sklearn 依赖scipy包)
 
 	pip install -i https://pypi.tuna.tsinghua.edu.cn/simple scipy
 
+pip安装tensorflow
+
+	pip install -i https://pypi.tuna.tsinghua.edu.cn/simple tensorflow==1.1.0
+
 MyEclipse安装PyDev
 
 打开help-> install from catalog
