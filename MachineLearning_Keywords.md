@@ -71,7 +71,7 @@ Theano是一个Python库，专门用于定义、优化、求值数学表达式�
 train 训练集
 test 测试集
 
-### 鸢尾花 ###
+### Iris鸢尾花 ###
 
 **Creator**: R.A. Fisher
 
@@ -90,6 +90,22 @@ test 测试集
       -- Iris Virginica 维吉尼亚鸢尾
 
 Iris数据集是常用的分类实验数据集，由Fisher, 1936收集整理。Iris也称鸢尾花卉数据集，是一类多重变量分析的数据集。数据集包含150个数据集，分为3类，每类50个数据，每个数据包含4个属性。可通过花萼长度，花萼宽度，花瓣长度，花瓣宽度4个属性预测鸢尾花卉属于（Setosa，Versicolour，Virginica）三个种类中的哪一类。
+
+### MNIST ###
+
+The **MNIST** database (**M**ixed **N**ational **I**nstitute of **S**tandards and **T**echnology database) is **a large database of handwritten digits** that is commonly used for training **various image processing systems**. The database is also widely used for training and testing in the field of **machine learning**.
+
+	MNIST是一个large database，里面的数据是handwritten digits。
+	MNIST常用于训练图像处理系统（various image processing systems），也用于机器学习（machine learning）。
+
+The MNIST database contains 60,000 training images and 10,000 testing images.
+
+	MNIST的训练集有6万张图片，测试集有1万张图片。
+
+[MNIST机器学习入门](http://wiki.jikexueyuan.com/project/tensorflow-zh/tutorials/mnist_beginners.html)
+
+
+
 
 ## 比赛 ##
 
