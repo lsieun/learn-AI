@@ -104,7 +104,7 @@ The MNIST database contains 60,000 training images and 10,000 testing images.
 
 [MNIST机器学习入门](http://wiki.jikexueyuan.com/project/tensorflow-zh/tutorials/mnist_beginners.html)
 
-
+MNIST数据集是NIST数据集的一个子集，它包含了60000张图片作为训练数据，10000张图片作为测试数据。在MNIST数据集中的每一张图片都代表了0-9中的一个数字。图片的大小都为28×28，且数字都会出现在图片的正中间。
 
 
 ## 比赛 ##
