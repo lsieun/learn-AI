@@ -265,5 +265,6 @@ print(x3.graph is tf.get_default_graph())   # False
 
 ```
 
+![](images/20180315135133.gif)
 
 
