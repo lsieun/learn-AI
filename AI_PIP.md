@@ -21,6 +21,11 @@ pip安装tensorflow
 
 	pip install -i https://pypi.tuna.tsinghua.edu.cn/simple tensorflow==1.1.0
 
+pip安装keras
+
+	pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade keras
+
+
 MyEclipse安装PyDev
 
 打开help-> install from catalog
