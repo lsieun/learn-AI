@@ -1,3 +1,6 @@
+# 使用Python的pip命令安装工具类库 #
+
+## 1、使用pip在线安装 ##
 
 [pypi 镜像使用帮助](https://mirrors.tuna.tsinghua.edu.cn/help/pypi/)
 
@@ -24,6 +27,16 @@ pip安装tensorflow
 pip安装keras
 
 	pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade keras
+
+## 2、使用pip离线安装 ##
+
+下载python的工具包地址：[Unofficial Windows Binaries for Python Extension Packages](https://www.lfd.uci.edu/~gohlke/pythonlibs/)
+
+pip安装*.whl文件
+
+	pip install opencv_python‑3.4.1+contrib‑cp35‑cp35m‑win_amd64.whl
+
+## 3、Eclipse安装PyDev ##
 
 
 MyEclipse安装PyDev
