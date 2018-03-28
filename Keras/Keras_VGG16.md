@@ -112,7 +112,7 @@ model_vgg_mnist.summary()
 - `weights`: one of `None` (random initialization), 'imagenet' (pre-training on ImageNet), or the path to the weights file to be loaded.
 - `input_shape`: optional shape tuple, only to be specified if `include_top` is False. It should have exactly 3 input channels, and width and height should be no smaller than 48. 
 
-## 2、 ##
+## 2、OpenCV ##
 
 ### 2.1、关于OpenCV ###
 
@@ -121,8 +121,18 @@ OpenCV是一个基于BSD许可（开源）发行的跨平台计算机视觉库�
 > 总结：OpenCV是一个计算机视觉库，实现了图像处理和计算机视觉方面的很多通用算法。
 
 
-如何安装cv2
+如何安装opencv？
 
+	pip install opencv_python-3.4.1+contrib-cp35-cp35m-win_amd64.whl
+
+下载地址： https://www.lfd.uci.edu/~gohlke/pythonlibs/#opencv
+
+
+
+
+## 3、迁移学习：使用VGG16进行MNIST手写体识别 ##
+
+前提：需要在`C:\Users\<username>\.keras\models`目录下有`vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5`文件。
 
 ```python
 from keras.applications.vgg16 import VGG16
@@ -135,6 +145,8 @@ from keras.optimizers import SGD
 
 from keras.datasets import mnist
 
+# 加载OpenCV（在命令行中窗口中输入pip install opencv-python），这里为了后期对图像的处理，
+# 比如尺寸变化和Channel变化。这些变化是为了使图像满足VGG16所需要的输入格式
 import cv2
 import numpy as np
 
@@ -150,6 +162,8 @@ def getVGGModel():
     model_vgg_mnist = Model(inputs=model_vgg.input, outputs=model, name='vgg16')
     return model_vgg_mnist
 
+# 因为VGG16对网络输入层的要求，我们用OpenCV把图像从32*32变成224*224，把黑白图像转成RGB图像，
+# 并把训练数据转化成张量形式，供keras输入
 def transpose_x(x_data):
     x_data_3_channels = [cv2.cvtColor(cv2.resize(i, (48, 48)), cv2.COLOR_GRAY2RGB) for i in x_data]
     trans_x_data = np.concatenate([arr[np.newaxis] for arr in x_data_3_channels]).astype('float32')
