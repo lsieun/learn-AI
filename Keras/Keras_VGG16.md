@@ -47,36 +47,9 @@ model_vgg_mnist.summary()
 	block1_conv2 (Conv2D)        (None, 48, 48, 64)        36928     
 	_________________________________________________________________
 	block1_pool (MaxPooling2D)   (None, 24, 24, 64)        0         
-	_________________________________________________________________
-	block2_conv1 (Conv2D)        (None, 24, 24, 128)       73856     
-	_________________________________________________________________
-	block2_conv2 (Conv2D)        (None, 24, 24, 128)       147584    
-	_________________________________________________________________
-	block2_pool (MaxPooling2D)   (None, 12, 12, 128)       0         
-	_________________________________________________________________
-	block3_conv1 (Conv2D)        (None, 12, 12, 256)       295168    
-	_________________________________________________________________
-	block3_conv2 (Conv2D)        (None, 12, 12, 256)       590080    
-	_________________________________________________________________
-	block3_conv3 (Conv2D)        (None, 12, 12, 256)       590080    
-	_________________________________________________________________
-	block3_pool (MaxPooling2D)   (None, 6, 6, 256)         0         
-	_________________________________________________________________
-	block4_conv1 (Conv2D)        (None, 6, 6, 512)         1180160   
-	_________________________________________________________________
-	block4_conv2 (Conv2D)        (None, 6, 6, 512)         2359808   
-	_________________________________________________________________
-	block4_conv3 (Conv2D)        (None, 6, 6, 512)         2359808   
-	_________________________________________________________________
-	block4_pool (MaxPooling2D)   (None, 3, 3, 512)         0         
-	_________________________________________________________________
-	block5_conv1 (Conv2D)        (None, 3, 3, 512)         2359808   
-	_________________________________________________________________
-	block5_conv2 (Conv2D)        (None, 3, 3, 512)         2359808   
-	_________________________________________________________________
-	block5_conv3 (Conv2D)        (None, 3, 3, 512)         2359808   
-	_________________________________________________________________
-	block5_pool (MaxPooling2D)   (None, 1, 1, 512)         0         
+
+	......省略......
+
 	_________________________________________________________________
 	flatten (Flatten)            (None, 512)               0         
 	_________________________________________________________________
@@ -127,8 +100,164 @@ OpenCV是一个基于BSD许可（开源）发行的跨平台计算机视觉库�
 
 下载地址： https://www.lfd.uci.edu/~gohlke/pythonlibs/#opencv
 
+### 2.2、使用pyplot对mnist数据进行展示 ###
 
+首先，通过Keras读取mnist数据集；其次，拿到第1个数据（索引为0），查看属性信息；最后，通过pyplot进行展示。
 
+示例代码：
+
+```python
+from keras.datasets import mnist
+import matplotlib.pyplot as plt
+
+# 首先，通过Keras读取mnist数据
+(x_train, y_train), (x_test, y_test) = mnist.load_data(path='mnist.npz')
+
+# 其次，拿到第1个数据（索引为0），查看属性信息
+x_train_0 = x_train[0]
+y_train_0 = y_train[0]
+print('type(x_train_0) = ', type(x_train_0))   # type(x_train_0) =  <class 'numpy.ndarray'>
+print('x_train_0.shape = ', x_train_0.shape)   # x_train_0.shape =  (28, 28)
+print('y_train_0 = ', y_train_0)               # y_train_0 =  5
+
+# 最后，通过pyplot进行展示
+plt.imshow(X=x_train_0, cmap='binary')
+plt.show()
+```
+
+输出：
+
+	Using TensorFlow backend.
+	type(x_train_0) =  <class 'numpy.ndarray'>
+	x_train_0.shape =  (28, 28)
+	y_train_0 =  5
+
+![](images/20180328100933.png)
+
+当把`plt.imshow(X=x_train_0, cmap='binary')`中的`binary`换成`gray`时，呈现如下效果：
+
+![](images/20180328101414.png)
+
+### 2.3、使用cv2对mnist数据进行展示 ###
+
+**原大小展示图片**。示例代码：
+
+```python
+from keras.datasets import mnist
+import cv2
+
+# 首先，通过Keras读取mnist数据
+(x_train, y_train), (x_test, y_test) = mnist.load_data(path='mnist.npz')
+
+# 其次，拿到第1个数据（索引为0），查看属性信息
+x_train_0 = x_train[0]
+y_train_0 = y_train[0]
+print('type(x_train_0) = ', type(x_train_0))   # type(x_train_0) =  <class 'numpy.ndarray'>
+print('x_train_0.shape = ', x_train_0.shape)   # x_train_0.shape =  (28, 28)
+print('y_train_0 = ', y_train_0)               # y_train_0 =  5
+
+# 最后，通过cv2进行展示
+cv2.namedWindow(winname='image', flags=cv2.WINDOW_AUTOSIZE)
+cv2.imshow(winname='image', mat=x_train_0)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+
+![](images/20180328102942.png)
+
+**图片放大到48x48像素再展示**：通过`cv2.resize`对图片进行放大。示例代码：
+
+```python
+from keras.datasets import mnist
+import cv2
+
+# 首先，通过Keras读取mnist数据
+(x_train, y_train), (x_test, y_test) = mnist.load_data(path='mnist.npz')
+
+# 其次，拿到第1个数据（索引为0），查看属性信息
+x_train_0 = x_train[0]
+y_train_0 = y_train[0]
+print('type(x_train_0) = ', type(x_train_0))   # type(x_train_0) =  <class 'numpy.ndarray'>
+print('x_train_0.shape = ', x_train_0.shape)   # x_train_0.shape =  (28, 28)
+print('y_train_0 = ', y_train_0)               # y_train_0 =  5
+
+# 最后，通过cv2进行放大并展示
+resize_img = cv2.resize(src=x_train_0, dsize=(48,48))
+cv2.namedWindow(winname='image', flags=cv2.WINDOW_AUTOSIZE)
+cv2.imshow(winname='image', mat=resize_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+
+![](images/20180328103628.png)
+
+**将灰度图像变成RGB图像**：使用`cv2.cvtColor`方法。示例代码：
+
+```python
+from keras.datasets import mnist
+import cv2
+
+# 首先，通过Keras读取mnist数据
+(x_train, y_train), (x_test, y_test) = mnist.load_data(path='mnist.npz')
+
+# 其次，拿到第1个数据（索引为0），查看属性信息
+x_train_0 = x_train[0]
+y_train_0 = y_train[0]
+print('type(x_train_0) = ', type(x_train_0))   # type(x_train_0) =  <class 'numpy.ndarray'>
+print('x_train_0.shape = ', x_train_0.shape)   # x_train_0.shape =  (28, 28)
+print('y_train_0 = ', y_train_0)               # y_train_0 =  5
+
+# 最后，通过cv2进行放大、由灰度图像变成RGB图像，进行展示
+resize_img = cv2.resize(src=x_train_0, dsize=(48,48))
+print('resize_img.shape = ', resize_img.shape) # resize_img.shape =  (48, 48)
+rgb_img = cv2.cvtColor(src=resize_img, code=cv2.COLOR_GRAY2RGB)
+print('rgb_img.shape = ', rgb_img.shape)       # rgb_img.shape =  (48, 48, 3)
+cv2.namedWindow(winname='image', flags=cv2.WINDOW_AUTOSIZE)
+cv2.imshow(winname='image', mat=rgb_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+
+![](images/20180328110444.png)
+
+### 2.4、探究numpy的newaxis和concatenate ###
+
+示例代码：
+
+```python
+from keras.datasets import mnist
+import cv2
+import numpy as np
+
+# 首先，通过Keras读取mnist数据
+(x_train, y_train), (x_test, y_test) = mnist.load_data(path='mnist.npz')
+
+# 其次，拿到第1个数据（索引为0），查看属性信息
+x_train_0 = x_train[0]
+y_train_0 = y_train[0]
+print('type(x_train_0) = ', type(x_train_0))   # type(x_train_0) =  <class 'numpy.ndarray'>
+print('x_train_0.shape = ', x_train_0.shape)   # x_train_0.shape =  (28, 28)
+print('y_train_0 = ', y_train_0)               # y_train_0 =  5
+
+# 最后，通过cv2进行放大、由灰度图像变成RGB图像，进行展示
+resize_img = cv2.resize(src=x_train_0, dsize=(48,48))
+print('resize_img.shape = ', resize_img.shape) # resize_img.shape =  (48, 48)
+rgb_img = cv2.cvtColor(src=resize_img, code=cv2.COLOR_GRAY2RGB)
+print('rgb_img.shape = ', rgb_img.shape)       # rgb_img.shape =  (48, 48, 3)
+
+newaxis_img = rgb_img[np.newaxis]
+print('newaxis_img.shape = ', newaxis_img.shape)   # newaxis_img.shape =  (1, 48, 48, 3)
+concat1 = np.concatenate([newaxis_img])
+print('concat1.shape = ', concat1.shape)           # concat1.shape =  (1, 48, 48, 3)
+concat2 = np.concatenate([newaxis_img, newaxis_img])
+print('concat2.shape = ', concat2.shape)           # concat2.shape =  (2, 48, 48, 3)
+concat3 = np.concatenate([newaxis_img, newaxis_img, newaxis_img])
+print('concat3.shape = ', concat3.shape)           # concat3.shape =  (3, 48, 48, 3)
+cv2.namedWindow(winname='image', flags=cv2.WINDOW_AUTOSIZE)
+cv2.imshow(winname='image', mat=rgb_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
 
 ## 3、迁移学习：使用VGG16进行MNIST手写体识别 ##
 
